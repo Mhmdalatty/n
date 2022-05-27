@@ -2041,7 +2041,7 @@ Addictive = Redis:sismember(FDFGERB.."FDFGERB:Addictive:Group"..msg.chat_id,User
 Distinguished = Redis:sismember(FDFGERB.."FDFGERB:Distinguished:Group"..msg.chat_id,UserId_Info.id)
 BanGroup = Redis:sismember(FDFGERB.."FDFGERB:BanGroup:Group"..msg.chat_id,UserId_Info.id)
 SilentGroup = Redis:sismember(FDFGERB.."FDFGERB:SilentGroup:Group"..msg.chat_id,UserId_Info.id)
-if BanGroup = then
+if BanGroup then
 BanGroupz = "✓"
 else
 BanGroupz = "✗"
@@ -2110,7 +2110,7 @@ Addictive = Redis:sismember(FDFGERB.."FDFGERB:Addictive:Group"..msg.chat_id,User
 Distinguished = Redis:sismember(FDFGERB.."FDFGERB:Distinguished:Group"..msg.chat_id,UserId_Info.id)
 BanGroup = Redis:sismember(FDFGERB.."FDFGERB:BanGroup:Group"..msg.chat_id,UserId_Info.id)
 SilentGroup = Redis:sismember(FDFGERB.."FDFGERB:SilentGroup:Group"..msg.chat_id,UserId_Info.idif)
-BanGroup = then
+if BanGroup then
 BanGroupz = "✓"
 else
 BanGroupz = "✗"
@@ -2144,7 +2144,7 @@ if Distinguished then
 Distinguishedz = "✓"
 else
 Distinguishedz = "✗"
-endnd
+end
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {
 {
 {text = 'رفع منشئ اساسي : '..TheBasicsz, data =msg.sender.user_id..'/statusTheBasicsz/'..Message_Reply.sender.user_id},{text = 'رفع منشئ : '..Originatorsz, data =msg.sender.user_id..'/statusOriginatorsz/'..Message_Reply.sender.user_id},
