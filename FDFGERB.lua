@@ -301,26 +301,84 @@ if GetMemberStatus.can_restrict_members then restrict_members = true else restri
 if GetMemberStatus.can_promote_members then promote = true else promote = false end
 return{ SetAdmin = promote, BanUser = restrict_members, Invite = invite_users, PinMsg = pin_messages, DelMsg = delete_messages, Info = change_info } end
 function download(url,name)
-if not name then name = url:match('([^/]+)$') end
-if string.find(url,'https') then data,res = https.request(url)
-elseif string.find(url,'http') then data,res = http.request(url) else
-return 'The link format is incorrect.' end
-if res ~= 200 then return 'check url , error code : '..res else
+if not name then
+name = url:match('([^/]+)$')
+end
+if string.find(url,'https') then
+data,res = https.request(url)
+elseif string.find(url,'http') then
+data,res = http.request(url)
+else
+return 'The link format is incorrect.'
+end
+if res ~= 200 then
+return 'check url , error code : '..res
+else
 file = io.open(name,'wb')
 file:write(data)
 file:close()
 print('Downloaded :> '..name)
-return './'..name end end
-local function Info_Video(x)
-local f=io.popen(x)
-if f then local s=f:read"*a" f:close()
-if s == 'a' then end return s end end
-function ChannelJoin(msg) JoinChannel = true
-local Channel = Redis:get(FDFGERB..'FDFGERB:Channel:Join')
-if Channel then
-local url , res = https.request('https://api.telegram.org/bot'..Token..'/getchatmember?chat_id=@'..Channel..'&user_id='..msg.sender.user_id)
-local ChannelJoin = JSON.decode(url)
-if ChannelJoin.result.status == "left" then JoinChannel = false end end return JoinChannel end
+return './'..name
+end
+end
+function ChannelJoin(msg)
+JoinChannel = true
+local chh = Redis:get(FDFGERB.."chfalse")
+if chh then
+local url = https.request("https://api.telegram.org/bot"..Token.."/getchatmember?chat_id="..chh.."&user_id="..msg.sender.user_id)
+data = json:decode(url)
+if data.result.status == "left" or data.result.status == "kicked" then
+JoinChannel = false 
+end
+end
+return JoinChannel
+end
+
+function editrtp(chat,user,msgid,useri)
+if Redis:sismember(FDFGERB.."BanGroup:Group"..chat,useri) then
+BanGroupz = "✓"
+else
+BanGroupz = "✗"
+end
+if Redis:sismember(FDFGERB.."FDFGERB:SilentGroup:Group"..chat,useri) then
+SilentGroupz = "✓"
+else
+SilentGroupz = "✗"
+end
+if Redis:sismember(FDFGERB.."FDFGERB:TheBasics:Group"..chat,useri)  then
+TheBasicsz = "✓"
+else
+TheBasicsz = "✗"
+end
+if Redis:sismember(FDFGERB.."FDFGERB:Originators:Group"..chat,useri) then
+Originatorsz = "✓"
+else
+Originatorsz = "✗"
+end
+if Redis:sismember(FDFGERB.."Manger:Group"..chat,useri) then
+Managersz = "✓"
+else
+Managersz = "✗"
+end
+if Redis:sismember(FDFGERB.."FDFGERB:Addictive:Group"..chat,useri) then
+Addictivez = "✓"
+else
+Addictivez = "✗"
+end
+if Redis:sismember(FDFGERB.."FDFGERB:Distinguished:Group"..chat,useri) then
+Distinguishedz = "✓"
+else
+Distinguishedz = "✗"
+end
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {
+{{text = 'رفع منشئ اساسي : '..TheBasicsz, data =user..'/statusTheBasicsz/'..useri},{text = 'رفع منشئ : '..Originatorsz, data =user..'/statusOriginatorsz/'..useri},},
+{{text = 'رفع مدير : '..Managersz, data =user..'/statusManagersz/'..useri},{text = 'رفع ادمن : '..Addictivez, data =user..'/statusAddictivez/'..useri},},
+{{text = 'رفع مميز : '..Distinguishedz, data =user..'/statusDistinguishedz/'..useri},},
+{{text = 'حظر العضو : '..BanGroupz, data =user..'/statusban/'..useri},{text = 'كتم العضو : '..SilentGroupz, data =user..'/statusktm/'..useri},},
+{{text = 'مسح الرتب : ', data =user..'/statusmem/'..useri},},
+{{text = '- اخفاء الامر ', data ='/delAmr1'}}}}
+return LuaTele.editMessageText(chat,msgid,'*\n• يمكنك تحكم بالعضو عن طريق الازرار . .*', 'md', true, false, reply_markup)
+end
 function File_Bot_Run(msg,data) local msg_chat_id = msg.chat_id local msg_reply_id = msg.reply_to_message_id local msg_user_send_id = msg.sender.user_id local msg_id = msg.id local text = nil
 if msg.sender.luatele == "messageSenderChat" then LuaTele.deleteMessages(msg.chat_id,{[1]= msg.id}) return false end
 if msg.date and msg.date < tonumber(os.time() - 15) then print("->> Old Message End <<-") return false end
@@ -2024,6 +2082,12 @@ return LuaTele.sendText(msg_chat_id,msg_id,'\n⌁ : معرفك ↫ ❨ '..UserIn
 
 if text and text:match('^تحكم @(%S+)$') then
 local UserName = text:match('^تحكم @(%S+)$') 
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 local UserId_Info = LuaTele.searchPublicChat(UserName)
 if not UserId_Info.id then
 return LuaTele.sendText(msg_chat_id,msg_id,"\n•عذرآ لا يوجد حساب بهذا المعرف ","md",true)  
@@ -2091,7 +2155,7 @@ local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {
 {text = 'حظر العضو : '..BanGroupz, data =msg.sender.user_id..'/statusban/'..UserId_Info.id},{text = 'كتم العضو : '..SilentGroupz, data =msg.sender.user_id..'/statusktm/'..UserId_Info.id},
 },
 {
-{text = 'تنزيل الرتب : ', data =msg.sender.user_id..'/statusmem/'..UserId_Info.id},
+{text = '‹ اخفاء الاوامر ›', data =IdUser..'/'.. 'ttttto'}
 },
 {
 {text = '- اخفاء الامر ', data ='/delAmr1'}
@@ -2101,15 +2165,21 @@ local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {
 return LuaTele.sendText(msg.chat_id,msg.id,'*\n• يمكنك تحكم بالعضو عن طريق الازرار \n تعني ان معه الرتبه : ✓ \nتعني انه ليس معه رتبه : ✗*',"md",false, false, false, false, reply_markup)
 end
 
+
 if text == 'تحكم' then
-local Message_Reply = LuaTele.getMessage(msg.chat_id, msg.reply_to_message_id)
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 TheBasics = Redis:sismember(FDFGERB.."FDFGERB:TheBasics:Group"..msg.chat_id,UserId_Info.id) 
 Originators = Redis:sismember(FDFGERB.."FDFGERB:Originators:Group"..msg.chat_id,UserId_Info.id)
 Managers = Redis:sismember(FDFGERB.."FDFGERB:Managers:Group"..msg.chat_id,UserId_Info.id)
 Addictive = Redis:sismember(FDFGERB.."FDFGERB:Addictive:Group"..msg.chat_id,UserId_Info.id)
 Distinguished = Redis:sismember(FDFGERB.."FDFGERB:Distinguished:Group"..msg.chat_id,UserId_Info.id)
 BanGroup = Redis:sismember(FDFGERB.."FDFGERB:BanGroup:Group"..msg.chat_id,UserId_Info.id)
-SilentGroup = Redis:sismember(FDFGERB.."FDFGERB:SilentGroup:Group"..msg.chat_id,UserId_Info.idif)
+SilentGroup = Redis:sismember(FDFGERB.."FDFGERB:SilentGroup:Group"..msg.chat_id,UserId_Info.id)
 if BanGroup then
 BanGroupz = "✓"
 else
@@ -2145,21 +2215,22 @@ Distinguishedz = "✓"
 else
 Distinguishedz = "✗"
 end
+
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {
 {
-{text = 'رفع منشئ اساسي : '..TheBasicsz, data =msg.sender.user_id..'/statusTheBasicsz/'..Message_Reply.sender.user_id},{text = 'رفع منشئ : '..Originatorsz, data =msg.sender.user_id..'/statusOriginatorsz/'..Message_Reply.sender.user_id},
+{text = 'رفع منشئ اساسي : '..TheBasicsz, data =msg.sender.user_id..'/statusTheBasicsz/'..UserId_Info.id},{text = 'رفع منشئ : '..Originatorsz, data =msg.sender.user_id..'/statusOriginatorsz/'..UserId_Info.id},
 },
 {
-{text = 'رفع مدير : '..Managersz, data =msg.sender.user_id..'/statusManagersz/'..Message_Reply.sender.user_id},{text = 'رفع ادمن : '..Addictivez, data =msg.sender.user_id..'/statusAddictivez/'..Message_Reply.sender.user_id},
+{text = 'رفع مدير : '..Managersz, data =msg.sender.user_id..'/statusManagersz/'..UserId_Info.id},{text = 'رفع ادمن : '..Addictivez, data =msg.sender.user_id..'/statusAddictivez/'..UserId_Info.id},
 },
 {
-{text = 'رفع مميز : '..Distinguishedz, data =msg.sender.user_id..'/statusDistinguishedz/'..Message_Reply.sender.user_id},
+{text = 'رفع مميز : '..Distinguishedz, data =msg.sender.user_id..'/statusDistinguishedz/'..UserId_Info.id},
 },
 {
-{text = 'حظر العضو : '..BanGroupz, data =msg.sender.user_id..'/statusban/'..Message_Reply.sender.user_id},{text = 'كتم العضو : '..SilentGroupz, data =msg.sender.user_id..'/statusktm/'..Message_Reply.sender.user_id},
+{text = 'حظر العضو : '..BanGroupz, data =msg.sender.user_id..'/statusban/'..UserId_Info.id},{text = 'كتم العضو : '..SilentGroupz, data =msg.sender.user_id..'/statusktm/'..UserId_Info.id},
 },
 {
-{text = 'تنزيل الرتب : ', data =msg.sender.user_id..'/statusmem/'..Message_Reply.sender.user_id},
+{text = '‹ اخفاء الاوامر ›', data =IdUser..'/'.. 'ttttto'}
 },
 {
 {text = '- اخفاء الامر ', data ='/delAmr1'}
@@ -4000,12 +4071,55 @@ end
 Redis:del(FDFGERB.."FDFGERB:Status:joinet"..msg_chat_id) 
 return LuaTele.sendText(msg_chat_id,msg_id,"*⌔︰ تم تعطيل التحقق ","md",true)
 end
+
+if text == "تعطيل سمسمي" or text == "تعطيل سمسم" then
+Redis:del(FDFGERB.."FDFGERB:Status:smsm"..msg_chat_id)
+LuaTele.sendText(msg_chat_id,msg_id,'\n*• تم تعطيل امر سمسمي * ',"md",true)  
+end
+if text == "تفعيل سمسم" or text == "تفعيل سمسمي" then
+Redis:set(FDFGERB.."FDFGERB:Status:smsm"..msg_chat_id,"off")
+LuaTele.sendText(msg_chat_id,msg_id,'\n*• تم تفعيل امر سمسمي * ',"md",true)  
+end
+if text then
+if Redis:get(FDFGERB.."FDFGERB:Status:smsm"..msg_chat_id) == "off" then
+if tonumber(msg.reply_to_message_id) ~= 0 then
+msg_user_id = LuaTele.getMessage(msg.chat_id, msg.reply_to_message_id).sender.user_id
+if tonumber(msg_user_id) == tonumber(FDFGERB) then  
+ures = https.request("https://dev-Revor.tk/AP/Smsmi.php?text="..text)
+JsonSInfo = JSON.decode(u)
+LuaTele.sendText(msg.chat_id,msg.id,"["..JsonSInfo['success'].."]","md",true)
+end
+end
+end
+end
 if text == 'تفعيل التحقق' then
 if not msg.Addictive then
 return LuaTele.sendText(msg_chat_id,msg_id,'\n• الامر يخص : ( '..Controller_Num(7)..' ) ',"md",true)  
 end
 Redis:set(FDFGERB.."FDFGERB:Status:joinet"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,"*⌔︰ تم تفعيل التحقق ","md",true)
+end
+
+if text == "زوجني" or text == "جوزني"  then 
+local Info_Members = LuaTele.searchChatMembers(msg_chat_id, "*", 200)
+x = 0 
+tags = 0 
+local list = Info_Members.members
+v = list[math.random(#list)] 
+local data = LuaTele.getUser(v.member_id.user_id)
+if x == 1 or x == tags or k == 0 then 
+tags = x + 1 
+t = "• تم إختيار زوجة عشوائية لك يا صديقي \n"
+end 
+x = x + 1 
+tagname = data.first_name
+tagname = tagname:gsub("]","") 
+tagname = tagname:gsub("[[]","") 
+t = t.." "..tagname.."" 
+if x == 1 or x == tags or k == 0 then 
+Text = t:gsub('#all,','#all\n')
+LuaTele.sendText(msg.chat_id, msg.id,Text,'md') 
+end  
 end
 if text and text:match("^تعطيل (.*)$") and msg.reply_to_message_id == 0 then
 local TextMsg = text:match("^تعطيل (.*)$")
@@ -12536,7 +12650,7 @@ elseif Redis:sismember(FDFGERB.."FDFGERB:Addictive:Group"..ChatId,IdUser) == tru
 data.The_Controller = 7
 elseif Redis:sismember(FDFGERB.."FDFGERB:Distinguished:Group"..ChatId,IdUser) == true then
 data.The_Controller = 8
-elseif tonumber(IdUser) == tonumber(Gold) then
+elseif tonumber(IdUser) == tonumber(FDFGERB) then
 data.The_Controller = 9
 else
 data.The_Controller = 10
@@ -12545,28 +12659,28 @@ if data.The_Controller == 1 then
 data.ControllerBot = true
 end
 if data.The_Controller == 1 or data.The_Controller == 2 then
-data.Devss = true
+data.DevelopersQ = true
 end
 if data.The_Controller == 1 or data.The_Controller == 2 or data.The_Controller == 3 then
-data.Dev = true
+data.Developers = true
 end
 if data.The_Controller == 1 or data.The_Controller == 2 or data.The_Controller == 3 or data.The_Controller ==44 then
-data.owner = true
+data.TheBasicsQ = true
 end
 if data.The_Controller == 1 or data.The_Controller == 2 or data.The_Controller == 3 or data.The_Controller == 4  or data.The_Controller ==44 or data.The_Controller == 9 then
-data.Supcreator = true
+data.TheBasics = true
 end
 if data.The_Controller == 1 or data.The_Controller == 2 or data.The_Controller ==44 or data.The_Controller == 3 or data.The_Controller == 4 or data.The_Controller == 5 or data.The_Controller == 9 then
-data.Creator = true
+data.Originators = true
 end
 if data.The_Controller == 1 or data.The_Controller == 2 or data.The_Controller ==44 or data.The_Controller == 3 or data.The_Controller == 4 or data.The_Controller == 5 or data.The_Controller == 6 or data.The_Controller == 9 then
-data.Manger = true
+data.Managers = true
 end
 if data.The_Controller == 1 or data.The_Controller == 2 or data.The_Controller ==44 or data.The_Controller == 3 or data.The_Controller == 4 or data.The_Controller == 5 or data.The_Controller == 6 or data.The_Controller == 7 or data.The_Controller == 9 then
-data.Admin = true
+data.Addictive = true
 end
 if data.The_Controller == 1 or data.The_Controller == 2 or data.The_Controller ==44 or data.The_Controller == 3 or data.The_Controller == 4 or data.The_Controller == 5 or data.The_Controller == 6 or data.The_Controller == 7 or data.The_Controller == 8 or data.The_Controller == 9 then
-data.Special = true
+data.Distinguished = true
 end
 if Text and Text:match('(%d+)/statusTheBasicsz/(%d+)') and data.owner then
 local UserId = {Text:match('(%d+)/statusTheBasicsz/(%d+)')}
@@ -12576,6 +12690,7 @@ Redis:srem(FDFGERB.."FDFGERB:TheBasics:Group"..ChatId,UserId[2])
 else
 Redis:sadd(FDFGERB.."FDFGERB:TheBasics:Group"..ChatId,UserId[2])
 end
+LuaTele.answerCallbackQuery(data.id, "⋆ تم رفع منشئ اساسي", true)
 return editrtp(ChatId,UserId[1],Msg_id,UserId[2])
 end
 end
@@ -12587,6 +12702,7 @@ Redis:srem(FDFGERB.."FDFGERB:Originators:Group"..ChatId,UserId[2])
 else
 Redis:sadd(FDFGERB.."FDFGERB:Originators:Group"..ChatId,UserId[2])
 end
+LuaTele.answerCallbackQuery(data.id, "⋆ تم رفع منشئ", true)
 return editrtp(ChatId,UserId[1],Msg_id,UserId[2])
 end
 end
@@ -12598,6 +12714,7 @@ Redis:srem(FDFGERB.."FDFGERB:Managers:Group"..ChatId,UserId[2])
 else
 Redis:sadd(FDFGERB.."FDFGERB:Managers:Group"..ChatId,UserId[2])
 end
+LuaTele.answerCallbackQuery(data.id, "⋆ تم رفع مدير", true)
 return editrtp(ChatId,UserId[1],Msg_id,UserId[2])
 end
 end
@@ -12609,6 +12726,7 @@ Redis:srem(FDFGERB.."FDFGERB:Addictive:Group"..ChatId,UserId[2])
 else
 Redis:sadd(FDFGERB.."FDFGERB:Addictive:Group"..ChatId,UserId[2])
 end
+LuaTele.answerCallbackQuery(data.id, "⋆ تم رفع ادمن", true)
 return editrtp(ChatId,UserId[1],Msg_id,UserId[2])
 end
 end
@@ -12620,6 +12738,7 @@ Redis:srem(FDFGERB.."FDFGERB:Distinguished:Group"..ChatId,UserId[2])
 else
 Redis:sadd(FDFGERB.."FDFGERB:Distinguished:Group"..ChatId,UserId[2])
 end
+LuaTele.answerCallbackQuery(data.id, "⋆ تم رفع مميز", true)
 return editrtp(ChatId,UserId[1],Msg_id,UserId[2])
 end
 end
@@ -14989,17 +15108,11 @@ local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = '‹ �
 LuaTele.editMessageText(ChatId,Msg_id,Text, 'md', false, false, reply_markup) end end 
 -- KADI
 if Text and Text:match('(%d+)/Rgg') then
-
 local UserId = Text:match('(%d+)/Rgg')
-
 if tonumber(IdUser) == tonumber(UserId) then
-
 local KADI = (Redis:get(FDFGERB..'FDFGERB:Num:Message:Edit'..data.chat_id..UserId) or 0)
-
 local KADI = (Redis:get(FDFGERB..'FDFGERB:Num:Message:User'..data.chat_id..':'..UserId) or 0)
-
 local Text = "\n⌔︰من خلال الازرار يمكنك مسح رسائلك وسحكاتك جهاتك نقاطك"
-
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {
 {
 {text = '‹ مسح سحكاتي › ', data =IdUser..'/'.. 'MsgDell'},{text = '‹ مسح رسائلي ›', data =IdUser..'/'.. 'MMsgDel'},
@@ -15015,10 +15128,8 @@ local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {
 },
 }
 }
-
 LuaTele.editMessageText(ChatId,Msg_id,Text, 'md', false, false, reply_markup) end end 
 
--- KADI
 if Text and Text:match('(%d+)/delAmr') then
 local UserId = Text:match('(%d+)/delAmr')
 if tonumber(IdUser) == tonumber(UserId) then return LuaTele.deleteMessages(ChatId,{[1]= Msg_id}) end end
