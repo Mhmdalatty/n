@@ -9107,10 +9107,8 @@ local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, u
 return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = '‹ قائمة الاوامر ›', data = msg.sender.user_id..'/help5'},},{{text = '‹ 𝖲𝗈U𝗋Ec MeLaNo  ›', url = 't.me/GVVVV6'},},}}
 return LuaTele.sendText(msg_chat_id,msg_id,'᥀︙اوامر المطور الاساسي  \n— — — — — — — — —\n᥀︙حظر عام ، الغاء العام\n᥀︙اضف ، حذف ← { مطور } \n᥀︙قائمه العام ، مسح قائمه العام\n᥀︙المطورين ، مسح المطورين\n— — — — — — — — —\n᥀︙اضف ، حذف ← { رد للكل }\n᥀︙وضع ، حذف ← { كليشه المطور } \n᥀︙مسح ردود المطور ، ردود المطور \n᥀︙تحديث ،  تحديث السورس \n᥀︙تعين عدد الاعضاء ← { العدد }\n— — — — — — — — —\n᥀︙تفعيل ، تعطيل ← { الاوامر التاليه ↓}\n᥀︙البوت الخدمي ، المغادرة ، الاذاعه\n᥀︙ملف ← { اسم الملف }\n— — — — — — — — —\n᥀︙مسح جميع الملفات \n᥀︙المتجر ، الملفات\n— — — — — — — — —\n᥀︙اوامر المطور في البوت\n— — — — — — — — —\n᥀︙تفعيل ، تعطيل ، الاحصائيات\n᥀︙رفع، تنزيل ← { منشئ اساسي }\n᥀︙مسح الاساسين ، المنشئين الاساسين \n᥀︙غادر ، غادر ← { والايدي }\n᥀︙اذاعه ، اذاعه بالتوجيه ، اذاعه بالتثبيت\n᥀︙اذاعه خاص ، اذاعه خاص بالتوجيه',"md",false, false, false, false, reply_markup)
-
-
 elseif text == 'الالعاب' then
-if not Redis:get(ALSHOR33.."ALSHOR33:Status:Id"..msg_chat_id) then return LuaTele.sendText(msg_chat_id,msg_id,"⌁ : عذراً امر الايدي معطل","md",true) end
+if not msg.Addictive then return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰هذا الامر للادمنية واعلى فقط',"md",true)  end
 if ChannelJoin(msg) == false then
 local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
 local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
@@ -9122,10 +9120,6 @@ type = 'inline',
 data = {{{text = '⌔︰الالعاب البوت ', data = IdUser..'/help6'},{text = '⌔︰العاب البنك ', data = IdUser..'/ali5'}, },
 {{text = '⌔︰الالعاب الاحترافيه ', data = IdUser..'/degm'}, },{{text = '- اخفاء الامر ', data =IdUser..'/'.. 'delAmr'}},{{text = '‹ ‹ 𝖳𝖾𝖠𝗆 ◟MeLaNo ›  ›', url = 't.me/GVVVV6'}, },}}
 return LuaTele.sendText(msg_chat_id,msg_id,'• قائمــه العــاب البــوته',"md",false, false, false, false, reply_markup)end
-
-
-
-
 if text == 'تحديث' or text == 'تحديث السورس' then
 if not msg.DevelopersAS then 
 return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰هذا الامر للمطور الاساسي واعلى فقط',"md",true)  end
