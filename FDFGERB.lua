@@ -4135,23 +4135,6 @@ Text = t:gsub('#all,','#all\n')
 LuaTele.sendText(msg.chat_id, msg.id,Text,'md') 
 end  
 end
-
-if text == 'تعطيل التحقق' then
-if not msg.Addictive then
-return LuaTele.sendText(msg_chat_id,msg_id,'\n• الامر يخص : ( '..Controller_Num(7)..' ) ',"md",true)  
-end
-Redis:del(FDFGERB.."FDFGERB:Status:joinet"..msg_chat_id) 
-return LuaTele.sendText(msg_chat_id,msg_id,"• تم تعطيل التحقق ","md",true)
-end
-if text == 'تفعيل التحقق' then
-if not msg.Addictive then
-return LuaTele.sendText(msg_chat_id,msg_id,'\n• الامر يخص : ( '..Controller_Num(7)..' ) ',"md",true)  
-end
-Redis:set(FDFGERB.."FDFGERB:Status:joinet"..msg_chat_id,true) 
-return LuaTele.sendText(msg_chat_id,msg_id,"• تم تفعيل التحقق ","md",true)
-end
-
-
 if text and text:match("^تعطيل (.*)$") and msg.reply_to_message_id == 0 then
 local TextMsg = text:match("^تعطيل (.*)$")
 if not msg.Addictive then return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰هذا الامر للادمنية واعلى فقط',"md",true)  end
@@ -12557,27 +12540,6 @@ if text == Redis:get(FDFGERB.."FDFGERB:PinMsegees:"..msg.chat_id) then
 LuaTele.pinChatMessage(msg.chat_id,msg.id,true)
 Redis:del(FDFGERB.."FDFGERB:PinMsegees:"..msg.chat_id) end end
 
-elseif data and data.luatele and data.luatele == "updateNewMessage" then
-if data.message.content.luatele == "messageChatDeleteMember" or data.message.content.luatele == "messageChatAddMembers" or data.message.content.luatele == "messagePinMessage" or data.message.content.luatele == "messageChatChangeTitle" or data.message.content.luatele == "messageChatJoinByLink" then
-if Redis:get(FDFGERB.."FDFGERB:Lock:tagservr"..data.message.chat_id) then
-LuaTele.deleteMessages(data.message.chat_id,{[1]= data.message.id})
-end
-end 
-if tonumber(data.message.sender.user_id) == tonumber(FDFGERB) then
-return false
-end
-if data.message.content.luatele == "messageChatJoinByLink" and Redis:get(FDFGERB..'FDFGERB:Status:joinet'..data.message.chat_id) == 'true' then
-local reply_markup = LuaTele.replyMarkup{
-type = 'inline',
-data = {
-{
-{text = ' انا لست بوت ', data = data.message.sender.user_id..'/UnKed'},
-},
-}
-} 
-LuaTele.setChatMemberStatus(data.message.chat_id,data.message.sender.user_id,'restricted',{1,0,0,0,0,0,0,0,0})
-return LuaTele.sendText(data.message.chat_id, data.message.id, '• عليك اختيار انا لست بوت لتخطي نضام التحقق', 'md',false, false, false, false, reply_markup)
-end
 
 File_Bot_Run(data.message,data.message)
 
