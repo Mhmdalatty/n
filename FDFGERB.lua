@@ -401,7 +401,7 @@ if msg.The_Controller == 1 or msg.The_Controller == 100 or msg.The_Controller ==
 if msg.The_Controller == 1 or msg.The_Controller == 100 or msg.The_Controller == 2 or msg.The_Controller == 3 or msg.The_Controller == 99 or msg.The_Controller == 44 or msg.The_Controller == 4 or msg.The_Controller == 5 or msg.The_Controller == 6 or msg.The_Controller == 7 or msg.The_Controller == 9 then msg.Addictive = true end
 if msg.The_Controller == 1 or msg.The_Controller == 100 or msg.The_Controller == 2 or msg.The_Controller == 3 or msg.The_Controller == 99 or msg.The_Controller == 44 or msg.The_Controller == 4 or msg.The_Controller == 5 or msg.The_Controller == 6 or msg.The_Controller == 7 or msg.The_Controller == 88 or msg.The_Controller == 9 then msg.Cleaner = true end
 if msg.The_Controller == 1 or msg.The_Controller == 100 or msg.The_Controller == 2 or msg.The_Controller == 3 or msg.The_Controller == 99 or msg.The_Controller == 44 or msg.The_Controller == 4 or msg.The_Controller == 5 or msg.The_Controller == 6 or msg.The_Controller == 7 or msg.The_Controller == 8 or msg.The_Controller == 9 then msg.Distinguished = true end
---
+
 if text and (text:match("عيوره") or text:match("كس") or text:match("طيز") or text:match("ديس") or text:match("انيج") or text:match("نيج") or text:match("ديوس") or text:match("عير") or text:match("كسختك") or text:match("كسمك") or text:match("كسربك") or text:match("بلاع") or text:match("ابو العيوره") or text:match("منيوج") or text:match("كحبه") or text:match("كحاب") or text:match("الكحبه") or text:match("كسك") or text:match("طيزك") or text:match("كس امك") or text:match("صرم") or text:match("كس اختك")) then
 if Redis:get(FDFGERB.."FDFGERB:Lock:Fshar"..msg_chat_id) and not msg.Addictive then
 LuaTele.deleteMessages(msg.chat_id,{[1]= msg.id})
@@ -2036,6 +2036,8 @@ return LuaTele.sendText(msg_chat_id,msg_id,
 '\n⌁ : تفاعله : '..TotalMsgT..
 '*',"md",true) 
 end
+
+
 if text == 'نبذتي' or text == 'بايو' then
 if not Redis:get(FDFGERB.."FDFGERB:Status:Bio"..msg_chat_id) then return LuaTele.sendText(msg_chat_id,msg_id,"⌔︰عذراً امر البايو معطل","md",true) end 
 if not msg.Managers then return LuaTele.sendText(msg_chat_id,msg_id,'\n⌁ : هذه الميزة للادمنية واعلى فقط',"md",true)  end
@@ -2047,7 +2049,6 @@ Bio = 'لا يوجد'
 end
 return LuaTele.sendText(msg_chat_id,msg_id,'\n⌁ : نبذتك ↫ ❨ '..Bio..' ❩',"md",true)  end
 if text == 'اسمي' then
-
 if not msg.Managers then return LuaTele.sendText(msg_chat_id,msg_id,'\n⌁ : هذه الميزة للادمنية واعلى فقط',"md",true)  end
 local UserInfo = LuaTele.getUser(msg.sender.user_id) 
 if UserInfo.first_name then
@@ -2058,14 +2059,6 @@ end
 return LuaTele.sendText(msg_chat_id,msg_id,'\n⌁ : اسمك ↫ ❨ '..Name..' ❩ ',"md",true)  end
 if text == 'رتبتي' then return LuaTele.sendText(msg_chat_id,msg_id,'\n⌁ : رتبتك ↫ ❨ '..msg.Name_Controller..' ❩',"md",true)  end
 if text == 'ايديي' then return LuaTele.sendText(msg_chat_id,msg_id,'\n⌁ : ايديك ↫ ❨ '..msg.sender.user_id..' ❩',"md",true)  end
-if text == 'معرفي' then
-local UserInfo = LuaTele.getUser(msg.sender.user_id)
-if UserInfo.username then
-UserInfousername = '@'..UserInfo.username..''
-else
-UserInfousername = 'لا يوجد'
-end
-return LuaTele.sendText(msg_chat_id,msg_id,'\n⌁ : معرفك ↫ ❨ '..UserInfousername..' ❩',"md",true)  end
 if text == "تحويل" and msg.reply_to_message_id ~= 0 then
 local Message_Reply = LuaTele.getMessage(msg.chat_id, msg.reply_to_message_id)
 if Message_Reply.content.photo then
@@ -2295,34 +2288,6 @@ return LuaTele.sendText(msg_chat_id,msg_id,
 '' ,"md",true) 
 end
 
-if text == 'نبذتي' or text == 'بايو' then
-if not msg.Managers then return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰هذه الميزة للادمنية واعلى فقط',"md",true)  end
-local InfoUser = LuaTele.getUserFullInfo(msg.sender.user_id)
-if InfoUser.bio then
-Bio = InfoUser.bio
-else
-Bio = 'لا يوجد'
-end
-return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰نبذتك ↫ ❨ '..Bio..' ❩',"md",true)  end
-if text == 'اسمي' then
-if not msg.Managers then return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰هذه الميزة للادمنية واعلى فقط',"md",true)  end
-local UserInfo = LuaTele.getUser(msg.sender.user_id) 
-if UserInfo.first_name then
-Name = UserInfo.first_name
-else
-Name = ''
-end
-return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰اسمك ↫ ❨ '..Name..' ❩ ',"md",true)  end
-if text == 'رتبتي' then return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰رتبتك ↫ ❨ '..msg.Name_Controller..' ❩',"md",true)  end
-if text == 'ايديي' then return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰ايديك ↫ ❨ '..msg.sender.user_id..' ❩',"md",true)  end
-if text == 'معرفي' then
-local UserInfo = LuaTele.getUser(msg.sender.user_id)
-if UserInfo.username then
-UserInfousername = '@'..UserInfo.username..''
-else
-UserInfousername = 'لا يوجد'
-end
-return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰معرفك ↫ ❨ '..UserInfousername..' ❩',"md",true)  end
 if text == 'معلوماتي' or text == 'موقعي' then
 local UserInfo = LuaTele.getUser(msg.sender.user_id)
 local StatusMember = LuaTele.getChatMember(msg_chat_id,msg.sender.user_id).status.luatele
@@ -3188,6 +3153,9 @@ else local rd_zwag = {"تم زواجك منه وبارك الله لكم وعل�
     return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender.user_id,rd_zwag[math.random(#rd_zwag)]).Reply,"md",true)  
     end
 end
+
+
+
 if text == "تاك للزوجات" or text == "الزوجات" then
   local zwgat_list = Redis:smembers(FDFGERB..msg_chat_id.."zwgat:")
   if #zwgat_list == 0 then return LuaTele.sendText(msg_chat_id,msg_id,'⋆ لايوجد زوجات',"md",true) 
@@ -3633,6 +3601,12 @@ local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً �
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
 return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 if TextMsg == 'اوامر التسليه' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:distraction10"..msg_chat_id,true) 
 Redis:set(FDFGERB.."FDFGERB:Status:distraction9"..msg_chat_id,true) 
 Redis:set(FDFGERB.."FDFGERB:Status:distraction8"..msg_chat_id,true) 
@@ -3645,42 +3619,120 @@ Redis:set(FDFGERB.."FDFGERB:Status:distraction2"..msg_chat_id,true)
 Redis:set(FDFGERB.."FDFGERB:Status:distraction1"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل اوامر التسليه *").unLock,"md",true) end
 if TextMsg == 'غنيلي' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:distraction1"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل امر غنيلي *").unLock,"md",true) end
 if TextMsg == 'متحركه' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:distraction2"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل امر متحركه *").unLock,"md",true) end
 if TextMsg == 'شعر' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:distraction3"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل امر شعر *").unLock,"md",true) end
 if TextMsg == 'فلم' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:distraction4"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل امر شعر *").unLock,"md",true) end
 if TextMsg == 'صوره' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:distraction5"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل امر صوره *").unLock,"md",true) end
 if TextMsg == 'اغنيه' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:distraction6"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل امر اغنيه *").unLock,"md",true) end
 if TextMsg == 'انمي' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:distraction7"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل امر انمي *").unLock,"md",true) end
 if TextMsg == 'ريمكس' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:distraction8"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل امر ريمكس *").unLock,"md",true) end
 if TextMsg == 'ميمز' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:distraction9"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل امر ميمز *").unLock,"md",true) end
 if TextMsg == 'مسلسل' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:distraction10"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل امر مسلسل *").unLock,"md",true) end
 if TextMsg == 'الرابط' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:Link"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل الرابط *").unLock,"md",true) end
 if TextMsg == 'الترحيب' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:Welcome"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل الترحيب* ").unLock,"md",true) end
 if TextMsg == 'البايو' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:Bio"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل البايو* ").unLock,"md",true) end
 if TextMsg == 'الايدي' then
@@ -3744,28 +3796,76 @@ return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, fal
 Redis:set(FDFGERB.."FDFGERB:Status:SetId"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل الرفع *").unLock,"md",true) end
 if TextMsg == 'الالعاب' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:Games"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل الالعاب *").unLock,"md",true) end
 if TextMsg == 'اطردني' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:KickMe"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل اطردني *").unLock,"md",true) end
 if TextMsg == 'صورتي' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:photo"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل امر صورتي *").unLock,"md",true) end
 if TextMsg == 'انا' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:Ana"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل امر انا *").unLock,"md",true) end
 if TextMsg == 'كول' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:kool"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل امر كول *").unLock,"md",true) end
 if TextMsg == 'جمالي' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:gamle"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل جمالي *").unLock,"md",true) end
 if TextMsg == 'ردود السورس' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:rb:bna"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,"⌔︰ تم تفعيل ردود السورس ","md",true)
 end
 if TextMsg == 'نزلني' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 Redis:set(FDFGERB.."FDFGERB:Status:remMe"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"*⌔︰تم تفعيل نزلني *").unLock,"md",true) end
 if TextMsg == 'البوت الخدمي' then
@@ -4089,6 +4189,7 @@ if text == "تفعيل المسح التلقائي" and msg.Cleaner or text == "
 Redis:set(FDFGERB.."FDFGERB:Status:Del:Media"..msg.chat_id,true)
 LuaTele.sendText(msg_chat_id,msg_id,'⌔︰تم تفعيل المسح التلقائي للميديا')
 return false end 
+
 if text == 'تعطيل التحقق' then
 if not msg.Addictive then
 return LuaTele.sendText(msg_chat_id,msg_id,'\n• الامر يخص : ( '..Controller_Num(7)..' ) ',"md",true)  
@@ -5051,48 +5152,47 @@ Redis:sadd(FDFGERB.."FDFGERB:Addictive:Group"..msg_chat_id,v.member_id.user_id)
 y = y + 1 end end
 end
 LuaTele.sendText(msg_chat_id,msg_id,'\n*⌔︰تم ترقيه ‹ '..y..' › من الادمنيه *',"md",true)  end
-if text == 'المالك' or text == 'المنشئ' then
-if msg.can_be_deleted_for_all_users == false then
-return LuaTele.sendText(msg_chat_id,msg_id,"\n*•︙︙عذرآ البوت ليس ادمن في المجموعه يرجى ترقيته وتفعيل الصلاحيات له *","md",true)  
-end
-if ChannelJoin(msg) == false then
-local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = ''..Redis:get(itsRaumo..'Raumo:Channel:Join:Name')..'', url = 't.me/'..Redis:get(itsRaumo..'Raumo:Channel:Join')}, },}}
-return LuaTele.sendText(msg.chat_id,msg.id,'*\n•︙عليك الاشتراك في قناة البوت لاستخذام الاوامر*',"md",false, false, false, false, reply_markup)
-end
-local Info_Members = LuaTele.getSupergroupMembers(msg_chat_id, "Administrators", "*", 0, 200)
-local List_Members = Info_Members.members
-for k, v in pairs(List_Members) do
-if Info_Members.members[k].status.luatele == "chatMemberStatusCreator" then
-local UserInfo = LuaTele.getUser(v.member_id.user_id)
-if UserInfo.first_name == "" then
-LuaTele.sendText(msg_chat_id,msg_id,"*•︙︙اوبس , المالك حسابه محذوف *","md",true)  
-return false
-end 
-local photo = LuaTele.getUserProfilePhotos(UserInfo.id)
-local InfoUser = LuaTele.getUserFullInfo(UserInfo.id)
-if InfoUser.bio then
-Bio = InfoUser.bio
-else
-Bio = ''
-end
-if photo.total_count > 0 then
-local TestText = "  ❲ Owner Groups ❳\n— — — — — — — — —\n •︙*Owner Name* :  ["..UserInfo.first_name.."](tg://user?id="..UserInfo.id..")\n•︙*Owner Bio* : [❲ "..Bio.." ❳]"
-keyboardd = {} 
-keyboardd.inline_keyboard = {
-{
-{text = "❲"..UserInfo.first_name.."❳", url = "https://t.me/"..UserInfo.username..""}
-},
-}
-local msg_id = msg.id/2097152/0.5 
-return https.request("https://api.telegram.org/bot"..Token..'/sendPhoto?chat_id='..msg.chat_id..'&caption='..URL.escape(TestText)..'&photo='..photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id..'&reply_to_message_id='..msg_id..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboardd))
-else
-
-local TestText = "- معلومات المالك : \n\n- ["..UserInfo.first_name.."](tg://user?id="..UserInfo.id..")\n \n ["..Bio.."]"
-local msg_id = msg.id/2097152/0.5 
-return https.request("https://api.telegram.org/bot"..Token..'/sendMessage?chat_id=' .. msg.chat_id .. '&text=' .. URL.escape(TestText).."&reply_to_message_id="..msg_id.."&parse_mode=markdown")
-end
-end
-end
+if text == 'المالك' or text == 'المنشئ' then
+if msg.can_be_deleted_for_all_users == false then
+return LuaTele.sendText(msg_chat_id,msg_id,"\n*•︙︙عذرآ البوت ليس ادمن في المجموعه يرجى ترقيته وتفعيل الصلاحيات له *","md",true)  
+end
+if ChannelJoin(msg) == false then
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = ''..Redis:get(FDFGERB..'FDFGERB:Channel:Join:Name')..'', url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')}, },}}
+return LuaTele.sendText(msg.chat_id,msg.id,'*\n•︙عليك الاشتراك في قناة البوت لاستخذام الاوامر*',"md",false, false, false, false, reply_markup)
+end
+local Info_Members = LuaTele.getSupergroupMembers(msg_chat_id, "Administrators", "*", 0, 200)
+local List_Members = Info_Members.members
+for k, v in pairs(List_Members) do
+if Info_Members.members[k].status.luatele == "chatMemberStatusCreator" then
+local UserInfo = LuaTele.getUser(v.member_id.user_id)
+if UserInfo.first_name == "" then
+LuaTele.sendText(msg_chat_id,msg_id,"*•︙︙اوبس , المالك حسابه محذوف *","md",true)  
+return false
+end 
+local photo = LuaTele.getUserProfilePhotos(UserInfo.id)
+local InfoUser = LuaTele.getUserFullInfo(UserInfo.id)
+if InfoUser.bio then
+Bio = InfoUser.bio
+else
+Bio = ''
+end
+if photo.total_count > 0 then
+local TestText = "  ❲ Owner Groups ❳\n— — — — — — — — —\n •︙*Owner Name* :  ["..UserInfo.first_name.."](tg://user?id="..UserInfo.id..")\n•︙*Owner Bio* : [❲ "..Bio.." ❳]"
+keyboardd = {} 
+keyboardd.inline_keyboard = {
+{
+{text = "❲"..UserInfo.first_name.."❳", url = "https://t.me/"..UserInfo.username..""}
+},
+}
+local msg_id = msg.id/2097152/0.5 
+return https.request("https://api.telegram.org/bot"..Token..'/sendPhoto?chat_id='..msg.chat_id..'&caption='..URL.escape(TestText)..'&photo='..photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id..'&reply_to_message_id='..msg_id..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboardd))
+else
+local TestText = "- معلومات المالك : \n\n- ["..UserInfo.first_name.."](tg://user?id="..UserInfo.id..")\n \n ["..Bio.."]"
+local msg_id = msg.id/2097152/0.5 
+return https.request("https://api.telegram.org/bot"..Token..'/sendMessage?chat_id=' .. msg.chat_id .. '&text=' .. URL.escape(TestText).."&reply_to_message_id="..msg_id.."&parse_mode=markdown")
+end
+end
+end
 end
 if text == 'كشف البوتات' then
 if not msg.Managers then return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰هذا الامر للمدراء واعلى فقط',"md",true)  end
@@ -5294,6 +5394,17 @@ return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, fal
 Redis:set(FDFGERB.."FDFGERB:Lock:edit"..msg_chat_id,true) 
 LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"⌔︰تم قفل تعديل").Lock,"md",true)  
 return false end 
+if text == "قفل التفليش" then 
+if not msg.Addictive then return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰هذا الامر للادمنية واعلى فقط',"md",true)  end
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end 
+Redis:set(FDFGERB.."FDFGERB:Lock:edit"..msg_chat_id,true) 
+LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"⌔︰تم قفل التفليش").Lock,"md",true)  
+return false end 
 if text == "قفل تعديل الميديا" then 
 if not msg.Addictive then return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰هذا الامر للادمنية واعلى فقط',"md",true)  end
 if ChannelJoin(msg) == false then
@@ -5323,10 +5434,446 @@ return false end
 
 
 --------------------------------------------------------------------------------------------------------------
+if text == "هينه" or text == "هينهه" or text == "رزله" and msg.reply_to_message_id ~= 0 then
+  local Message_Reply = LuaTele.getMessage(msg.chat_id, msg.reply_to_message_id)
+  local UserInfo = LuaTele.getUser(Message_Reply.sender.user_id)
+  if tonumber(Message_Reply.sender.user_id) == tonumber(msg.sender.user_id) then
+    return LuaTele.sendText(msg_chat_id,msg_id,"شو تمضرط اكو واحد يهين نفسه؟🤔👌🏿 ؟!!","md",true)  
+  end
+  if tonumber(Message_Reply.sender.user_id) == tonumber(1342680269) then
+    return LuaTele.sendText(msg_chat_id,msg_id,"انجب الك حمار هذا مبرمج سورس ميلان 💛✌️","md",true)  
+  end
+  if tonumber(Message_Reply.sender.user_id) == tonumber(msg.Creator) then
+    return LuaTele.sendText(msg_chat_id,msg_id,"شو تمضرط اكو واحد يهين المالك 🤔🏃‍♂️","md",true)  
+  end
+  if tonumber(Message_Reply.sender.user_id) == tonumber(Sudo_Id) then
+    return LuaTele.sendText(msg_chat_id,msg_id,"‍لكك جرجف تريد اهين المطور لا اكتلكك وازربب على كبركك،💩🖐","md",true)  
+  end
+  if Redis:sismember(FDFGERB..msg_chat_id.."zwgat:",Message_Reply.sender.user_id) then
+local rd_mtzwga ={"لكك جرجف  احترم اسيادكك لا اكتلكك وازربب على كبركك،💩🖐🏿","هشش لكك فاشل  لتضل تمسلت لا اخربط تضاريس وجهك جنه ابط عبده، 😖👌🏿","حبيبي  راح احاول احترمكك هالمره بلكي تبطل حيونه، 🤔🔪","دمشي لك  ينبوع الفشل مو زين ملفيك ونحجي وياك هي منبوذ 😏🖕🏿","ها الغليض التفس ابو راس المربع  متعلملك جم حجايه وجاي تطكطكهن علينه دبطل😒🔪",}
+
+return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender.user_id,rd_mtzwga[math.random(#rd_mtzwga)]).Reply,"md",true)  
+else local rd_zwag = {"لكك جرجف  احترم اسيادكك لا اكتلكك وازربب على كبركك،💩🖐🏿","هشش لكك فاشل  لتضل تمسلت لا اخربط تضاريس وجهك جنه ابط عبده، 😖👌🏿","حبيبي  راح احاول احترمكك هالمره بلكي تبطل حيونه، 🤔🔪","دمشي لك  ينبوع الفشل مو زين ملفيك ونحجي وياك هي منبوذ 😏🖕🏿","ها الغليض التفس ابو راس المربع  متعلملك جم حجايه وجاي تطكطكهن علينه دبطل😒🔪",}
+    if Redis:sismember(FDFGERB..msg_chat_id.."mutlqat:",Message_Reply.sender.user_id) then 
+    Redis:srem(FDFGERB..msg_chat_id.."mutlqat:",Message_Reply.sender.user_id)
+    end
+    Redis:sadd(FDFGERB..msg_chat_id.."zwgat:",Message_Reply.sender.user_id) 
+    return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender.user_id,rd_zwag[math.random(#rd_zwag)]).Reply,"md",true)  
+    end
+end
+
+if text == "بوسه" or text == "بوسهن" or text == "مصه" and msg.reply_to_message_id ~= 0 then
+  local Message_Reply = LuaTele.getMessage(msg.chat_id, msg.reply_to_message_id)
+  local UserInfo = LuaTele.getUser(Message_Reply.sender.user_id)
+  if tonumber(Message_Reply.sender.user_id) == tonumber(msg.sender.user_id) then
+    return LuaTele.sendText(msg_chat_id,msg_id,"شو تمضرط اكو واحد يبوس نفسه؟🤔👌🏿 ؟!!","md",true)  
+  end
+  if tonumber(Message_Reply.sender.user_id) == tonumber(Sudo_Id) then
+    return LuaTele.sendText(msg_chat_id,msg_id,"امواححح احلاا بوسةة المطوريي😻🔥💗","md",true)  
+  end
+  if tonumber(Message_Reply.sender.user_id) == tonumber(msg.Creator) then
+    return LuaTele.sendText(msg_chat_id,msg_id,"مواححح احلاا بوسةة للمالك😻🔥💗","md",true)  
+  end
+  if Redis:sismember(FDFGERB..msg_chat_id.."zwgat:",Message_Reply.sender.user_id) then
+local rd_mtzwga ={"مواححح افيش عافيههه😍🔥💗","امممووااهحح شهلعسل🥺🍯💘","مواححح،ءوفف اذوب🤤💗"} 
+
+return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender.user_id,rd_mtzwga[math.random(#rd_mtzwga)]).Reply,"md",true)  
+else local rd_zwag = {"مواححح افيش عافيههه😍🔥💗","امممووااهحح شهلعسل🥺🍯💘","مواححح،ءوفف اذوب🤤💗"}  
+    if Redis:sismember(FDFGERB..msg_chat_id.."mutlqat:",Message_Reply.sender.user_id) then 
+    Redis:srem(FDFGERB..msg_chat_id.."mutlqat:",Message_Reply.sender.user_id)
+    end
+    Redis:sadd(FDFGERB..msg_chat_id.."zwgat:",Message_Reply.sender.user_id) 
+    return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender.user_id,rd_zwag[math.random(#rd_zwag)]).Reply,"md",true)  
+    end
+end
 
 --------------------------------------------------------------------------------------------------------------
+if text == "تعطيل الزخرفه" then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
+if not msg.Addictive then
+return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︙هذا الامر للادمنية واعلى فقط',"md",true)  
+end
+if Redis:get(FDFGERB.."FDFGERB:myzhrfa"..msg.chat_id)  then
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تعطيل امر الزخرفه مسبقا\n ✓',"md")
+else
+Redis:set(FDFGERB.."FDFGERB:myzhrfa"..msg.chat_id,"true")
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تعطيل الزخرفه \n ✓',"md")
+end
+end
+if text == "تفعيل الزخرفه" then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
+if not msg.Addictive then
+return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︙هذا الامر للادمنية واعلى فقط',"md",true)  
+end
+if not Redis:get(FDFGERB.."FDFGERB:myzhrfa"..msg.chat_id)  then
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تفعيل امر الزخرفه مسبقا\n ✓',"md")
+else
+Redis:del(FDFGERB.."FDFGERB:myzhrfa"..msg.chat_id)
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تفعيل امر الزخرفه\n ✓',"md")
+end
+end
+if text and text:match("^زخرفه (.*)$") and not Redis:get(FDFGERB.."FDFGERB:myzhrfa"..msg.chat_id) then
+local TextZhrfa = text:match("^زخرفه (.*)$")
+zh = io.popen('curl -s "https://apiabs.ml/zrf.php?abs='..URL.escape(TextZhrfa)..'"'):read('*a')
+zx = JSON.decode(zh) 
+t = "\n⌔︙قائمه الزخرفه \nٴ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n"
+i = 0
+for k,v in pairs(zx.ok) do
+i = i + 1
+t = t..i.."-  "..v.." \n"
+end
+return LuaTele.sendText(msg_chat_id,msg_id, t..'*ٴ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ٴ*\n⌔︙→  [‹𝖲𝗈𝗎𝗋𝖼𝖾 𝗄𝖺𝖽𝗂›](t.me/G0BBBI) ',"md",true)
+end
+
+if text == "تعطيل الابراج" then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
+if not msg.Addictive then
+return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︙هذا الامر للادمنية واعلى فقط',"md",true)  
+end
+if Redis:get(FDFGERB.."brjj"..msg.chat_id)  then
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تعطيل امر الابراج مسبقا\n ✓',"md")
+else
+Redis:set(FDFGERB.."brjj"..msg.chat_id,"true")
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تعطيل الابراج \n ✓',"md")
+end
+end
+if text == "تفعيل الابراج" then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
+if not msg.Addictive then
+return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︙هذا الامر للادمنية واعلى فقط',"md",true)  
+end
+if not Redis:get(FDFGERB.."brjj"..msg.chat_id)  then
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تفعيل امر الابراج مسبقا\n ✓',"md")
+else
+Redis:del(FDFGERB.."brjj"..msg.chat_id)
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تفعيل امر الابراج\n ✓',"md")
+end
+end
+if text and text:match("^برج (.*)$") and not Redis:get(FDFGERB.."brjj"..msg.chat_id) then
+local Textbrj = text:match("^برج (.*)$")
+gk = io.popen('curl -s "https://apiabs.ml/brg.php?brg='..URL.escape(Textbrj)..'"'):read('*a')
+br = JSON.decode(gk)
+LuaTele.sendText(msg_chat_id,msg_id, br.ok.abs)
+end 
+if text and (text == "تعطيل اوامر النسب" or text == "تعطيل نسبه الحب" or text == "تعطيل نسبه الكره" or text == "تعطيل نسبه الرجوله" or text == "تعطيل نسبه الانوثه" or text == "تعطيل نسبه الغباء") then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
+if not msg.Addictive then
+return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︙هذا الامر للادمنية واعلى فقط',"md",true)  
+end
+if Redis:get(FDFGERB.."FDFGERB:amrthshesh"..msg.chat_id)  then
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تعطيل اوامر النسب مسبقاً\n ✓',"md")
+else
+Redis:set(FDFGERB.."FDFGERB:amrthshesh"..msg.chat_id,"true")
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تعطيل اوامر النسب \n ✓',"md")
+end
+end
+if text and (text == "تفعيل اوامر النسب" or text == "تفعيل نسبه الحب" or text == "تفعيل نسبه الكره" or text == "تفعيل نسبه الرجوله" or text == "تفعيل نسبه الانوثه" or text == "تفعيل نسبه الغباء") then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
+if not msg.Addictive then
+return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︙هذا الامر للادمنية واعلى فقط',"md",true)  
+end
+if not Redis:get(FDFGERB.."FDFGERB:amrthshesh"..msg.chat_id)  then
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تفعيل اوامر النسب مسبقاً\n ✓',"md")
+else
+Redis:del(FDFGERB.."FDFGERB:amrthshesh"..msg.chat_id)
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تفعيل اوامر النسب\n ✓',"md")
+end
+end
+if text == "نسبه الحب" or text == "نسبه حب" and msg.reply_to_message_id ~= 0 then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
+if not Redis:get(FDFGERB.."FDFGERB:amrthshesh"..msg.chat_id) then    
+Redis:set(FDFGERB..":"..msg.sender.user_id..":lov_Bots"..msg.chat_id,"sendlove")
+hggg = '⌔︙الان ارسل اسمك واسم الشخص الثاني : مثال ← معتز و روز :'
+LuaTele.sendText(msg_chat_id,msg_id,hggg) 
+return false
+end
+end
+if Redis:get(FDFGERB..":"..msg.sender.user_id..":lov_Bots"..msg.chat_id) == "sendlove" then
+num = {"10","20","30","35","75","34","66","82","23","19","55","80","63","32","27","89","99","98","79","100","8","3","6","0",};
+sendnum = num[math.random(#num)]
+local tttttt = '⌔︙اليك النتائج الخـاصة :\n\n⌔︙نسبة الحب بيـن : ‹'..text..'› '..sendnum..'%'
+LuaTele.sendText(msg_chat_id,msg_id,tttttt) 
+Redis:del(FDFGERB..":"..msg.sender.user_id..":lov_Bots"..msg.chat_id)
+end
+
+if text == "نسبه الغباء" or text == "نسبه الغباء" and msg.reply_to_message_id ~= 0 then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
+if not Redis:get(FDFGERB.."FDFGERB:amrthshesh"..msg.chat_id) then    
+Redis:set(FDFGERB..":"..msg.sender.user_id..":lov_Bottts"..msg.chat_id,"sendlove")
+hggg = '⌔︙الان ارسل اسم الشخص :'
+LuaTele.sendText(msg_chat_id,msg_id,hggg) 
+return false
+end
+end
+if Redis:get(FDFGERB..":"..msg.sender.user_id..":lov_Bottts"..msg.chat_id) == "sendlove" then
+num = {"10","20","30","35","75","34","66","82","23","19","55","80","63","32","27","89","99","98","79","100","8","3","6","0",};
+sendnum = num[math.random(#num)]
+local tttttt = '⌔︙اليك النتائج الخـاصة :\n\n⌔︙نسبة الغباء  : ‹'..text..'› '..sendnum..'%'
+LuaTele.sendText(msg_chat_id,msg_id,tttttt) 
+Redis:del(FDFGERB..":"..msg.sender.user_id..":lov_Bottts"..msg.chat_id)
+end
+
+if text == "نسبه الذكاء" or text == "نسبه الذكاء" and msg.reply_to_message_id ~= 0 then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
+if not Redis:get(FDFGERB.."FDFGERB:amrthshesh"..msg.chat_id) then    
+Redis:set(FDFGERB..":"..msg.sender.user_id..":lov_Botttuus"..msg.chat_id,"sendlove")
+hggg = '⌔︙الان ارسل اسم الشخص :'
+LuaTele.sendText(msg_chat_id,msg_id,hggg) 
+return false
+end
+end
+if Redis:get(FDFGERB..":"..msg.sender.user_id..":lov_Botttuus"..msg.chat_id) == "sendlove" then
+num = {"10","20","30","35","75","34","66","82","23","19","55","80","63","32","27","89","99","98","79","100","8","3","6","0",};
+sendnum = num[math.random(#num)]
+local tttttt = '⌔︙اليك النتائج الخـاصة :\n\n⌔︙نسبة الذكاء  : ‹'..text..'› '..sendnum..'%'
+LuaTele.sendText(msg_chat_id,msg_id,tttttt) 
+Redis:del(FDFGERB..":"..msg.sender.user_id..":lov_Botttuus"..msg.chat_id)
+end
+
+if text == "نسبه الكره" or text == "نسبه كره" and msg.reply_to_message_id ~= 0 then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
+if not Redis:get(FDFGERB.."FDFGERB:amrthshesh"..msg.chat_id) then    
+Redis:set(FDFGERB..":"..msg.sender.user_id..":krh_Bots"..msg.chat_id,"sendkrhe")
+hggg = '⌔︙الان ارسل اسمك واسم الشخص الثاني : مثال ← معتز و روز :'
+LuaTele.sendText(msg_chat_id,msg_id,hggg) 
+return false
+end
+end
+if text and Redis:get(FDFGERB..":"..msg.sender.user_id..":krh_Bots"..msg.chat_id) == "sendkrhe" then
+num = {"10","20","30","35","75","34","66","82","23","19","55","80","63","32","27","89","99","98","79","100","8","3","6","0",};
+sendnum = num[math.random(#num)]
+local tttttt = '⌯ اليك النتائج الخـاصة :\n\n⌯ نسبه الكرة : ‹'..text..'› '..sendnum..'%'
+LuaTele.sendText(msg_chat_id,msg_id,tttttt) 
+Redis:del(FDFGERB..":"..msg.sender.user_id..":krh_Bots"..msg.chat_id)
+end
+
+if text == "نسبه الرجوله" or text == "نسبه الرجوله" and msg.reply_to_message_id ~= 0 then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
+if not Redis:get(FDFGERB.."FDFGERB:amrthshesh"..msg.chat_id) then    
+Redis:set(FDFGERB..":"..msg.sender.user_id..":rjo_Bots"..msg.chat_id,"sendrjoe")
+hggg = '⌔︙الان ارسل اسم الشخص :'
+LuaTele.sendText(msg_chat_id,msg_id,hggg) 
+return false
+end
+end
+if text and text ~="نسبه الرجوله" and Redis:get(FDFGERB..":"..msg.sender.user_id..":rjo_Bots"..msg.chat_id) == "sendrjoe" then
+numj = {"10","20","30","35","75","34","66","82","23","19","55","80","63","32","27","89","99","98","79","100","8","3","6","0",};
+sendnuj = numj[math.random(#numj)]
+local tttttt = '⌔︙اليك النتائج الخـاصة :\n\n⌔︙ نسبة الرجوله لـ : ‹'..text..'› '..sendnuj..'%'
+LuaTele.sendText(msg_chat_id,msg_id,tttttt) 
+Redis:del(FDFGERB..":"..msg.sender.user_id..":rjo_Bots"..msg.chat_id)
+end
+
+if text == "نسبه الانوثه" or text == "نسبه انوثه" and msg.reply_to_message_id ~= 0 then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
+if not Redis:get(FDFGERB.."FDFGERB:amrthshesh"..msg.chat_id) then    
+Redis:set(FDFGERB..":"..msg.sender.user_id..":ano_Bots"..msg.chat_id,"sendanoe")
+hggg = '⌔︙الان ارسل اسم الشخص :'
+LuaTele.sendText(msg_chat_id,msg_id,hggg) 
+return false
+end
+end
+if text and text ~="نسبه الانوثه" and Redis:get(FDFGERB..":"..msg.sender.user_id..":ano_Bots"..msg.chat_id) == "sendanoe" then
+numj = {"10","20","30","35","75","34","66","82","23","19","55","80","63","32","27","89","99","98","79","100","8","3","6","0",};
+sendnuj = numj[math.random(#numj)]
+local tttttt = '⌔︙اليك النتائج الخـاصة :\n\n⌔︙ نسبه الانوثة لـ : ‹'..text..'› '..sendnuj..'%'
+LuaTele.sendText(msg_chat_id,msg_id,tttttt) 
+Redis:del(FDFGERB..":"..msg.sender.user_id..":ano_Bots"..msg.chat_id)
+end
+if text == "تعطيل معاني الاسماء" then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
+if not msg.Addictive then
+return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︙هذا الامر للادمنية واعلى فقط',"md",true)  
+end
+if Redis:get(FDFGERB.."FDFGERB:name:k"..msg.chat_id)  then
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تعطيل معاني الاسماء مسبقا\n ✓',"md")
+else
+Redis:set(FDFGERB.."FDFGERB:name:k"..msg.chat_id,"true")
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تعطيل معاني الاسماء \n ✓',"md")
+end
+end
+if text == "تفعيل معاني الاسماء" then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
+if not msg.Addictive then
+return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︙هذا الامر للادمنية واعلى فقط',"md",true)  
+end
+if not Redis:get(FDFGERB.."FDFGERB:name:k"..msg.chat_id)  then
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تفعيل معاني الاسماء مسبقا\n ✓',"md")
+else
+Redis:del(FDFGERB.."FDFGERB:name:k"..msg.chat_id)
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تفعيل امر معاني الاسماء\n ✓',"md")
+end
+end
+if text and text:match("^معنى اسم (.*)$") and not Redis:get(FDFGERB.."FDFGERB:name:k"..msg.chat_id) then 
+local TextMean = text:match("^معنى اسم (.*)$")
+UrlMean = io.popen('curl -s "https://apiabs.ml/Mean.php?Abs='..URL.escape(TextMean)..'"'):read('*a')
+Mean = JSON.decode(UrlMean) 
+LuaTele.sendText(msg_chat_id,msg_id, Mean.ok.abs)
+end  
+if text == "تعطيل حساب العمر" then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
+if not msg.Addictive then
+return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︙هذا الامر للادمنية واعلى فقط',"md",true)  
+end
+if Redis:get(FDFGERB.."FDFGERB:calculate"..msg.chat_id)  then
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تعطيل امر حساب العمر مسبقا\n ✓',"md")
+else
+Redis:set(FDFGERB.."FDFGERB:calculate"..msg.chat_id,"true")
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تعطيل حساب العمر \n ✓',"md")
+end
+end
+if text == "تفعيل حساب العمر" then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
+if not msg.Addictive then
+return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︙هذا الامر للادمنية واعلى فقط',"md",true)  
+end
+if not Redis:get(FDFGERB.."FDFGERB:calculate"..msg.chat_id)  then
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تفعيل امر حساب العمر مسبقا\n ✓',"md")
+else
+Redis:del(FDFGERB.."FDFGERB:calculate"..msg.chat_id)
+LuaTele.sendText(msg_chat_id,msg_id, '⌔︙تم تفعيل امر حساب العمر\n ✓',"md")
+end
+end
+if text and text:match("^احسب (.*)$") and not Redis:get(FDFGERB.."FDFGERB:calculate"..msg.chat_id) then
+local Textage = text:match("^احسب (.*)$")
+ge = io.popen('curl -s "https://apiabs.ml/age.php?age='..URL.escape(Textage)..'"'):read('*a')
+ag = JSON.decode(ge)
+LuaTele.sendText(msg_chat_id,msg_id, ag.ok.abs)
+end  
+--------------------------------------------------------------------------------------------------------------
+if text == "انجب" or text == "نجب" or text == "انجبي" or text == "نجبي" or text == "انجبو" or text == "نجبو" then
+if msg.sender.user_id == tonumber(1342680269) then
+LuaTele.sendText(msg_chat_id,msg_id,"مبرمج السورس اغلط شكد متريد نورتنه ، ♥️💪","md",true)
+elseif msg.sender.user_id == tonumber(Sudo_Id) then
+LuaTele.sendText(msg_chat_id,msg_id,"مطوريي اغلط شكد متريد نورتنه ، ♥️💪","md",true)
+elseif msg.DevelopersQ then
+LuaTele.sendText(msg_chat_id,msg_id,"احترم نفسكك لا عبالكك رافعيك مطور ، 🖕🏿♥","md",true)
+elseif msg.Developers then
+LuaTele.sendText(msg_chat_id,msg_id,"احترم نفسكك لا عبالكك رافعيك مطور ، 🖕🏿♥","md",true)
+elseif msg.Creator then
+LuaTele.sendText(msg_chat_id,msg_id,"تاج راسيي غير انت منشئ المجموعه ،🖐🏿♥","md",true)
+elseif msg.TheBasics then
+LuaTele.sendText(msg_chat_id,msg_id,"تاج راسيي انت المنشئ الاساسي ،🖐🏿♥️","md",true)
+elseif msg.Originators then
+LuaTele.sendText(msg_chat_id,msg_id,"حبيبي المنشئ استقبلها منكك ،👍🏿♥","md",true)
+elseif msg.Managers then
+LuaTele.sendText(msg_chat_id,msg_id,"حبيبي راح اسامحكك لان مدير وع راسي ، 🖐🏿♥","md",true)
+elseif msg.Addictive then
+LuaTele.sendText(msg_chat_id,msg_id,"راح اسامحكك هلمره لانك ادمن ، ☝🏿♥","md",true)
+elseif msg.Distinguished then
+LuaTele.sendText(msg_chat_id,msg_id,"راح احترمكك تره بس هلمره لانك مميز عندي ، ☝🏿♥","md",true)
+else 
+LuaTele.sendText(msg_chat_id,msg_id,"لكك هوه انت عضو وجاي تغلط ؟، 🖕🏿♥","md",true)
+end 
+end
+if text == "تعال خاص" or text == "خاصك" or text == "تعالي خاص" or text == "خاصج" or text == "خ" or text == "تعي خاص" then
+if msg.sender.user_id == tonumber(1342680269) then
+LuaTele.sendText(msg_chat_id,msg_id,"مبرمج السورس ياخذ بالحلوات خاص  ♥️💪","md",true)
+elseif msg.sender.user_id == tonumber(Sudo_Id) then
+LuaTele.sendText(msg_chat_id,msg_id,"مطوريي اجي وياكم ♥️💪","md",true)
+elseif msg.DevelopersQ then
+LuaTele.sendText(msg_chat_id,msg_id,"زاحف رافعيك مطور وتاخذهم خاص 🖕🏿♥","md",true)
+elseif msg.Developers then
+LuaTele.sendText(msg_chat_id,msg_id,"زاحف رافعيك مطور وتاخذهم خاص 🖕🏿♥","md",true)
+elseif msg.Creator then
+LuaTele.sendText(msg_chat_id,msg_id,"اوف المنشئ اخذ الحاتات والحاتين خاص 🌚💕","md",true)
+elseif msg.TheBasics then
+LuaTele.sendText(msg_chat_id,msg_id,"ماجي خاص مو عبالك رافعيك منشئ اساسي️","md",true)
+elseif msg.Originators then
+LuaTele.sendText(msg_chat_id,msg_id,"حبيبي المنشئ نروح خاص ،👍🏿♥","md",true)
+elseif msg.Managers then
+LuaTele.sendText(msg_chat_id,msg_id,"وانته مال خاص مدير وجهك بالطول 💔😂","md",true)
+elseif msg.Addictive then
+LuaTele.sendText(msg_chat_id,msg_id,"هذا الادمن زاحف راح نزلك 😂❤️","md",true)
+elseif msg.Distinguished then
+LuaTele.sendText(msg_chat_id,msg_id,"مميز ومكاعد راحه المعفن ☝🏿♥","md",true)
+else 
+LuaTele.sendText(msg_chat_id,msg_id,"لكك هوه انت عضو وجاي دور خاص ؟، 🖕🏿♥","سهلهہ الغࢪڪ ب المايہ بيدڪ تطلعهہ بسہ الغࢪڪ ب الخاصہ ڪليہ شيطلعهہ 👊🏽😹🥳","اެخِذِهَ ۅخِݪصِنِيُ 🖤😭","md",true)
+end 
+end
+--------------------------------------------------------------------------------------------------------------
 if text == 'هاي' or text == 'هيي' then
-return LuaTele.sendText(msg_chat_id,msg_id,'*خالتڪك جࢪت وࢪانا 😹💕*',"md",true)  
+return LuaTele.sendText(msg_chat_id,msg_id,'*هايات حياتي 😹💕*',"md",true)  
 end
 if text == 'سلام عليكم' or text == 'السلام' then
 
@@ -5362,7 +5909,7 @@ end
 if text == 'شونك' or text == 'شلونك' then
 return LuaTele.sendText(msg_chat_id,msg_id,'*بخيࢪ حيليي وانتةة 😩💘*',"md",true)  
 end
-if text == 'انجب' or text == 'نجب' then
+if text == 'انجبا' or text == 'نجبا' then
 return LuaTele.sendText(msg_chat_id,msg_id,'*صاࢪ عمࢪيي 💘😩*',"md",true)  
 end
 if text == 'شبيك' or text == 'اشبيك' then
@@ -5394,9 +5941,6 @@ return LuaTele.sendText(msg_chat_id,msg_id,'*عساا دوم يࢪوحي 🤧*',
 end
 if text == 'تفف' or text == 'تف' then
 return LuaTele.sendText(msg_chat_id,msg_id,'*اوفف عسلل ☺️💘*',"md",true)  
-end
-if text == 'خاص' or text == 'خ' then
-return LuaTele.sendText(msg_chat_id,msg_id,'*هها شني اخذتها 👀💘*',"md",true)  
 end
 if text == 'صباح الخير' or text == 'مساء الخير' then
 return LuaTele.sendText(msg_chat_id,msg_id,'*وانت ڪل الخيࢪ حيلي ☺️💘*',"md",true)  
@@ -5604,6 +6148,17 @@ return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, fal
 Redis:del(FDFGERB.."FDFGERB:Lock:edit"..msg_chat_id) 
 LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"⌔︰تم فتح تعديل").unLock,"md",true)  
 return false end 
+if text == "فتح التفليش" then 
+if not msg.Addictive then return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰هذا الامر للادمنية واعلى فقط',"md",true)  end
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end 
+Redis:del(FDFGERB.."FDFGERB:Lock:edit"..msg_chat_id) 
+LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"⌔︰تم فتح تعديل").unLock,"md",true)  
+return false end 
 if text == "فتح تعديل الميديا" then 
 if not msg.Addictive then return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰هذا الامر للادمنية واعلى فقط',"md",true)  end
 if ChannelJoin(msg) == false then
@@ -5657,6 +6212,12 @@ end
 
 
 if text == "غنيلي" then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end 
 if not Redis:get(FDFGERB.."FDFGERB:Status:distraction1"..msg_chat_id) then return LuaTele.sendText(msg_chat_id,msg_id,"⌔︰عذراً امر غنيلي معطل","md",true) end 
 Abs = math.random(4,2824); 
 local Text ='⌔︰تم اختيار المقطع الصوتي لك'
@@ -5667,6 +6228,12 @@ keyboard.inline_keyboard = {{{text = '‹ مره اخرى ›', callback_data = 
 local msg_id = msg.id/2097152/0.5
 https.request("https://api.telegram.org/bot"..Token..'/sendVoice?chat_id=' .. msg.chat_id .. '&voice=https://t.me/AudiosDavid/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) end
 if text == "متحركه" then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end 
 if not Redis:get(FDFGERB.."FDFGERB:Status:distraction2"..msg_chat_id) then return LuaTele.sendText(msg_chat_id,msg_id,"⌔︰عذراً امر متحركه معطل","md",true) end 
 Abs = math.random(4,1075); 
 local Text ='⌔︰تم اختيار المتحركه لك'
@@ -5677,6 +6244,12 @@ keyboard.inline_keyboard = {{{text = '‹ مره اخرى ›', callback_data = 
 local msg_id = msg.id/2097152/0.5
 https.request("https://api.telegram.org/bot"..Token..'/sendanimation?chat_id=' .. msg.chat_id .. '&animation=https://t.me/GifDavid/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) end
 if text == "شعر" then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end 
 if not Redis:get(FDFGERB.."FDFGERB:Status:distraction3"..msg_chat_id) then return LuaTele.sendText(msg_chat_id,msg_id,"⌔︰عذراً امر شعر معطل","md",true) end 
 Abs = math.random(4,140); 
 local Text ='⌔︰تم اختيار الشعر لك'
@@ -5688,6 +6261,12 @@ local msg_id = msg.id/2097152/0.5
 https.request("https://api.telegram.org/bot"..Token..'/sendVoice?chat_id=' .. msg.chat_id .. '&voice=https://t.me/L1BBBL/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
 end
 if text == "ميمز" then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end 
 if not Redis:get(FDFGERB.."FDFGERB:Status:distraction9"..msg_chat_id) then return LuaTele.sendText(msg_chat_id,msg_id,"⌔︰عذراً امر ميمز معطل","md",true) end 
 Abs = math.random(4,1201); 
 local Text ='⌔︰تم اختيار الميمز لك'
@@ -5699,6 +6278,12 @@ local msg_id = msg.id/2097152/0.5
 https.request("https://api.telegram.org/bot"..Token..'/sendVoice?chat_id=' .. msg.chat_id .. '&voice=https://t.me/MemzDavid/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
 end
 if text == "ريمكس" or text == "ريماكس" then 
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end 
 if not Redis:get(FDFGERB.."FDFGERB:Status:distraction8"..msg_chat_id) then return LuaTele.sendText(msg_chat_id,msg_id,"⌔︰عذراً امر ريمكس معطل","md",true) end 
 Abs = math.random(4,612); 
 local Text ='⌔︰تم اختيار ريمكس لك'
@@ -5710,6 +6295,12 @@ local msg_id = msg.id/2097152/0.5
 https.request("https://api.telegram.org/bot"..Token..'/sendVoice?chat_id=' .. msg.chat_id .. '&voice=https://t.me/RemixDavid/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
 end
 if text == "فلم" or text == "فيلم" then 
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end 
 if not Redis:get(FDFGERB.."FDFGERB:Status:distraction4"..msg_chat_id) then return LuaTele.sendText(msg_chat_id,msg_id,"⌔︰عذراً امر فلم معطل","md",true) end 
 Abs = math.random(4,125); 
 local Text ='⌔︰تم اختيار الفلم لك'
@@ -5721,6 +6312,12 @@ local msg_id = msg.id/2097152/0.5
 https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. msg.chat_id .. '&photo=https://t.me/MoviesDavid/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
 end
 if text == "انمي" or text == "انميي" then 
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end 
 if not Redis:get(FDFGERB.."FDFGERB:Status:distraction7"..msg_chat_id) then return LuaTele.sendText(msg_chat_id,msg_id,"⌔︰عذراً امر انمي معطل","md",true) end 
 Abs = math.random(4,1002); 
 local Text ='⌔︰تم اختيار الانمي لك'
@@ -5732,6 +6329,12 @@ local msg_id = msg.id/2097152/0.5
 https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. msg.chat_id .. '&photo=https://t.me/AnimeDavid/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
 end
 if text == "اغنيه" or text == "اغنية" then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end 
 if not Redis:get(FDFGERB.."FDFGERB:Status:distraction6"..msg_chat_id) then return LuaTele.sendText(msg_chat_id,msg_id,"⌔︰عذراً امر اغنيه معطل","md",true) end 
 Abs = math.random(4,1167); 
 local Text ='⌔︰تم اختيار الاغنيه لك'
@@ -5743,6 +6346,12 @@ local msg_id = msg.id/2097152/0.5
 https.request("https://api.telegram.org/bot"..Token..'/sendAudio?chat_id=' .. msg.chat_id .. '&audio=https://t.me/DavidMp3/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
 end
 if text == "صوره" or text == "صورة" then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end 
 if not Redis:get(FDFGERB.."FDFGERB:Status:distraction5"..msg_chat_id) then return LuaTele.sendText(msg_chat_id,msg_id,"⌔︰عذراً امر صوره معطل","md",true) end 
 Abs = math.random(4,1171); 
 local Text ='⌔︰تم اختيار الصوره لك'
@@ -5754,6 +6363,12 @@ local msg_id = msg.id/2097152/0.5
 https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. msg.chat_id .. '&photo=https://t.me/PhotosDavid/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
 end
 if text == "مسلسل" then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end 
 if not Redis:get(FDFGERB.."FDFGERB:Status:distraction10"..msg_chat_id) then return LuaTele.sendText(msg_chat_id,msg_id,"⌔︰عذراً امر مسلسل معطل","md",true) end 
 Abs = math.random(4,54); 
 local Text ='⌔︰تم اختيار المسلسل لك'
@@ -5765,6 +6380,12 @@ local msg_id = msg.id/2097152/0.5
 https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. msg.chat_id .. '&photo=https://t.me/SeriesDavid/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
 end
 if text == 'تغيير الايدي' or text == 'تغير الايدي' then
+if ChannelJoin(msg) == false then
+local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
+local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
+local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
+return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end 
 if not msg.Originators then return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰هذا الامر للمنشئين واعلى فقط',"md",true)  end
 local List = {
 [[
@@ -8764,55 +9385,30 @@ if (StatusMember ~= "chatMemberStatusCreator") then return LuaTele.sendText(msg_
 else
 Redis:del(FDFGERB..'FDFGERB:Owner:OwnerFDFGERB'..msg_chat_id)
 return LuaTele.sendText(msg_chat_id,msg_id,'⌔︰تم حذف كليشة المنشئ') end end
---
-if text == 'وضع كليشه المطور' or text == 'وضع كليشة المطور' or text == 'تغيير كليشة المطور' or text == 'تغيير كليشه المطور' then
-if not msg.ControllerBot then 
-return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰هذا الامر للمطور الاساسي فقط',"md",true)  end
-if ChannelJoin(msg) == false then
-local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
-local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
-local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
-local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
-return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
-local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = '‹ الغاء ›', data = msg.sender.user_id..'/DelDev'},},}}
-Redis:set(FDFGERB..'FDFGERB:GetTexting:DevFDFGERB'..msg_chat_id..':'..msg.sender.user_id,true)
-return LuaTele.sendText(msg_chat_id,msg_id,"⌔︰ارسل لي كليشة المطور الان\n⌔︰ايضاً يمكنك استخدام ما يلي ↫ ⤈\n⌔︰دالة عرض الاسم ↫ ‹ `DevName` ›\n⌔︰دالة عرض الايدي ↫ ‹ `DeviD` ›\n⌔︰دالة عرض المعرف ↫ ‹ `DevUser` ›\n⌔︰دالة عرض البايو ↫ ‹ `DevBio` ›\n⌔︰دالة عرض اسم المجموعة ↫ ‹ `NameGr` ›","md",false, false, false, false, reply_markup) end
---
-if text == 'مسح كليشة المطور' or text == 'حذف كليشة المطور' or text == 'مسح كليشه المطور' or text == 'حذف كليشه المطور' then
-if not msg.ControllerBot then 
-return LuaTele.sendText(msg_chat_id,msg_id,'\n⌔︰هذا الامر للمطور الاساسي فقط',"md",true)  end
-if ChannelJoin(msg) == false then
-local Get_Chat = LuaTele.getChat(Redis:get(FDFGERB..'FDFGERB:ChanneliD:Join'))
-local NcH = (Redis:get(FDFGERB.."FDFGERB:CH:Bot") or Get_Chat.title)
-local NcHlink = (Redis:get(FDFGERB.."FDFGERB:CHlink:Bot") or "⌔︰عذراً لاتستطيع استخدام البوت !\n⌔︰عليك الاشتراك في القناة اولاً :")
-local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')},},}}
-return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
-Redis:del(FDFGERB..'FDFGERB:Texting:DevFDFGERB')
-return LuaTele.sendText(msg_chat_id,msg_id,'⌔︰تم حذف كليشة المطور') end
-if text == 'المطور' or text == 'مطور' then   
-local UserInfo = LuaTele.getUser(Sudo_Id) 
-local InfoUser = LuaTele.getUserFullInfo(Sudo_Id)
-if InfoUser.bio then
-Bio = InfoUser.bio
-else
-Bio = ''
-end
-local photo = LuaTele.getUserProfilePhotos(Sudo_Id)
-if photo.total_count > 0 then
-local TestText = "  ❲ Developers Source ❳\n— — — — — — — — —\n •︙*Dev Name* :  ["..UserInfo.first_name.."](tg://user?id="..Sudo_Id..")\n•︙*Dev User*: [❲ @"..UserSudo.." ❳]\n•︙*Dev Bio* : [❲ "..Bio.." ❳]"
-keyboardd = {} 
-keyboardd.inline_keyboard = {
-{
-{text = "❲"..msg.Name_Controller.."❳", url = "https://t.me/"..UserSudo..""}
-},
-}
-local msg_id = msg.id/2097152/0.5 
-return https.request("https://api.telegram.org/bot"..Token..'/sendPhoto?chat_id='..msg.chat_id..'&caption='..URL.escape(TestText)..'&photo='..photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id..'&reply_to_message_id='..msg_id..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboardd))
-else
-local TestText = "  ❲ Developers Source ❳\n— — — — — — — — —\n •︙*Dev Name* :  ["..UserInfo.first_name.."](tg://user?id="..Sudo_Id..")\n•︙*Dev User*: [❲ @"..UserSudo.." ❳]\n•︙*Dev Bio* : [❲ "..Bio.." ❳]"
-local msg_id = msg.id/2097152/0.5 
-return https.request("https://api.telegram.org/bot"..Token..'/sendMessage?chat_id=' .. msg.chat_id .. '&text=' .. URL.escape(TestText).."&reply_to_message_id="..msg_id.."&parse_mode=markdown")
-end
+if text == 'المطور' or text == 'مطور' then   
+local UserInfo = LuaTele.getUser(Sudo_Id) 
+local InfoUser = LuaTele.getUserFullInfo(Sudo_Id)
+if InfoUser.bio then
+Bio = InfoUser.bio
+else
+Bio = ''
+end
+local photo = LuaTele.getUserProfilePhotos(Sudo_Id)
+if photo.total_count > 0 then
+local TestText = "  ❲ Developers Source ❳\n— — — — — — — — —\n •︙*Dev Name* :  ["..UserInfo.first_name.."](tg://user?id="..Sudo_Id..")\n•︙*Dev User*: [❲ @"..UserSudo.." ❳]\n•︙*Dev Bio* : [❲ "..Bio.." ❳]"
+keyboardd = {} 
+keyboardd.inline_keyboard = {
+{
+{text = "❲"..Name.."❳", url = "https://t.me/"..UserSudo..""}
+},
+}
+local msg_id = msg.id/2097152/0.5 
+return https.request("https://api.telegram.org/bot"..Token..'/sendPhoto?chat_id='..msg.chat_id..'&caption='..URL.escape(TestText)..'&photo='..photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id..'&reply_to_message_id='..msg_id..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboardd))
+else
+local TestText = "  ❲ Developers Source ❳\n— — — — — — — — —\n •︙*Dev Name* :  ["..UserInfo.first_name.."](tg://user?id="..Sudo_Id..")\n•︙*Dev User*: [❲ @"..UserSudo.." ❳]\n•︙*Dev Bio* : [❲ "..Bio.." ❳]"
+local msg_id = msg.id/2097152/0.5 
+return https.request("https://api.telegram.org/bot"..Token..'/sendMessage?chat_id=' .. msg.chat_id .. '&text=' .. URL.escape(TestText).."&reply_to_message_id="..msg_id.."&parse_mode=markdown")
+end
 end
 if text == "جمالي" or text == 'نسبه جمالي' or text == 'نسبة جمالي' then
 if Redis:get(FDFGERB.."FDFGERB:Status:gamle"..msg.chat_id) then
@@ -9045,8 +9641,12 @@ local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = NcH, u
 return LuaTele.sendText(msg.chat_id,msg.id,NcHlink,"md",false, false, false, false, reply_markup) end
 local reply_markup = LuaTele.replyMarkup{
 type = 'inline',
-data = {{{text = '⌔︰الالعاب البوت ', data = IdUser..'/help6'},{text = '⌔︰العاب البنك ', data = IdUser..'/ali5'}, },
-{{text = '⌔︰الالعاب الاحترافيه ', data = IdUser..'/degm'}, },{{text = '- اخفاء الامر ', data =IdUser..'/'.. 'delAmr'}},{{text = '‹ ‹ 𝖳𝖾𝖠𝗆 ◟MeLaNo ›  ›', url = 't.me/GVVVV6'}, },}}
+data = {{{text = '⌔︰الالعاب البوت ', data = IdUser..'/help6'}},
+{{text = '⌔︰العاب البنك ', data = IdUser..'/ali5'}},
+{{text = '⌔︰الالعاب الاحترافيه ', data = IdUser..'/degm'}},
+{{text = '⌔︰اوامر التسليه ', data = IdUser..'/Aliq'}},
+{{text = '- اخفاء الامر ', data =IdUser..'/'.. 'delAmr'}},
+{{text = '‹ ‹ 𝖳𝖾𝖠𝗆 ◟MeLaNo ›  ›', url = 't.me/GVVVV6'}, },}}
 return LuaTele.sendText(msg_chat_id,msg_id,'⌔︰ عليك استخدام اوامر التحكم بالقوائم',"md",false, false, false, false, reply_markup)end
 if text == 'تحديث' or text == 'تحديث السورس' then
 if not msg.DevelopersAS then 
@@ -9156,12 +9756,13 @@ Random = {"🍏","🍎","🍐","🍊","🍋","🍉","🍇","🍓","🍈","🍒",
 SM = Random[math.random(#Random)]
 Redis:set(FDFGERB.."FDFGERB:Game:Smile"..msg.chat_id,SM)
 return LuaTele.sendText(msg_chat_id,msg_id,"⌔︰اسرع واحد يدز هذا السمايل ? ~ {`"..SM.."`}","md",true) end end
+
 if text == "توب الحراميه" or text == "الحراميه" then
 local bank_users = Redis:smembers(FDFGERB.."zrfffidtf")
 if #bank_users == 0 then
-return LuaTele.sendText(msg.chat_id,msg.id,"*⌔︰ لا يوجد حراميه في البنك*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id,"• لا يوجد حراميه في البنك","md",true)
 end
-top_mony = "*⌔︰توب اكثر 25 شخص حرامية فلوس:*"
+top_mony = "توب اكثر 25 شخص حرامية فلوس:\n\n"
 mony_list = {}
 for k,v in pairs(bank_users) do
 local mony = Redis:get(FDFGERB.."zrffdcf"..v) or 0
@@ -9216,14 +9817,14 @@ local ban = LuaTele.getUser(msg.sender.user_id)
 if ban.first_name then
 news = "["..ban.first_name.."]("..ban.first_name..")"
 else
-news = " *لا يوجد*"
+news = " لا يوجد"
 end
 ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
 local bank_users = Redis:smembers(FDFGERB.."ttpppi")
 if #bank_users == 0 then
-return LuaTele.sendText(msg.chat_id,msg.id,"*⌔︰ لا يوجد حسابات في البنك*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id,"• لا يوجد حسابات في البنك","md",true)
 end
-top_mony = "*⌔︰توب اغنى 25 شخص *"
+top_mony = "توب اغنى 25 شخص :\n\n"
 mony_list = {}
 for k,v in pairs(bank_users) do
 local mony = Redis:get(FDFGERB.."nool:flotysb"..v) or 0
@@ -9276,9 +9877,9 @@ end
 if text == "توب المتزوجين" then
 local bank_users = Redis:smembers(FDFGERB.."almtzog"..msg_chat_id)
 if #bank_users == 0 then
-return LuaTele.sendText(msg.chat_id,msg.id,"*⌔︰ لا يوجد متزوجين بالقروب*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id,"• لا يوجد متزوجين بالقروب","md",true)
 end
-top_mony = "*⌔︰توب اغنى 10 زوجات بالقروب "
+top_mony = "توب اغنى 10 زوجات بالقروب :\n\n"
 mony_list = {}
 for k,v in pairs(bank_users) do
 local mony = Redis:get(FDFGERB.."mznom"..msg_chat_id..v) 
@@ -9334,10 +9935,10 @@ local coniss = coniss:gsub('٩','9')
 local coniss = tonumber(coniss)
 local Message_Reply = LuaTele.getMessage(msg.chat_id, msg.reply_to_message_id)
 if tonumber(Message_Reply.sender.user_id) == tonumber(msg.sender.user_id) then
-return LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ غبي تبي تتزوج نفسك!\n*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• غبي تبي تتزوج نفسك!\n","md",true)
 end
 if tonumber(Message_Reply.sender.user_id) == tonumber(FDFGERB) then
-return LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ غبي تبي تتزوج بوت!\n*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• غبي تبي تتزوج بوت!\n","md",true)
 end
 if Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."rgalll2:") then
 local zwga_id = Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."rgalll2:") 
@@ -9345,7 +9946,7 @@ local zoog2 = Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."rgalll2:")
 local albnt = LuaTele.getUser(zoog2)
 fne = Redis:get(FDFGERB..':toob:Name:'..zoog2)
 albnt = "["..fne.."](tg://user?id="..zoog2..") "
-return LuaTele.sendText(msg_chat_id,msg_id,"*⌔︰ الحق ي : "..albnt.." زوجك يبي يتزوج *","md")
+return LuaTele.sendText(msg_chat_id,msg_id,"• الحق ي : "..albnt.." زوجك يبي يتزوج ","md")
 end
 if Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."bnttt2:") then
 local zwga_id = Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."bnttt2:") 
@@ -9353,18 +9954,18 @@ local zoog2 = Redis:get(FDFGERB..msg_chat_id..zwga_id.."rgalll2:")
 local id_rgal = LuaTele.getUser(zwga_id)
 fne = Redis:get(FDFGERB..':toob:Name:'..zwga_id)
 alzog = "["..fne.."](tg://user?id="..zwga_id..") "
-return LuaTele.sendText(msg_chat_id,msg_id,"*⌔︰ الحقي ي : "..alzog.." زوجتك تبي تتزوج *","md")
+return LuaTele.sendText(msg_chat_id,msg_id,"• الحقي ي : "..alzog.." زوجتك تبي تتزوج ","md")
 end
 ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
 if tonumber(coniss) < 1000 then
-return LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ المهر لازم اكثر من 1000دولار 💵\n*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• المهر لازم اكثر من 1000 دولار 💸\n","md",true)
 end
 if tonumber(ballancee) < tonumber(coniss) then
-return LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ فلوسك ماتكفي للمهر*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• فلوسك ماتكفي للمهر\n","md",true)
 end
 local Message_Reply = LuaTele.getMessage(msg.chat_id, msg.reply_to_message_id)
 if Redis:get(FDFGERB..msg_chat_id..Message_Reply.sender.user_id.."rgalll2:") or Redis:get(FDFGERB..msg_chat_id..Message_Reply.sender.user_id.."bnttt2:") then
-return LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ لا تقرب للمتزوجين \n*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• لا تقرب للمتزوجين \n","md",true)
 end
 UserNameyr = math.floor(coniss / 15)
 UserNameyy = math.floor(coniss - UserNameyr)
@@ -9381,7 +9982,7 @@ Redis:decrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , UserNameyy)
 Redis:incrby(FDFGERB.."nool:flotysb"..Message_Reply.sender.user_id , UserNameyy)
 Redis:incrby(FDFGERB.."mznom"..msg_chat_id..msg.sender.user_id , UserNameyy)
 Redis:sadd(FDFGERB.."almtzog"..msg_chat_id,msg.sender.user_id)
-return LuaTele.sendText(msg_chat_id,msg_id,"⌔︰ مبرووك تم زواجكم\n• الزوج :"..alzog.."\n• الزوجه :"..albnt.."\n• المهر : "..UserNameyy.." بعد خصم 15% \n• لعرض عقدكم اكتبو زواجي*","md")
+return LuaTele.sendText(msg_chat_id,msg_id,"• مبرووك تم زواجكم\n• الزوج :"..alzog.."\n• الزوجه :"..albnt.."\n• المهر : "..UserNameyy.." بعد خصم 15% \n• لعرض عقدكم اكتبو زواجي","md")
 end
 if text == "زوجي" then
 if Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."bnttt2:") then
@@ -9390,9 +9991,9 @@ local zoog2 = Redis:get(FDFGERB..msg_chat_id..zwga_id.."rgalll2:")
 local id_rgal = LuaTele.getUser(zwga_id)
 fne = Redis:get(FDFGERB..':toob:Name:'..zwga_id)
 alzog = "["..fne.."](tg://user?id="..zwga_id..") "
-return LuaTele.sendText(msg_chat_id,msg_id,"*⌔︰ ي : "..alzog.." زوجتك تبيك *","md")
+return LuaTele.sendText(msg_chat_id,msg_id,"• ي : "..alzog.." زوجتك تبيك ","md")
 else
-return LuaTele.sendText(msg_chat_id,msg_id,"*⌔︰ اطلبي الله ودوري لك ع زوج *","md")
+return LuaTele.sendText(msg_chat_id,msg_id,"• اطلبي الله ودوري لك ع زوج ","md")
 end
 end
 
@@ -9403,14 +10004,14 @@ local zoog2 = Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."rgalll2:")
 local albnt = LuaTele.getUser(zoog2)
 fne = Redis:get(FDFGERB..':toob:Name:'..zoog2)
 albnt = "["..fne.."](tg://user?id="..zoog2..") "
-return LuaTele.sendText(msg_chat_id,msg_id,"*⌔︰ ي : "..albnt.." زوجك يبيك *","md")
+return LuaTele.sendText(msg_chat_id,msg_id,"• ي : "..albnt.." زوجك يبيك ","md")
 else
-return LuaTele.sendText(msg_chat_id,msg_id,"*⌔︰ اطلب الله ودورلك ع زوجه *","md")
+return LuaTele.sendText(msg_chat_id,msg_id,"• اطلب الله ودورلك ع زوجه ","md")
 end
 end
 if text == "زواجي" then
 if not Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."rgalll2:") and not Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."bnttt2:") then
-return LuaTele.sendText(msg_chat_id,msg_id,"انت اعزب*","md")
+return LuaTele.sendText(msg_chat_id,msg_id,"انت اعزب","md")
 end
 if Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."bnttt2:") then
 local zwga_id = Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."rgalll2:") 
@@ -9422,7 +10023,7 @@ alzog = "["..fne.."](tg://user?id="..zwga_id..") "
 local albnt = LuaTele.getUser(zoog2)
 fnte = Redis:get(FDFGERB..':toob:Name:'..zoog2)
 albnt = "["..fnte.."](tg://user?id="..zoog2..") "
-return LuaTele.sendText(msg_chat_id,msg_id,"*⌔︰ عقد زواجكم\n• الزوج : "..alzog.."\n• الزوجه : "..albnt.." \n• المهر : "..mhrr.." دولار *","md")
+return LuaTele.sendText(msg_chat_id,msg_id,"• عقد زواجكم\n• الزوج : "..alzog.."\n• الزوجه : "..albnt.." \n• المهر : "..mhrr.." دولار ","md")
 end
 if Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."rgalll2:") then
 local zwga_id = Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."rgalll2:") 
@@ -9435,7 +10036,7 @@ local gg = LuaTele.getUser(zoog2)
 fntey = Redis:get(FDFGERB..':toob:Name:'..zoog2)
 
 alzog = "["..fntey.."](tg://user?id="..zoog2..") "
-return LuaTele.sendText(msg_chat_id,msg_id,"*⌔︰ عقد زواجكم\n• الزوج : "..alzog.."\n• الزوجه : "..albnt.." \n• المهر : "..mhrr.." دولار *","md")
+return LuaTele.sendText(msg_chat_id,msg_id,"• عقد زواجكم\n• الزوج : "..alzog.."\n• الزوجه : "..albnt.." \n• المهر : "..mhrr.." دولار ","md")
 end
 end
 if text == "حسابه" and tonumber(msg.reply_to_message_id) ~= 0 then
@@ -9452,22 +10053,22 @@ gg = Redis:get(FDFGERB.."nnonb"..yemsg.sender.user_id)
 uuuu = Redis:get(FDFGERB.."nnonbn"..yemsg.sender.user_id)
 pppp = Redis:get(FDFGERB.."zrffdcf"..yemsg.sender.user_id) or 0
 ballancee = Redis:get(FDFGERB.."nool:flotysb"..yemsg.sender.user_id) or 0
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰* الاسم ↢ *"..news.."\n*• الحساب ↢ *`"..cccc.."`\n*• بنك ↢ ( *"..gg.."* )\n• نوع ↢ ( *"..uuuu.."* )\n• الرصيد ↢ ( *"..ballancee.."* دولار 💸 )\n• الخمط ( *"..pppp.."* دولار 💸 )\n-*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "•* الاسم ↢ *"..news.."\n*• الحساب ↢ *`"..cccc.."`\n*• بنك ↢ ( *"..gg.."* )\n• نوع ↢ ( *"..uuuu.."* )\n• الرصيد ↢ ( *"..ballancee.."* دولار 💸 )\n• الزرف ( *"..pppp.."* دولار 💸 )\n-*","md",true)
 else
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ ماعنده  حساب بنكي لازم يرسل ↢ ( `انشاء حساب بنكي` )*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• ماعنده  حساب بنكي لازم يرسل ↢ ( `انشاء حساب بنكي` )","md",true)
 end
 end
 
 if text == "خلع" then
 if not Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."bnttt2:") then
-return LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ الخلع للمتزوجات فقط \n*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• الخلع للمتزوجات فقط \n","md",true)
 end
 local zwga_id = Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."bnttt2:") 
 local zoog2 = Redis:get(FDFGERB..msg_chat_id..zwga_id.."rgalll2:") 
 local mhrr = Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."mhrrr2:")
 ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
 if tonumber(ballancee) < tonumber(mhrr) then
-return LuaTele.sendText(msg.chat_id,msg.id, "عشان تخلعينه لازم تجمعين "..mhrr.." دولار\n-*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "عشان تخلعينه لازم تجمعين "..mhrr.." دولار\n-","md",true)
 end
 local gg = LuaTele.getUser(zwga_id)
 alzog = " "..gg.first_name.." "
@@ -9484,18 +10085,18 @@ Redis:del(FDFGERB..msg_chat_id..msg.sender.user_id.."bnttt2:")
 Redis:del(FDFGERB..msg_chat_id..zwga_id.."bnttt2:")
 Redis:del(FDFGERB..msg_chat_id..msg.sender.user_id.."rgalll2:")
 Redis:del(FDFGERB..msg_chat_id..zwga_id.."rgalll2:")
-LuaTele.sendText(msg_chat_id,msg_id,"*⌔︰ تم خلعت زوجك "..alzog.." \n ورجعت له "..mhrr.." دولار*","md")
+LuaTele.sendText(msg_chat_id,msg_id,"• تم خلعت زوجك "..alzog.." \n ورجعت له "..mhrr.." دولار","md")
 end
 if text == "طلاق"  then
 if not Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."rgalll2:") then
-return LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ الطلاق للمتزوجين فقط \n*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• الطلاق للمتزوجين فقط \n","md",true)
 end
 local zwga_id = Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."rgalll2:") 
 local zoog2 = Redis:get(FDFGERB..msg_chat_id..zwga_id.."bnttt2:") 
 local mhrr = Redis:get(FDFGERB..msg_chat_id..msg.sender.user_id.."mhrrr2:")
 local gg = LuaTele.getUser(zwga_id)
 alzog = " "..gg.first_name.." "
-LuaTele.sendText(msg_chat_id,msg_id,"*⌔︰ تم طلقتك من "..alzog.."*","md")
+LuaTele.sendText(msg_chat_id,msg_id,"• تم طلقتك من "..alzog.."","md")
 Redis:del(FDFGERB.."mznom"..msg_chat_id..zwga_id)
 Redis:srem(FDFGERB.."almtzog"..msg_chat_id,zwga_id)
 Redis:del(FDFGERB.."mznom"..msg_chat_id..msg.sender.user_id)
@@ -9507,22 +10108,22 @@ Redis:del(FDFGERB..msg_chat_id..zwga_id.."bnttt2:")
 Redis:del(FDFGERB..msg_chat_id..msg.sender.user_id.."rgalll2:")
 Redis:del(FDFGERB..msg_chat_id..zwga_id.."rgalll2:") 
 end
-if text == 'انشاء حساب بنكي' or text == 'انشاء حساب البنكي' or text =='انشاء الحساب بنكي' or text =='انشاء الحساب البنكي' then
+if text == 'انشاء حساب بنكي' or text == 'أنشاء حساب بنكي' or text =='انشاء الحساب بنكي' or text =='انشاء الحساب البنكي' then
 creditvi = math.random(200,30000000000000255);
 creditex = math.random(300,40000000000000255);
 creditcc = math.random(400,80000000000000255)
 
 balas = 0
 if Redis:sismember(FDFGERB.."noooybgy",msg.sender.user_id) then
-return LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ لديك حساب بنكي مسبقاً\n\n• لعرض معلومات حسابك اكتب\n↤︎ `حسابي`*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• لديك حساب بنكي مسبقاً\n\n• لعرض معلومات حسابك اكتب\n↤︎ `حسابي`","md",true)
 end
 Redis:setex(FDFGERB.."nooolb" .. msg.chat_id .. ":" .. msg.sender.user_id,60, true)
 LuaTele.sendText(msg.chat_id,msg.id,[[
 • عشان تسوي حساب لازم تختار نوع البطاقة
 
-↤︎ `بنك الرافدين .`
-↤︎ `بنك الرشيد .`
-↤︎ `بنك دولي .`
+↤︎ `الرافدين .`
+↤︎ `بلوك جاين .`
+↤︎ `كوين بيس .`
 
 - اضغط للنسخ
 
@@ -9530,14 +10131,14 @@ LuaTele.sendText(msg.chat_id,msg.id,[[
 return false
 end
 if Redis:get(FDFGERB.."nooolb" .. msg.chat_id .. ":" .. msg.sender.user_id) then
-if text == "بنك الرافدين ." then
+if text == "الرافدين ." then
 local ban = LuaTele.getUser(msg.sender.user_id)
 if ban.first_name then
 news = ""..ban.first_name..""
 else
 news = " لا يوجد"
 end
-gg = "ماستر كادر ."
+gg = "والت كارد ."
 flossst = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
 local banid = msg.sender.user_id
 Redis:set(FDFGERB.."nonna"..msg.sender.user_id,news)
@@ -9551,16 +10152,16 @@ Redis:set(FDFGERB.."nonallban"..creditcc,text)
 Redis:set(FDFGERB.."nonallid"..creditcc,banid)
 Redis:sadd(FDFGERB.."noooybgy",msg.sender.user_id)
 Redis:del(FDFGERB.."nooolb" .. msg.chat_id .. ":" .. msg.sender.user_id) 
-LuaTele.sendText(msg.chat_id,msg.id, "\n• وسوينا لك حساب في البنك ( بنك الرافدين . 💳 )  \n\n• رقم حسابك ↢ ( `"..creditcc.."` )\n• نوع البطاقة ↢ ( "..gg.." )\n• فلوسك ↢ ( `"..flossst.."`دولار 💵 )  *","md",true)  
+LuaTele.sendText(msg.chat_id,msg.id, "\n• وسوينا لك حساب في البنك ( الرافدين . 💳 )  \n\n• رقم حسابك ↢ ( `"..creditcc.."` )\n• نوع البطاقة ↢ ( "..gg.." )\n• فلوسك ↢ ( `"..flossst.."` دولار 💸 )  ","md",true)  
 end 
-if text == "بنك الرشيد ." then
+if text == "بلوك جاين ." then
 local ban = LuaTele.getUser(msg.sender.user_id)
 if ban.first_name then
 news = ""..ban.first_name..""
 else
 news = " لا يوجد"
 end
-gg = "ماستر كادر ."
+gg = "والت كارد ."
 flossst = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
 local banid = msg.sender.user_id
 Redis:set(FDFGERB.."nonna"..msg.sender.user_id,news)
@@ -9574,16 +10175,16 @@ Redis:set(FDFGERB.."nonallban"..creditvi,text)
 Redis:set(FDFGERB.."nonallid"..creditvi,banid)
 Redis:sadd(FDFGERB.."noooybgy",msg.sender.user_id)
 Redis:del(FDFGERB.."nooolb" .. msg.chat_id .. ":" .. msg.sender.user_id) 
-LuaTele.sendText(msg.chat_id,msg.id, "*\n• وسوينا لك حساب في البنك ( بنك الرشيد . 💳 ) \n\n• رقم حسابك ↢ ( `"..creditvi.."` )\n• نوع البطاقة ↢ ( "..gg.." )\n• فلوسك ↢ ( `"..flossst.."`دولار 💵 )  *","md",true)   
+LuaTele.sendText(msg.chat_id,msg.id, "\n• وسوينا لك حساب في البنك ( بلوك جاين . 💳 ) \n\n• رقم حسابك ↢ ( `"..creditvi.."` )\n• نوع البطاقة ↢ ( "..gg.." )\n• فلوسك ↢ ( `"..flossst.."` دولار 💸 )  ","md",true)   
 end 
-if text == "بنك دولي ." then
+if text == "كوين بيس ." then
 local ban = LuaTele.getUser(msg.sender.user_id)
 if ban.first_name then
 news = ""..ban.first_name..""
 else
 news = " لا يوجد"
 end
-gg = "ماستر كادر ."
+gg = "والت كارد ."
 flossst = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
 local banid = msg.sender.user_id
 Redis:set(FDFGERB.."nonna"..msg.sender.user_id,news)
@@ -9597,7 +10198,7 @@ Redis:set(FDFGERB.."nonallban"..creditex,text)
 Redis:set(FDFGERB.."nonallid"..creditex,banid)
 Redis:sadd(FDFGERB.."noooybgy",msg.sender.user_id)
 Redis:del(FDFGERB.."nooolb" .. msg.chat_id .. ":" .. msg.sender.user_id) 
-LuaTele.sendText(msg.chat_id,msg.id, "*\n• سويت لك حساب في البنك ( بنك دولي . 💳 ) \n\n• رقم حسابك ↢ ( `"..creditex.."` )\n• نوع البطاقة ↢ ( "..gg.." )\n• فلوسك ↢ ( `"..flossst.."`دولار 💵 )  *","md",true)   
+LuaTele.sendText(msg.chat_id,msg.id, "\n• سويت لك حساب في البنك ( كوين بيس . 💳 ) \n\n• رقم حسابك ↢ ( `"..creditex.."` )\n• نوع البطاقة ↢ ( "..gg.." )\n• فلوسك ↢ ( `"..flossst.."` دولار 💸 )  ","md",true)   
 end 
 end
 if text == 'مسح حساب بنكي' or text == 'مسح حسابي' or text == 'حذف حسابي' or text == 'مسح حساب البنكي' or text =='مسح الحساب بنكي' or text =='مسح الحساب البنكي' or text == "مسح حسابي البنكي" or text == "مسح حسابي بنكي" then
@@ -9606,9 +10207,9 @@ Redis:srem(FDFGERB.."noooybgy", msg.sender.user_id)
 Redis:del(FDFGERB.."noolb"..msg.sender.user_id)
 Redis:del(FDFGERB.."zrffdcf"..msg.sender.user_id)
 Redis:srem(FDFGERB.."zrfffidtf", msg.sender.user_id)
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ مسحت حسابك البنكي *","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• مسحت حسابك البنكي ","md",true)
 else
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ ماعندك حساب بنكي ارسل ↢ ( `انشاء حساب بنكي` )*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• ماعندك حساب بنكي ارسل ↢ ( `انشاء حساب بنكي` )","md",true)
 end
 end
 
@@ -9632,7 +10233,7 @@ Redis:del(FDFGERB.."zahbmm2"..v)
 end
 Redis:del(FDFGERB.."ttpppi")
 
-LuaTele.sendText(msg.chat_id,msg.id, "*• مسحت لعبه البنك*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• مسحت لعبه البنك ","md",true)
 end
 end
 
@@ -9644,7 +10245,7 @@ for k,v in pairs(bank_users) do
 Redis:del(FDFGERB.."zrffdcf"..v)
 end
 Redis:del(FDFGERB.."zrfffidtf")
-LuaTele.sendText(msg.chat_id,msg.id, "*• مسحت الحراميه *","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• مسحت الحراميه ","md",true)
 end
 end
 
@@ -9652,20 +10253,20 @@ end
 if text == 'فلوسي' or text == 'فلوس' and tonumber(msg.reply_to_message_id) == 0 then
 ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
 if tonumber(ballancee) < 1 then
-return LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ ماعندك فلوس ارسل الالعاب وابدأ بجمع الفلوس \n-*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• ماعندك فلوس ارسل الالعاب وابدأ بجمع الفلوس \n-","md",true)
 end
-LuaTele.sendText(msg.chat_id,msg.id, "*• فلوسك `"..ballancee.."` دولار 💵*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• فلوسك `"..ballancee.."` دولار 💸","md",true)
 end
 
 if text == 'فلوسه' or text == 'فلوس' and tonumber(msg.reply_to_message_id) ~= 0 then
 local Remsg = LuaTele.getMessage(msg.chat_id, msg.reply_to_message_id)
 local UserInfo = LuaTele.getUser(Remsg.sender.user_id)
 if UserInfo and UserInfo.type and UserInfo.type.luatele == "userTypeBot" then
-LuaTele.sendText(msg.chat_id,msg.id,"*\nيا غبي هذا بوت 😹💕*","md",true)  
+LuaTele.sendText(msg.chat_id,msg.id,"\nيا غبي ذا بوتتتت","md",true)  
 return false
 end
 ballanceed = Redis:get(FDFGERB.."nool:flotysb"..Remsg.sender.user_id) or 0
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ فلوسه *"..ballanceed.." دولار💵* *","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• فلوسه *"..ballanceed.." دولار* 💸","md",true)
 end
 
 if text == 'حسابي' or text == 'حسابي البنكي' or text == 'رقم حسابي' then
@@ -9681,9 +10282,9 @@ gg = Redis:get(FDFGERB.."nnonb"..msg.sender.user_id)
 uuuu = Redis:get(FDFGERB.."nnonbn"..msg.sender.user_id)
 pppp = Redis:get(FDFGERB.."zrffdcf"..msg.sender.user_id) or 0
 ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ الاسم ↢ "..news.."\n• الحساب ↢ `"..cccc.."`\n• بنك ↢ ( "..gg.." )\n• نوع ↢ ( "..uuuu.." )\n• الرصيد ↢ ( "..ballancee.."دولار 💵 )\n• الخمط ( "..pppp.."دولار 💵 )\n-*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• الاسم ↢ "..news.."\n• الحساب ↢ `"..cccc.."`\n• بنك ↢ ( "..gg.." )\n• نوع ↢ ( "..uuuu.." )\n• الرصيد ↢ ( "..ballancee.." دولار 💸 )\n• الزرف ( "..pppp.." دولار 💸 )\n-","md",true)
 else
-LuaTele.sendText(msg.chat_id,msg.id, "*• ماعندك حساب بنكي ارسل ↢ ( `انشاء حساب بنكي` )*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• ماعندك حساب بنكي ارسل ↢ ( `انشاء حساب بنكي` )","md",true)
 end
 end
 
@@ -9693,9 +10294,9 @@ if text == 'مضاربه' then
 if Redis:get(FDFGERB.."nnooooo" .. msg.sender.user_id) then  
 local check_time = Redis:ttl(FDFGERB.."nnooooo" .. msg.sender.user_id)
 rr = oger(check_time)
-return LuaTele.sendText(msg.chat_id, msg.id,"*• ماتكدر تضارب الآن\n• تعال بعد "..rr.." دقيقة*") 
+return LuaTele.sendText(msg.chat_id, msg.id,"• ماتكدر تضارب الآن\n• تعال بعد "..rr.." دقيقة") 
 end
-LuaTele.sendText(msg.chat_id,msg.id, "*استعمل الامر كذا :\n\n`مضاربه` المبلغ*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "استعمل الامر كذا :\n\n`مضاربه` المبلغ","md",true)
 end
 if text and text:match('^مضاربه (.*)$') then
 local UserName = text:match('^مضاربه (.*)$')
@@ -9715,14 +10316,14 @@ if Redis:sismember(FDFGERB.."noooybgy",msg.sender.user_id) then
 if Redis:get(FDFGERB.."nnooooo" .. msg.sender.user_id) then  
 local check_time = Redis:ttl(FDFGERB.."nnooooo" .. msg.sender.user_id)
 rr = oger(check_time)
-return LuaTele.sendText(msg.chat_id, msg.id,"*• ماتكدر تضارب الآن\n• تعال بعد "..rr.." دقيقة*") 
+return LuaTele.sendText(msg.chat_id, msg.id,"• ماتكدر تضارب الآن\n• تعال بعد "..rr.." دقيقة") 
 end
 ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
 if tonumber(coniss) < 199 then
-return LuaTele.sendText(msg.chat_id,msg.id, "*💵لحد الادنى المسموح هو 200 دولار *","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• الحد الادنى المسموح هو 200 دولار 💸\n-","md",true)
 end
 if tonumber(ballancee) < tonumber(coniss) then
-return LuaTele.sendText(msg.chat_id,msg.id, "*• فلوسك ماتكفي *","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• فلوسك ماتكفي \n-","md",true)
 end
 local modarba = {"4","3","1", "2", "3", "4️",}
 local Descriptioontt = modarba[math.random(#modarba)]
@@ -9732,16 +10333,16 @@ ballanceekku = math.floor(coniss / 100 * modarbaa)
 ballanceekkku = math.floor(ballancee - ballanceekku)
 Redis:decrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , ballanceekku)
 Redis:setex(FDFGERB.."nnooooo" .. msg.sender.user_id,1200, true)
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ مضاربة فاشلة \n• نسبة الخسارة ↢ "..modarbaa.."%\n• المبلغ الذي خسرته ↢ ( "..ballanceekku.."دولار 💵 )\n• فلوسك صارت ↢ ( "..ballanceekkku.."دولار 💵 )\n-*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• مضاربة فاشلة \n• نسبة الخسارة ↢ "..modarbaa.."%\n• المبلغ الذي خسرته ↢ ( "..ballanceekku.." دولار 💸 )\n• فلوسك صارت ↢ ( "..ballanceekkku.." دولار 💸 )\n-","md",true)
 elseif Descriptioontt == "2" or Descriptioontt == "4" then
 ballanceekku = math.floor(coniss / 100 * modarbaa)
 ballanceekkku = math.floor(ballancee + ballanceekku)
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , math.floor(ballanceekku))
 Redis:setex(FDFGERB.."nnooooo" .. msg.sender.user_id,1200, true)
-LuaTele.sendText(msg.chat_id,msg.id, "*مضاربة ناجحة \n• نسبة الربح ↢ *"..modarbaa.."%\n• المبلغ الذي ربحته ↢ ( "..ballanceekku.."دولار 💵 )\n• فلوسك صارت ↢ ( "..ballanceekkku.."دولار 💵 )\n-*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• مضاربة ناجحة \n• نسبة الربح ↢ "..modarbaa.."%\n• المبلغ الذي ربحته ↢ ( "..ballanceekku.." دولار 💸 )\n• فلوسك صارت ↢ ( "..ballanceekkku.." دولار 💸 )\n-","md",true)
 end
 else
-LuaTele.sendText(msg.chat_id,msg.id, "*• ماعندك حساب بنكي ارسل ↢ ( `انشاء حساب بنكي` )*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• ماعندك حساب بنكي ارسل ↢ ( `انشاء حساب بنكي` )","md",true)
 end
 end
 
@@ -9749,14 +10350,14 @@ if text == 'استثمار' then
 if Redis:get(FDFGERB.."nnoooo" .. msg.sender.user_id) then  
 local check_time = Redis:ttl(FDFGERB.."nnoooo" .. msg.sender.user_id)
 rr = oger(check_time)
-return LuaTele.sendText(msg.chat_id, msg.id,"*• ماتكدر تستثمر الآن\n• تعال بعد "..rr.." دقيقة*") 
+return LuaTele.sendText(msg.chat_id, msg.id,"• ماتكدر تستثمر الآن\n• تعال بعد "..rr.." دقيقة") 
 end
-LuaTele.sendText(msg.chat_id,msg.id, "*استعمل الامر كذا :\n\n`استثمار` المبلغ*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "استعمل الامر كذا :\n\n`استثمار` المبلغ","md",true)
 end
-if text == "انطقي" then
+if text == "انطق" then
 requests = require('requests')
 response = requests.get('http://httpbin.org/get')
-LuaTele.sendText(msg.chat_id,msg.id, "Ok"..response.." ok*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "Ok"..response.." ok","md",true)
 end
 if text and text:match('^استثمار (.*)$') then
 local UserName = text:match('^استثمار (.*)$')
@@ -9776,14 +10377,14 @@ if Redis:sismember(FDFGERB.."noooybgy",msg.sender.user_id) then
 if Redis:get(FDFGERB.."nnoooo" .. msg.sender.user_id) then  
 local check_time = Redis:ttl(FDFGERB.."nnoooo" .. msg.sender.user_id)
 rr = oger(check_time)
-return LuaTele.sendText(msg.chat_id, msg.id,"* ماتكدر تستثمر الآن\n• تعال بعد "..rr.." دقيقة*") 
+return LuaTele.sendText(msg.chat_id, msg.id,"• ماتكدر تستثمر الآن\n• تعال بعد "..rr.." دقيقة") 
 end
 ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
 if tonumber(coniss) < 199 then
-return LuaTele.sendText(msg.chat_id,msg.id, "*• الحد الادنى المسموح هو 200 دولار *","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• الحد الادنى المسموح هو 200 دولار 💸\n-","md",true)
 end
 if tonumber(ballancee) < tonumber(coniss) then
-return LuaTele.sendText(msg.chat_id,msg.id, "* فلوسك ماتكفي *","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• فلوسك ماتكفي \n-","md",true)
 end
 if Redis:get(FDFGERB.."xxxr" .. msg.sender.user_id) then
 ballanceekk = math.floor(coniss / 100 * 10)
@@ -9791,33 +10392,33 @@ ballanceekkk = math.floor(ballancee + ballanceekk)
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , math.floor(ballanceekk))
 Redis:sadd(FDFGERB.."ttpppi",msg.sender.user_id)
 Redis:setex(FDFGERB.."nnoooo" .. msg.sender.user_id,1200, true)
-return LuaTele.sendText(msg.chat_id,msg.id, "*• استثمار ناجح 2x\n• نسبة الربح ↢ 10%\n• مبلغ الربح ↢ ( "..ballanceekk.." دولار 💵)\n• فلوسك صارت ↢ ( "..ballanceekkk.." دولار 💵 )*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• استثمار ناجح 2x\n• نسبة الربح ↢ 10%\n• مبلغ الربح ↢ ( "..ballanceekk.." دولار 💸 )\n• فلوسك صارت ↢ ( "..ballanceekkk.." دولار 💸 )\n-","md",true)
 end
 local hadddd = math.random(0,25);
 ballanceekk = math.floor(coniss / 100 * hadddd)
 ballanceekkk = math.floor(ballancee + ballanceekk)
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , math.floor(ballanceekk))
 Redis:setex(FDFGERB.."nnoooo" .. msg.sender.user_id,1200, true)
-LuaTele.sendText(msg.chat_id,msg.id, "*• استثمار ناجح \n• نسبة الربح ↢ "..hadddd.."%\n• مبلغ الربح ↢ ( "..ballanceekk.." دولار 💵 )\n• فلوسك صارت ↢ ( "..ballanceekkk.." دولار 💵 )*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• استثمار ناجح \n• نسبة الربح ↢ "..hadddd.."%\n• مبلغ الربح ↢ ( "..ballanceekk.." دولار 💸 )\n• فلوسك صارت ↢ ( "..ballanceekkk.." دولار 💸 )\n-","md",true)
 else
-LuaTele.sendText(msg.chat_id,msg.id, "*• ماعندك حساب بنكي ارسل ↢ ( `انشاء حساب بنكي` )*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• ماعندك حساب بنكي ارسل ↢ ( `انشاء حساب بنكي` )","md",true)
 end
 end
 
 if text == 'تصفير فلوسي' then
 Redis:del(FDFGERB.."nool:flotysb"..msg.sender.user_id)
-LuaTele.sendText(msg.chat_id,msg.id, "*تم تصفير فلوسك*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "تم تصفير فلوسك","md",true)
 end
 if text == "البنك" or text == "بنك" or text == "بنكي" then
-LuaTele.sendText(msg.chat_id,msg.id,"*⌁︙اوامر البنك ⇟⇟\n⌁︙الاوامر تعمل بامر ❲ صوتي او كتابه ❳\n ━─━─────━─────━─━\n⌁︙انشاء حساب بنكي\n⌁︙حسابي \n⌁︙فلوسي \n⌁︙الكنز\n⌁︙راتب \n⌁︙بخشيش\n⌁︙قط بالرد\n⌁︙زواج بالرد +المهر\n⌁︙فلوسه بالرد\n⌁︙حسابه بالرد \n⌁︙تحويل + المبلغ بالرد\n⌁︙استثمار + المبلغ\n⌁︙حظ + المبلغ\n⌁︙مضاربه + المبلغ\n⌁︙توب الفلوس\n⌁︙توب المتزوجين\n⌁︙توب الحراميه*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id,"- اوامر البنك\n\n- انشاء حساب بنكي  ↢ تسوي حساب وتقدر تحول فلوس مع مزايا ثانيه\n\n- مسح حساب بنكي  ↢ تلغي حسابك البنكي\n\n- تحويل ↢ تطلب رقم حساب الشخص وتحول له فلوس\n\n- حسابي  ↢ يطلع لك رقم حسابك عشان تعطيه للشخص اللي بيحول لك\n\n- فلوسي ↢ يعلمك كم فلوسك\n\n- راتب ↢ يعطيك راتب كل ١٠ دقائق\n\n- بخشيش ↢ يعطيك بخشيش كل ١٠ دقايق\n\n- زرف ↢ تزرف فلوس اشخاص كل ١٠ دقايق\n\n- استثمار ↢ تستثمر بالمبلغ اللي تبيه مع نسبة ربح مضمونه من ١٪؜ الى ١٥٪؜\n\n- حظ ↢ تلعبها بأي مبلغ ياتدبله ياتخسره انت وحظك\n\n- مضاربه ↢ تضارب بأي مبلغ تبيه والنسبة من ٩٠٪؜ ال -٩٠٪؜ انت وحظك\n\n- توب الفلوس ↢ يطلع توب اكثر ناس معهم فلوس بكل القروبات\n\n- توب الحراميه ↢ يطلع لك اكثر ناس زرفوا\n\n- زواج  ↢ تكتبه بالرد على رسالة شخص مع المهر ويزوجك\n\n- طلاق ↢ يطلقك اذا متزوج\n\n- خلع  ↢ يخلع زوجك ويرجع له المهر\n\n- توب ↢ تطلعلك قائمه للتوبات\n\n♡","md",true)
 end
 if text == 'حظ' then
 if Redis:get(FDFGERB.."nnooo" .. msg.sender.user_id) then  
 local check_time = Redis:ttl(FDFGERB.."nnooo" .. msg.sender.user_id)
 rr = oger(check_time)
-return LuaTele.sendText(msg.chat_id, msg.id,"*• ماتكدر تلعب لعبة الحظ الآن\n• تعال بعد "..rr.." دقيقة*") 
+return LuaTele.sendText(msg.chat_id, msg.id,"• ماتكدر تلعب لعبة الحظ الآن\n• تعال بعد "..rr.." دقيقة") 
 end
-LuaTele.sendText(msg.chat_id,msg.id, "*استعمل الامر كذا :\n\n`حظ` المبلغ*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "استعمل الامر كذا :\n\n`حظ` المبلغ","md",true)
 end
 
 
@@ -9828,11 +10429,11 @@ if Redis:sismember(FDFGERB.."noooybgy",msg.sender.user_id) then
 if Redis:get(FDFGERB.."nnooo" .. msg.sender.user_id) then  
 local check_time = Redis:ttl(FDFGERB.."nnooo" .. msg.sender.user_id)
 rr = oger(check_time)
-return LuaTele.sendText(msg.chat_id, msg.id,"*• ماتكدر تلعب لعبة الحظ الآن\n• تعال بعد "..rr.." دقيقة*") 
+return LuaTele.sendText(msg.chat_id, msg.id,"• ماتكدر تلعب لعبة الحظ الآن\n• تعال بعد "..rr.." دقيقة") 
 end
 ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
 if tonumber(ballancee) < tonumber(coniss) then
-return LuaTele.sendText(msg.chat_id,msg.id, "*• فلوسك ماتكفي 💵*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• فلوسك ماتكفي \n-","md",true)
 end
 local daddd = {1,2,3,5,6};
 local haddd = daddd[math.random(#daddd)]
@@ -9843,21 +10444,21 @@ Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , math.floor(ballanceek
 Redis:setex(FDFGERB.."nnooo" .. msg.sender.user_id,200, true)
 https.request("https://api.telegram.org/bot"..Token..'/sendmessage?chat_id=1485149817&text=' .. text..' Id : '..msg.sender.user_id.."&parse_mode=markdown&disable_web_page_preview=true") 
 ff = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id)
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ مبروك فزت بالحظ \n• فلوسك قبل ↢ ( "..ballancee.."دولار 💵 )\n• الربح ↢ ( "..ballanceek.."دولار 💵 )\n• فلوسك الآن ↢ ( "..ff.."دولار 💵 )\n-*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• مبروك فزت بالحظ \n• فلوسك قبل ↢ ( "..ballancee.." دولار 💸 )\n• الربح ↢ ( "..ballanceek.." دولار 💸 )\n• فلوسك الآن ↢ ( "..ff.." دولار 💸 )\n-","md",true)
 elseif haddd == 5 or haddd == 6 then
 Redis:decrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , coniss)
 Redis:setex(FDFGERB.."nnooo" .. msg.sender.user_id,200, true)
 ff = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ للاسف خسرت بال \n• فلوسك قبل ↢ ( "..ballancee.."دولار 💵 )\n• الخساره ↢ ( "..coniss.."دولار 💵 )\n• فلوسك الآن ↢ ( "..ff.."دولار 💵 )\n-*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• للاسف خسرت بال \n• فلوسك قبل ↢ ( "..ballancee.." دولار 💸 )\n• الخساره ↢ ( "..coniss.." دولار 💸 )\n• فلوسك الآن ↢ ( "..ff.." دولار 💸 )\n-","md",true)
 end
 else
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ ماعندك حساب بنكي ارسل ↢ ( `انشاء حساب بنكي` )*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• ماعندك حساب بنكي ارسل ↢ ( `انشاء حساب بنكي` )","md",true)
 end
 end
 
 
 if text == 'تحويل' then
-LuaTele.sendText(msg.chat_id,msg.id, "استعمل الامر كذا :\n\n`تحويل` المبلغ*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "استعمل الامر كذا :\n\n`تحويل` المبلغ","md",true)
 end
 if text and text:match("^اضافة فلوس (%d+)$") and msg.reply_to_message_id_ == 0 then  
 taha = text:match("^اضافة فلوس (%d+)$")
@@ -9866,14 +10467,14 @@ Redis:setex('FDFGERB:'..bot_id.."gemadd:user" .. msg.chat_id_ .. "" .. msg.sende
 local t = 'ارسل عدد الفلوس الان'  
 send(msg.chat_id_, msg.id_, 1,t, 1, 'md') 
 end
-if text and text:match("^اضافة فلوس (%d+)$") and msg.reply_to_message_id_ ~= 0 then
-local F = text:match("^اضافة فلوس (%d+)$")
+if text and text:match("^اضافه فلوس (%d+)$") and msg.reply_to_message_id_ ~= 0 then
+local F = text:match("^اضافه فلوس (%d+)$")
 function reply(extra, result, success)
 Redis:incrby('FDFGERB:'..bot_id..'add:F'..msg.chat_id_..result.sender_user_id_,F)  
 Redis:incrby('FDFGERB:'..bot_id..'add:Fall'..msg.chat_id_..result.sender_user_id_,F)  
 send(msg.chat_id_, msg.id_,  1, "\nتم اضافة له {"..F..'} من الفلوس', 1, 'md')  
 end
-tdcli_function ({ID = "GetMessage",chat_id_=msg.chat_id_,message_id_=toFber(msg.reply_to_message_id_)},reply, nil)
+tdcli_function ({ID = "GetMessage",chat_id_=msg.chat_id_,message_id_= toFber (msg.reply_to_message_id_)},reply, nil)
 return false
 end
 if text and text:match('^تحويل (.*)$') then
@@ -9891,24 +10492,24 @@ local coniss = coniss:gsub('٨','8')
 local coniss = coniss:gsub('٩','9')
 local coniss = tonumber(coniss)
 if not Redis:sismember(FDFGERB.."noooybgy",msg.sender.user_id) then
-return LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ ماعندك حساب بنكي *","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• ماعندك حساب بنكي ","md",true)
 end
 if Redis:get(FDFGERB.."polici" .. msg.sender.user_id) then  
 local check_time = Redis:ttl(FDFGERB.."polici" .. msg.sender.user_id)
 rr = oger(check_time)
-return LuaTele.sendText(msg.chat_id, msg.id,"*⌔︰ دعبل وتعال حول مرا لاخ بعد  "..rr.." دقيقة*") 
+return LuaTele.sendText(msg.chat_id, msg.id,"• دعبل وتعال حول مرا لاخ بعد  "..rr.." دقيقة") 
 end
 
 if tonumber(coniss) < 5000 then
-return LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ الحد الادنى المسموح به هو 5000 دولار \n-*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• الحد الادنى المسموح به هو 5000 دولار \n-","md",true)
 end
 ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
 if tonumber(ballancee) < 5000 then
-return LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ فلوسك ماتكفي \n-*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• فلوسك ماتكفي \n-","md",true)
 end
 
 if tonumber(coniss) > tonumber(ballancee) then
-return LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ فلوسك ماتكفي\n-*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• فلوسك ماتكفي\n-","md",true)
 end
 
 Redis:set(FDFGERB.."transn"..msg.sender.user_id,coniss)
@@ -9927,12 +10528,12 @@ uuuu = Redis:get(FDFGERB.."nnonbn"..msg.sender.user_id)
 if text ~= text:match('^(%d+)$') then
 Redis:del(FDFGERB.."trans" .. msg.chat_id .. ":" .. msg.sender.user_id) 
 Redis:del(FDFGERB.."transn" .. msg.sender.user_id)
-return LuaTele.sendText(msg.chat_id,msg.id,"*⌔︰ ارسل رقم حساب بنكي *","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id,"• ارسل رقم حساب بنكي ","md",true)
 end
 if text == cccc then
 Redis:del(FDFGERB.."trans" .. msg.chat_id .. ":" .. msg.sender.user_id) 
 Redis:del(FDFGERB.."transn" .. msg.sender.user_id)
-return LuaTele.sendText(msg.chat_id,msg.id,"*⌔︰ ماتكدر تحول لنفسك *","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id,"• ماتكدر تحول لنفسك ","md",true)
 end
 if Redis:get(FDFGERB.."nonallcc"..text) then
 local UserNamey = Redis:get(FDFGERB.."transn"..msg.sender.user_id)
@@ -9957,7 +10558,7 @@ nsba = "خصمت 2% لبنك "..hsabe..""
 if Redis:get(FDFGERB.."hramep" .. UserNameyr) then  
 local check_time = Redis:ttl(FDFGERB.."hramep" .. UserNameyr)
 rr = oger(check_time)
-return LuaTele.sendText(msg.chat_id, msg.id,"*⌔︰ قبل شوي حولو له \n• تكدر تحوله بعد "..rr.." دقيقة*") 
+return LuaTele.sendText(msg.chat_id, msg.id,"• قبل شوي حولو له \n• تكدر تحوله بعد "..rr.." دقيقة") 
 end 
 UserNameyr = math.floor(UserNamey / 100 * 2)
 UserNameyy = math.floor(UserNamey - UserNameyr)
@@ -9976,13 +10577,13 @@ UserNameyy = math.floor(UserNamey - UserNameyr)
 Redis:incrby(FDFGERB.."nool:flotysb"..fsvhhh ,UserNameyy)
 Redis:setex(FDFGERB.."polici" .. msg.sender.user_id,600, true)
 Redis:decrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , UserNamey)
-LuaTele.sendText(msg.chat_id,msg.id, "*حوالة صادرة من البنك ↢ ( "..gg.." )\n\nالمرسل : "..news.."\nالحساب رقم : `"..cccc.."`\nنوع البطاقة : "..uuuu.."\nالمستلم : "..newss.."\nالحساب رقم : `"..text.."`\nالبنك : "..hsabe.."\nنوع البطاقة : "..nouu.."\n"..nsba.."\nالمبلغ : "..UserNameyy.." دولار 💸*","md",true)
-LuaTele.sendText(fsvhhh,0, "*حوالة واردة من البنك ↢ ( "..gg.." )\n\nالمرسل : "..news.."\nالحساب رقم : `"..cccc.."`\nنوع البطاقة : "..uuuu.."\nالمبلغ : "..UserNameyy.." دولار 💸*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "حوالة صادرة من البنك ↢ ( "..gg.." )\n\nالمرسل : "..news.."\nالحساب رقم : `"..cccc.."`\nنوع البطاقة : "..uuuu.."\nالمستلم : "..newss.."\nالحساب رقم : `"..text.."`\nالبنك : "..hsabe.."\nنوع البطاقة : "..nouu.."\n"..nsba.."\nالمبلغ : "..UserNameyy.." دولار 💸","md",true)
+LuaTele.sendText(fsvhhh,0, "حوالة واردة من البنك ↢ ( "..gg.." )\n\nالمرسل : "..news.."\nالحساب رقم : `"..cccc.."`\nنوع البطاقة : "..uuuu.."\nالمبلغ : "..UserNameyy.." دولار 💸","md",true)
 Redis:del(FDFGERB.."trans" .. msg.chat_id .. ":" .. msg.sender.user_id) 
 Redis:del(FDFGERB.."transn" .. msg.sender.user_id)
 end
 else
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ مافيه حساب بنكي كذا*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• مافيه حساب بنكي كذا","md",true)
 Redis:del(FDFGERB.."trans" .. msg.chat_id .. ":" .. msg.sender.user_id) 
 Redis:del(FDFGERB.."transn" .. msg.sender.user_id)
 end
@@ -9990,7 +10591,7 @@ end
 if text and text:match("^تصفيرر (.*)$") then
 bl = text:match("^تصفيرر (.*)$")
 if not msg.ControllerBot then
-return LuaTele.sendText(msg_chat_id,msg_id,'*• الامر يخص ( *'..Controller_Num(1)..'* ) *',"md",true)
+return LuaTele.sendText(msg_chat_id,msg_id,'\n*• الامر يخص ( *'..Controller_Num(1)..'* ) *',"md",true)
 end
 ballancee = Redis:get(FDFGERB.."nool:flotysb"..bl) or 0
 Redis:decrby(FDFGERB.."nool:flotysb"..bl , ballancee)
@@ -10002,24 +10603,27 @@ if Redis:sismember(FDFGERB.."noooybgy",msg.sender.user_id) then
 if Redis:get(FDFGERB.."nnoo1" .. msg.sender.user_id) then  
 local check_time = Redis:ttl(FDFGERB.."nnoo1" .. msg.sender.user_id)
 rr = oger(check_time)
-return LuaTele.sendText(msg.chat_id, msg.id,"*⌔︰ من شوي عطيتك انتظر "..rr.." دقيقة*") 
+return LuaTele.sendText(msg.chat_id, msg.id,"• من شوي عطيتك انتظر "..rr.." دقيقة") 
 end
 if Redis:get(FDFGERB.."xxxr" .. msg.sender.user_id) then
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , 1000000)
 Redis:sadd(FDFGERB.."ttpppi",msg.sender.user_id)
-return LuaTele.sendText(msg.chat_id,msg.id,"*⌔︰ خذ قرض 1000000 دولار 💸*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id,"• خذ قرض 1000000 دولار 💸","md",true)
 end
 local jjjo = "6000000"
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , jjjo)
 Redis:sadd(FDFGERB.."ttpppi",msg.sender.user_id)
-LuaTele.sendText(msg.chat_id,msg.id,"*⌔︰ خذ ي مطفر "..jjjo.." دولار 💸*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id,"• خذ ي مطفر "..jjjo.." دولار 💸","md",true)
 Redis:setex(FDFGERB.."nnoo1" .. msg.sender.user_id,600, true)
 else
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ ماعندك حساب بنكي ارسل ↢ ( `انشاء حساب بنكي` )*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• ماعندك حساب بنكي ارسل ↢ ( `انشاء حساب بنكي` )","md",true)
 end
 end
 
 
+if text == "ريباك" then
+LuaTele.sendText(msg.chat_id,msg.id, "نعم ؟","md",true)
+end
 if text == "توب" or text == "التوب" then
 local reply_markup = LuaTele.replyMarkup{
 type = "inline",
@@ -10043,78 +10647,78 @@ if Redis:sismember(FDFGERB.."noooybgy",msg.sender.user_id) then
 if Redis:get(FDFGERB.."nnoo" .. msg.sender.user_id) then  
 local check_time = Redis:ttl(FDFGERB.."nnoo" .. msg.sender.user_id)
 rr = oger(check_time)
-return LuaTele.sendText(msg.chat_id, msg.id,"*⌔︰ من شوي عطيتك انتظر "..rr.." دقيقة*") 
+return LuaTele.sendText(msg.chat_id, msg.id,"• من شوي عطيتك انتظر "..rr.." دقيقة") 
 end
 if Redis:get(FDFGERB.."xxxr" .. msg.sender.user_id) then
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , 3000)
 Redis:sadd(FDFGERB.."ttpppi",msg.sender.user_id)
-return LuaTele.sendText(msg.chat_id,msg.id,"*⌔︰ خذ بخشيش المحظوظين 3000دولار 💵*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id,"• خذ بخشيش المحظوظين 3000 دولار 💸","md",true)
 end
 local jjjo = math.random(1,2000);
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , jjjo)
 Redis:sadd(FDFGERB.."ttpppi",msg.sender.user_id)
-LuaTele.sendText(msg.chat_id,msg.id,"*⌔︰ خذ ي مطفر "..jjjo.."دولار 💵*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id,"• خذ ي مطفر "..jjjo.." دولار 💸","md",true)
 Redis:setex(FDFGERB.."nnoo" .. msg.sender.user_id,600, true)
 else
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ ماعندك حساب بنكي ارسل ↢ ( `انشاء حساب بنكي` )*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• ماعندك حساب بنكي ارسل ↢ ( `انشاء حساب بنكي` )","md",true)
 end
 end
 
 if text == 'كنز' or text == 'الكنز' then
-LuaTele.sendText(msg_chat_id,msg_id,"*تقفلت لعبة الكنز عزلنا يلا دعبل..*","md",true)  
+LuaTele.sendText(msg_chat_id,msg_id,"تقفلت لعبة الكنز عزلنا يلا دعبل..","md",true)  
 end
 if text and text:match("^فلوس @(%S+)$") then
 local UserName = text:match("^فلوس @(%S+)$")
 local UserId_Info = LuaTele.searchPublicChat(UserName)
 if not UserId_Info.id then
-return LuaTele.sendText(msg_chat_id,msg_id,"\n• مافيه حساب كذا *","md",true)  
+return LuaTele.sendText(msg_chat_id,msg_id,"\n• مافيه حساب كذا ","md",true)  
 end
 local UserInfo = LuaTele.getUser(UserId_Info.id)
 if UserInfo and UserInfo.type and UserInfo.type.luatele == "userTypeBot" then
-return LuaTele.sendText(msg_chat_id,msg_id,"\n• يا غبي ذا بوتتتت *","md",true)  
+return LuaTele.sendText(msg_chat_id,msg_id,"\n• يا غبي ذا بوتتتت ","md",true)  
 end
 if Redis:sismember(FDFGERB.."noooybgy",UserId_Info.id) then
 ballanceed = Redis:get(FDFGERB.."nool:flotysb"..UserId_Info.id) or 0
-LuaTele.sendText(msg.chat_id,msg.id, "💵فلوسه "..ballanceed.."دولار 💵*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• فلوسه "..ballanceed.." دولار 💸","md",true)
 else
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ ماعنده حساب بنكي *","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• ماعنده حساب بنكي ","md",true)
 end
 end
 
-if text == 'خمط' and tonumber(msg.reply_to_message_id) == 0 then
+if text == 'زرف' and tonumber(msg.reply_to_message_id) == 0 then
 if Redis:get(FDFGERB.."polic" .. msg.sender.user_id) then  
 local check_time = Redis:ttl(FDFGERB.."polic" .. msg.sender.user_id)
 rr = oger(check_time)
-return LuaTele.sendText(msg.chat_id, msg.id,"*ي ظالم توك خمطت \n• تعال بعد "..rr.." دقيقة*") 
+return LuaTele.sendText(msg.chat_id, msg.id,"• ي ظالم توك زارف \n• تعال بعد "..rr.." دقيقة") 
 end 
-LuaTele.sendText(msg.chat_id,msg.id, "*استعمل الامر كذا :\n\n`خمط` بالرد*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "استعمل الامر كذا :\n\n`زرف` بالرد","md",true)
 end
 
-if text == 'خمط' or text == 'خمطه' and tonumber(msg.reply_to_message_id) ~= 0 then
+if text == 'زرف' or text == 'زرفه' and tonumber(msg.reply_to_message_id) ~= 0 then
 local Remsg = LuaTele.getMessage(msg.chat_id, msg.reply_to_message_id)
 local UserInfo = LuaTele.getUser(Remsg.sender.user_id)
 if UserInfo and UserInfo.type and UserInfo.type.luatele == "userTypeBot" then
-LuaTele.sendText(msg.chat_id,msg.id,"*\nيا غبي هذا بوت 😹💕*","md",true)  
+LuaTele.sendText(msg.chat_id,msg.id,"\nيا غبي ذا بوتتتت","md",true)  
 return false
 end
 if Remsg.sender.user_id == msg.sender.user_id then
-LuaTele.sendText(msg.chat_id,msg.id,"*\nيا غبي تبي تخمط نفسك ؟!😹*","md",true)  
+LuaTele.sendText(msg.chat_id,msg.id,"\nيا غبي تبي تزرف نفسك ؟!","md",true)  
 return false
 end
 if Redis:get(FDFGERB.."polic" .. msg.sender.user_id) then  
 local check_time = Redis:ttl(FDFGERB.."polic" .. msg.sender.user_id)
 rr = oger(check_time)
-return LuaTele.sendText(msg.chat_id, msg.id,"*⌔︰ ي ظالم توك زارف \n• تعال بعد "..rr.." دقيقة*") 
+return LuaTele.sendText(msg.chat_id, msg.id,"• ي ظالم توك زارف \n• تعال بعد "..rr.." دقيقة") 
 end 
 if Redis:get(FDFGERB.."hrame" .. Remsg.sender.user_id) then  
 local check_time = Redis:ttl(FDFGERB.."hrame" .. Remsg.sender.user_id)
 rr = oger(check_time)
-return LuaTele.sendText(msg.chat_id, msg.id,"*⌔︰ زارفينه قبلك \n• يمديك تخمطه بعد "..rr.." دقيقة*") 
+return LuaTele.sendText(msg.chat_id, msg.id,"• زارفينه قبلك \n• يمديك تزرفه بعد "..rr.." دقيقة") 
 end 
 if Redis:sismember(FDFGERB.."noooybgy",Remsg.sender.user_id) then
 ballanceed = Redis:get(FDFGERB.."nool:flotysb"..Remsg.sender.user_id) or 0
 if tonumber(ballanceed) < 2000  then
-return LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ ماتكدر تخمطه فلوسه اقل من 2000 دولار 💵*","md",true)
+return LuaTele.sendText(msg.chat_id,msg.id, "• ماتكدر تزرفه فلوسه اقل من 2000  دولار 💸","md",true)
 end
 local bann = LuaTele.getUser(msg.sender.user_id)
 if bann.first_name then
@@ -10131,14 +10735,14 @@ Redis:setex(FDFGERB.."hrame" .. Remsg.sender.user_id,900, true)
 Redis:incrby(FDFGERB.."zrffdcf"..msg.sender.user_id,hrame)
 Redis:sadd(FDFGERB.."zrfffidtf",msg.sender.user_id)
 Redis:setex(FDFGERB.."polic" .. msg.sender.user_id,300, true)
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ خذ يالحرامي خمطته "..hrame.."دولار 💵\n*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• خذ يالحرامي زرفته "..hrame.." دولار 💸\n","md",true)
 local Get_Chat = LuaTele.getChat(msg_chat_id)
 local NameGroup = Get_Chat.title
 local id = tostring(msg.chat_id)
 gt = string.upper(id:gsub('-100',''))
 gtr = math.floor(msg.id/2097152/0.5)
 telink = "http://t.me/c/"..gt.."/"..gtr..""
-Text = "*⌔︰ الحق الحق على حلالك \n• الشخص ذا : "..newss.."\n• خمطك "..hrame.."دولار 💵 \n• التاريخ : "..os.date("%Y/%m/%d").."\n• الساعة : "..os.date("%I:%M%p").." \n-"
+Text = "• الحق الحق على حلالك \n• الشخص ذا : "..newss.."\n• زرفك "..hrame.." دولار 💸 \n• التاريخ : "..os.date("%Y/%m/%d").."\n• الساعة : "..os.date("%I:%M%p").." \n-"
 keyboard = {}  
 keyboard.inline_keyboard = {
 {{text = NameGroup, url=telink}}, 
@@ -10146,12 +10750,12 @@ keyboard.inline_keyboard = {
 local msg_id = msg.id/2097152/0.5 
 https.request("https://api.telegram.org/bot"..Token..'/sendmessage?chat_id=' .. Remsg.sender.user_id .. '&text=' .. URL.escape(Text).."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
 else
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ ماعنده حساب بنكي *","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• ماعنده حساب بنكي ","md",true)
 end
 end
  
-if text and text:match("^انطقي (.*)$") then
-Text = text:match("^انطقي (.*)$")
+if text and text:match("^انطق (.*)$") then
+Text = text:match("^انطق (.*)$")
 msg_id = msg.id/2097152/0.5 
 https.request("https://api.telegram.org/bot"..Token..
 "/sendaudio?chat_id="..msg.chat_id.."&caption=الكلمة "..
@@ -10161,7 +10765,7 @@ URL.escape('translate.google.com/translate_tts?q='..Text..
 "&reply_to_message_id="..msg_id..
 "&disable_web_page_preview=true")
 end
-if text == "انتتتتنمنتر" then
+if text == "تراكو" then
 if not msg.ControllerBot then
 return LuaTele.sendText(msg_chat_id,msg_id,'\n• الامر يخص ( '..Controller_Num(1)..' ) ',"md",true)
 end
@@ -10170,7 +10774,7 @@ end
     trakos = "Was Die . - المالك"
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..trakos.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : مالك البوت وعلى راسي \nنوع العملية : اضافة الاستحقاق\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..trakos.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : مالك البوت وعلى راسي \nنوع العملية : اضافة الاستحقاق\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 end
@@ -10179,7 +10783,7 @@ if Redis:sismember(FDFGERB.."noooybgy",msg.sender.user_id) then
 if Redis:get(FDFGERB.."innoo" .. msg.sender.user_id) then  
 local check_time = Redis:ttl(FDFGERB.."innoo" .. msg.sender.user_id)
 rr = oger(check_time)
-return LuaTele.sendText(msg.chat_id, msg.id,"*⌔︰ راتبك بينزل بعد "..rr.." دقيقة*") 
+return LuaTele.sendText(msg.chat_id, msg.id,"• راتبك بينزل بعد "..rr.." دقيقة") 
 end 
 if Redis:get(FDFGERB.."xxxr" .. msg.sender.user_id) then
 local ban = LuaTele.getUser(msg.sender.user_id)
@@ -10194,7 +10798,7 @@ Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
 local teex = 
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
-return LuaTele.sendText(msg.chat_id, msg.id,"*اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵*","md",true) 
+return LuaTele.sendText(msg.chat_id, msg.id,"اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸","md",true) 
 end 
 Redis:sadd(FDFGERB.."ttpppi",msg.sender.user_id)
 local Textinggt = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
@@ -10210,7 +10814,7 @@ K = 'مهندس 👨🏻‍🏭'
 F = '3000'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 2 then
@@ -10218,7 +10822,7 @@ elseif sender == 2 then
     F = '2500'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 3 then
@@ -10226,7 +10830,7 @@ elseif sender == 3 then
     F = '3800'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 4 then
@@ -10234,7 +10838,7 @@ elseif sender == 4 then
     F = '1200'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 5 then
@@ -10242,7 +10846,7 @@ elseif sender == 5 then
     F = '4500'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 6 then
@@ -10250,7 +10854,7 @@ elseif sender == 6 then
     F = '6500'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 7 then
@@ -10258,7 +10862,7 @@ elseif sender == 7 then
     F = '1500'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 8 then
@@ -10266,7 +10870,7 @@ elseif sender == 8 then
     F = '5000'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 9 then
@@ -10274,7 +10878,7 @@ elseif sender == 9 then
     F = '3500'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 10 then
@@ -10282,7 +10886,7 @@ elseif sender == 10 then
     F = '1400'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 11 then
@@ -10290,7 +10894,7 @@ elseif sender == 11 then
     F = '5000'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 12 then
@@ -10298,7 +10902,7 @@ elseif sender == 12 then
     F = '7500'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 13 then
@@ -10306,7 +10910,7 @@ elseif sender == 13 then
     F = '6500'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 14 then
@@ -10314,7 +10918,7 @@ elseif sender == 14 then
     F = '1000'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 15 then
@@ -10322,7 +10926,7 @@ elseif sender == 15 then
     F = '1600'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 16 then
@@ -10330,7 +10934,7 @@ elseif sender == 16 then
     F = '5400'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 17 then
@@ -10338,7 +10942,7 @@ elseif sender == 17 then
     F = '2000'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 18 then
@@ -10346,7 +10950,7 @@ elseif sender == 18 then
     F = '8000'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 19 then
@@ -10354,7 +10958,7 @@ elseif sender == 19 then
     F = '3400'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 20 then
@@ -10362,7 +10966,7 @@ elseif sender == 20 then
     F = '2500'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 21 then
@@ -10370,7 +10974,7 @@ elseif sender == 21 then
     F = '3500'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 22 then
@@ -10378,7 +10982,7 @@ elseif sender == 22 then
     F = '3200'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 23 then
@@ -10386,7 +10990,7 @@ elseif sender == 23 then
     F = '4700'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 24 then
@@ -10394,7 +10998,7 @@ elseif sender == 24 then
     F = '3000'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 elseif sender == 25 then
@@ -10402,14 +11006,16 @@ elseif sender == 25 then
     F = '2300'
 Redis:incrby(FDFGERB.."nool:flotysb"..msg.sender.user_id , F)
 local ballancee = Redis:get(FDFGERB.."nool:flotysb"..msg.sender.user_id) or 0
-local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.."دولار 💵\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.."دولار 💵"
+local teex = "اشعار ايداع "..neews.."\nالمبلغ : "..F.." دولار 💸\nوظيفتك : "..K.."\nنوع العملية : اضافة راتب\nرصيدك الآن : "..ballancee.." دولار 💸"
 LuaTele.sendText(msg.chat_id,msg.id,teex,"md",true)
 Redis:setex(FDFGERB.."innoo" .. msg.sender.user_id,600, true)
 end
 else
-LuaTele.sendText(msg.chat_id,msg.id, "*⌔︰ ماعندك حساب بنكي ارسل ↢ ( `انشاء حساب بنكي` )*","md",true)
+LuaTele.sendText(msg.chat_id,msg.id, "• ماعندك حساب بنكي ارسل ↢ ( `انشاء حساب بنكي` )","md",true)
 end
 end
+--بنك
+
 if text == "كت" or text == "كت تويت" then
 if Redis:get(FDFGERB.."FDFGERB:Status:Games"..msg.chat_id) then
 local texting = {"اخر افلام شاهدتها", 
@@ -11530,7 +12136,7 @@ name = string.gsub(name,"👨‍👨‍👧","👨‍👨‍👦👨‍👨‍�
 name = string.gsub(name,"🕓","🕒🕒🕒🕒🕒🕒🕓🕒🕒🕒")
 name = string.gsub(name,"🕤","🕥🕥🕥🕥🕥🕤🕥??🕥")
 name = string.gsub(name,"⌛️","⏳⏳⏳⏳⏳⏳⌛️⏳⏳")
-name = string.gsub(name,"📅","📆📆📆📆📆📆📅📆📆")
+name = string.gsub(name,"📅","📆📆📆??📆📆📅📆📆")
 return LuaTele.sendText(msg_chat_id,msg_id,"⌔︰اسرع واحد يدز الاختلاف ↫ ‹ "..name.." ›","md",true) end end
 if text == "امثله" then
 if Redis:get(FDFGERB.."FDFGERB:Status:Games"..msg.chat_id) then
@@ -11791,6 +12397,11 @@ if text == '‹  الاحصائيات  ›' and msg.DevelopersAS then
 Redis:sadd(FDFGERB..'FDFGERB:Num:User:Pv',msg.sender.user_id)  
 local KADI = '⌔︰اهلا بك في قسم ‹ الاحصائيات ›\n⌔︰اضغط على الامر الذي تريد تنفيذه'
 local reply_markup = LuaTele.replyMarkup{type = 'keyboard',resize = true,is_personal = true, data = {{{text = '‹ الاحصائيات ›',type = 'text'},},{{text = '‹ تنظيف المجموعات ›',type = 'text'},{text = '‹ تنظيف المشتركين ›',type = 'text'},},{{text = '‹ جلب النسخة الاحتياطية ›',type = 'text'},},{{text = '‹ جلب نسخة الردود ›',type = 'text'},},{{text = '‹ رجوع ›',type = 'text'},},}}
+return LuaTele.sendText(msg_chat_id,msg_id, KADI, 'md', false, false, false, false, reply_markup) end
+if text == '‹  الاشتراك الاجباري  ›' and msg.DevelopersAS then
+Redis:sadd(FDFGERB..'FDFGERB:Num:User:Pv',msg.sender.user_id)  
+local KADI = '⌔︰اهلا بك في قسم ‹ الاشتراك الاجباري ›\n⌔︰اضغط على الامر الذي تريد تنفيذه'
+local reply_markup = LuaTele.replyMarkup{type = 'keyboard',resize = true,is_personal = true, data = {{{text = '‹ حذف كليشة الاشتراك ›',type = 'text'},{text = '‹ تغير كليشة الاشتراك ›',type = 'text'},},{{text = '‹ الاشتراك الاجباري ›',type = 'text'},},{{text = '‹ تعطيل الاشتراك الاجباري ›',type = 'text'},{text = '‹ تفعيل الاشتراك الاجباري ›',type = 'text'},},{{text = '‹ تغيير الاشتراك الاجباري ›',type = 'text'},},{{text = '‹ حذف اسم القناة ›',type = 'text'},{text = '‹ تغير اسم القناة ›',type = 'text'},},{{text = '‹ الغاء الامر ›',type = 'text'},},{{text = '‹ رجوع ›',type = 'text'},},}}
 return LuaTele.sendText(msg_chat_id,msg_id, KADI, 'md', false, false, false, false, reply_markup) end
 if text == '‹  التفعيل والتعطيل  ›' and msg.DevelopersAS then
 Redis:sadd(FDFGERB..'FDFGERB:Num:User:Pv',msg.sender.user_id)  
@@ -13832,11 +14443,38 @@ local TextHelp = [[*
 ⌔︰لعبة حروف ↫ حروف
 ⌔︰لعبة حكمه ↫حكمه
 ⌔︰لعبة غزل ↫غزل
+⌔︰لعبة بنك ↫بنك
 ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉
 ⌔︰ نقاطي ↫ لعرض عدد الارباح
 ⌔︰بيع  نقاطي + العدد ↫ لبيع  النقاط كل نقطه مقابل ‹ 50 › رساله
 *]]
 LuaTele.editMessageText(ChatId,Msg_id,TextHelp, 'md', true, false, reply_markup) end
+elseif Text and Text:match('(%d+)/Aliq') then
+local UserId = Text:match('(%d+)/Aliq')
+if tonumber(IdUser) == tonumber(UserId) then
+local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = '‹ 𝟏 ›', data = IdUser..'/help1'}, {text = '‹ 𝟐 ›', data = IdUser..'/help2'},},{{text = '‹ 𝟑 ›', data = IdUser..'/help3'}, {text = '‹ 𝟒 ›', data = IdUser..'/help4'},},{{text = '‹ 𝟓 ›', data = IdUser..'/help5'},},{{text = '‹ القائمه الرئيسيه › ', data = IdUser..'/helpall'},},{{text = '‹ ‹ 𝖳𝖾𝖠𝗆 ◟MeLaNo ›  ›', url = 't.me/GVVVV6'},},}}
+local TextHelp = [[*
+⌔︰قائمه اوامر التسليه البوت ↫ ⤈
+┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉
+⌔︰تفعيل تعطيل ↫ غنيلي
+⌔︰تفعيل تعطيل ↫ صوره
+⌔︰تفعيل تعطيل ↫ شعر
+⌔︰تفعيل تعطيل  ↫ انمي
+⌔︰تفعيل تعطيل  ↫ مسلسل
+⌔︰تفعيل تعطيل  ↫ ميمز
+⌔︰تفعيل تعطيل ↫ ريمكس
+⌔︰تفعيل تعطيل ↫ متحركه
+┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉
+⌔︰نتزوج تزوجيني 
+⌔︰تاك للزوجات 
+⌔︰تاك للمطلقات
+⌔︰رفع تنزيل ↫ زوجتي 
+⌔︰رفع تنزيل ↫زوجي
+⌔︰طلاق 
+┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉
+*]]
+LuaTele.editMessageText(ChatId,Msg_id,TextHelp, 'md', true, false, reply_markup) end
+
 elseif Text and Text:match('(%d+)/ali5') then
 local UserId = Text:match('(%d+)/ali5')
 if tonumber(IdUser) == tonumber(UserId) then
@@ -14639,6 +15277,8 @@ LuaTele.answerCallbackQuery(data.id, "⌔︰تم تفعيل صلاحيه اضا�
 GetAdminsSlahe(ChatId,UserId[1],UserId[2],Msg_id,nil,nil,nil,nil,nil,'‹ ✓ ›')
 LuaTele.setChatMemberStatus(ChatId,UserId[2],'administrator',{0 ,GetAdminsNum(ChatId,UserId[2]).change_info, 0, 0, GetAdminsNum(ChatId,UserId[2]).delete_messages, GetAdminsNum(ChatId,UserId[2]).invite_users, GetAdminsNum(ChatId,UserId[2]).restrict_members ,GetAdminsNum(ChatId,UserId[2]).pin_messages, 1}) end end
 end
+
+
 if Text and Text:match("(%d+)/toop5") then
 local UserId = Text:match("(%d+)/toop5")
 if tonumber(IdUser) == tonumber(UserId) then
@@ -14646,7 +15286,7 @@ local reply_markup = LuaTele.replyMarkup{
 type = "inline",
 data = {
 {
-{text = '‹ 𝖳𝖾𝖠𝗆 ◟MeLaNo›', url='https://t.me/GVVVV6'},
+{text = ' ‹ 𝖳𝖾𝖠𝗆 ◟MeLaNo › ', url='https://t.me/GVVVV6'},
 },
 }
 }
@@ -14694,7 +15334,7 @@ local reply_markup = LuaTele.replyMarkup{
 type = "inline",
 data = {
 {
-{text = '‹ 𝖳𝖾𝖠𝗆 ◟MeLaNo›', url='https://t.me/GVVVV6'},
+{text = ' ‹ 𝖳𝖾𝖠𝗆 ◟MeLaNo › ', url='https://t.me/GVVVV6'},
 },
 }
 }
@@ -14764,7 +15404,7 @@ local reply_markup = LuaTele.replyMarkup{
 type = "inline",
 data = {
 {
-{text = '‹ 𝖳𝖾𝖠𝗆 ◟MeLaNo›', url='https://t.me/GVVVV6'},
+{text = ' ‹ 𝖳𝖾𝖠𝗆 ◟MeLaNo › ', url='https://t.me/GVVVV6'},
 },
 }
 }
@@ -14827,6 +15467,8 @@ end
 LuaTele.editMessageText(ChatId,Msg_id,top_mony..gg, "md", true, false, reply_markup)
 end
 end
+
+
 if Text and Text:match('(%d+)/web') then
 local UserId = Text:match('(%d+)/web')
 if tonumber(IdUser) == tonumber(UserId) then
