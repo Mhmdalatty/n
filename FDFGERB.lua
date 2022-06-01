@@ -5170,10 +5170,6 @@ if text == 'المالك' or text == 'المنشئ' then
 if msg.can_be_deleted_for_all_users == false then
 return LuaTele.sendText(msg_chat_id,msg_id,"\n*•︙︙عذرآ البوت ليس ادمن في المجموعه يرجى ترقيته وتفعيل الصلاحيات له *","md",true)  
 end
-if ChannelJoin(msg) == false then
-local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = ''..Redis:get(FDFGERB..'FDFGERB:Channel:Join:Name')..'', url = 't.me/'..Redis:get(FDFGERB..'FDFGERB:Channel:Join')}, },}}
-return LuaTele.sendText(msg.chat_id,msg.id,'*\n•︙عليك الاشتراك في قناة البوت لاستخذام الاوامر*',"md",false, false, false, false, reply_markup)
-end
 local Info_Members = LuaTele.getSupergroupMembers(msg_chat_id, "Administrators", "*", 0, 200)
 local List_Members = Info_Members.members
 for k, v in pairs(List_Members) do
@@ -9421,7 +9417,7 @@ local TestText = "  ❲ Developers Source ❳\n— — — — — — — — �
 keyboardd = {} 
 keyboardd.inline_keyboard = {
 {
-{text = "❲"..Name.."❳", url = "https://t.me/"..UserSudo..""}
+{text = "❲"..UserInfo.first_name.."❳", url = "https://t.me/"..UserSudo..""}
 },
 }
 local msg_id = msg.id/2097152/0.5 
