@@ -13,7 +13,7 @@ end
 luatele = require('luatele')
 local FileInformation = io.open("./Information.lua","r")
 if not FileInformation then
-if not Redis:get(SshId.."Info:Redis:Token") then
+if not Redis:get(Server_Done.."set:Token") then
 io.write('\27[1;31mارسل لي توكن البوت الان \nSend Me a Bot Token Now ↡\n\27[0;39;49m')
 local TokenBot = io.read()
 if TokenBot and TokenBot:match('(%d+):(.*)') then
@@ -25,43 +25,43 @@ else
 io.write('\27[1;34mتم حفظ التوكن بنجاح \nThe token been saved successfully \n\27[0;39;49m')
 TheTokenBot = TokenBot:match("(%d+)")
 os.execute('sudo rm -fr .CallBack-Bot/'..TheTokenBot)
-Redis:set(SshId.."Info:Redis:Token",TokenBot)
-Redis:set(SshId.."Info:Redis:Token:User",Json_Info.result.username)
+Redis:setex(Server_Done.."set:Token",300,TokenBot)
+Redis:setex(Server_Done.."set:userbot",300,Json_Info.result.username)
 end 
 else
 print('\27[1;34mلم يتم حفظ التوكن جرب مره اخره \nToken not saved, try again')
 end 
-os.execute('lua5.2 FDFGERB.lua')
+os.execute('lua FDFGERB.lua')
 end
-if not Redis:get(SshId.."Info:Redis:User") then
+if not Redis:get(Server_Done.."set:user") then
 io.write('\27[1;31mارسل معرف المطور الاساسي الان \nDeveloper UserName saved ↡\n\27[0;39;49m')
 local UserSudo = io.read():gsub('@','')
 if UserSudo ~= '' then
 io.write('\n\27[1;34mتم حفظ معرف المطور \nDeveloper UserName saved \n\n\27[0;39;49m')
-Redis:set(SshId.."Info:Redis:User",UserSudo)
+Redis:setex(Server_Done.."set:user",300,UserSudo)
 else
 print('\n\27[1;34mلم يتم حفظ معرف المطور الاساسي \nDeveloper UserName not saved\n')
 end 
-os.execute('lua5.2 FDFGERB.lua')
+os.execute('lua FDFGERB.lua')
 end
-if not Redis:get(SshId.."Info:Redis:User:ID") then
+if not Redis:get(Server_Done.."set:user:ID") then
 io.write('\27[1;31mارسل ايدي المطور الاساسي الان \nDeveloper ID saved ↡\n\27[0;39;49m')
 local UserId = io.read()
 if UserId and UserId:match('(%d+)') then
 io.write('\n\27[1;34mتم حفظ ايدي المطور \nDeveloper ID saved \n\n\27[0;39;49m')
-Redis:set(SshId.."Info:Redis:User:ID",UserId)
+Redis:setex(Server_Done.."set:user:ID",300,UserId)
 else
 print('\n\27[1;34mلم يتم حفظ ايدي المطور الاساسي \nDeveloper ID not saved\n')
 end 
-os.execute('lua5.2 FDFGERB.lua')
+os.execute('lua FDFGERB.lua')
 end
 local Informationlua = io.open("Information.lua", 'w')
 Informationlua:write([[
 return {
-Token = "]]..Redis:get(SshId.."Info:Redis:Token")..[[",
-UserBot = "]]..Redis:get(SshId.."Info:Redis:Token:User")..[[",
-UserSudo = "]]..Redis:get(SshId.."Info:Redis:User")..[[",
-SudoId = ]]..Redis:get(SshId.."Info:Redis:User:ID")..[[
+Token = "]]..Redis:get(Server_Done.."set:Token")..[[",
+UserBot = "]]..Redis:get(Server_Done.."set:userbot")..[[",
+UserSudo = "]]..Redis:get(Server_Done.."set:user")..[[",
+SudoId = ]]..Redis:get(Server_Done.."set:user:ID")..[[
 }
 ]])
 Informationlua:close()
@@ -69,7 +69,7 @@ local FDFGERB = io.open("FDFGERB", 'w')
 FDFGERB:write([[
 cd $(cd $(dirname $0); pwd)
 while(true) do
-sudo lua5.2 FDFGERB.lua
+sudo lua5.3 FDFGERB.lua
 done
 ]])
 FDFGERB:close()
@@ -77,13 +77,13 @@ local Run = io.open("Run", 'w')
 Run:write([[
 cd $(cd $(dirname $0); pwd)
 while(true) do
-screen -S ]]..Redis:get(SshId.."Info:Redis:Token:User")..[[ -X kill
-screen -S ]]..Redis:get(SshId.."Info:Redis:Token:User")..[[ ./FDFGERB
+screen -S FDFGERB -X kill
+screen -S FDFGERB ./FDFGERB
 done
 ]])
 Run:close()
-Redis:del(SshId.."Info:Redis:User:ID");Redis:del(SshId.."Info:Redis:User");Redis:del(SshId.."Info:Redis:Token:User");Redis:del(SshId.."Info:Redis:Token")
-os.execute('rm -rf luatele.zip ;chmod +x FDFGERB;chmod +x Run;./Run')
+Redis:del(Server_Done.."set:user:ID");Redis:del(Server_Done.."set:user");Redis:del(Server_Done.."set:userbot");Redis:del(Server_Done.."set:Token")
+os.execute('chmod +x FDFGERB;chmod +x Run;./Run')
 end
 Information = dofile('./Information.lua')
 Sudo_Id = Information.SudoId
@@ -92,7 +92,7 @@ Token = Information.Token
 UserBot = Information.UserBot
 FDFGERB = Token:match("(%d+)")
 os.execute('sudo rm -fr .CallBack-Bot/'..FDFGERB)
-Luatele = Luatele.set_config{api_id=2692371,api_hash='fe85fff033dfe0f328aeb02b4f784930',session_name=FDFGERB,token=Token}
+LuaTele = luatele.set_config{api_id=2692371,api_hash='fe85fff033dfe0f328aeb02b4f784930',session_name=FDFGERB,token=Token}
 function var(value)  
 print(serpent.block(value, {comment=false}))   
 end 
