@@ -13,7 +13,7 @@ end
 luatele = require('luatele')
 local FileInformation = io.open("./Information.lua","r")
 if not FileInformation then
-if not Redis:get(Server_Done.."set:Token") then
+if not Redis:get(SshId.."Info:Redis:Token") then
 io.write('\27[1;31mارسل لي توكن البوت الان \nSend Me a Bot Token Now ↡\n\27[0;39;49m')
 local TokenBot = io.read()
 if TokenBot and TokenBot:match('(%d+):(.*)') then
@@ -25,43 +25,43 @@ else
 io.write('\27[1;34mتم حفظ التوكن بنجاح \nThe token been saved successfully \n\27[0;39;49m')
 TheTokenBot = TokenBot:match("(%d+)")
 os.execute('sudo rm -fr .CallBack-Bot/'..TheTokenBot)
-Redis:setex(Server_Done.."set:Token",300,TokenBot)
-Redis:setex(Server_Done.."set:userbot",300,Json_Info.result.username)
+Redis:set(SshId.."Info:Redis:Token",TokenBot)
+Redis:set(SshId.."Info:Redis:Token:User",Json_Info.result.username)
 end 
 else
 print('\27[1;34mلم يتم حفظ التوكن جرب مره اخره \nToken not saved, try again')
 end 
-os.execute('lua FDFGERB.lua')
+os.execute('lua5.2 FDFGERB.lua')
 end
-if not Redis:get(Server_Done.."set:user") then
+if not Redis:get(SshId.."Info:Redis:User") then
 io.write('\27[1;31mارسل معرف المطور الاساسي الان \nDeveloper UserName saved ↡\n\27[0;39;49m')
 local UserSudo = io.read():gsub('@','')
 if UserSudo ~= '' then
 io.write('\n\27[1;34mتم حفظ معرف المطور \nDeveloper UserName saved \n\n\27[0;39;49m')
-Redis:setex(Server_Done.."set:user",300,UserSudo)
+Redis:set(SshId.."Info:Redis:User",UserSudo)
 else
 print('\n\27[1;34mلم يتم حفظ معرف المطور الاساسي \nDeveloper UserName not saved\n')
 end 
-os.execute('lua FDFGERB.lua')
+os.execute('lua5.2 FDFGERB.lua')
 end
-if not Redis:get(Server_Done.."set:user:ID") then
+if not Redis:get(SshId.."Info:Redis:User:ID") then
 io.write('\27[1;31mارسل ايدي المطور الاساسي الان \nDeveloper ID saved ↡\n\27[0;39;49m')
 local UserId = io.read()
 if UserId and UserId:match('(%d+)') then
 io.write('\n\27[1;34mتم حفظ ايدي المطور \nDeveloper ID saved \n\n\27[0;39;49m')
-Redis:setex(Server_Done.."set:user:ID",300,UserId)
+Redis:set(SshId.."Info:Redis:User:ID",UserId)
 else
 print('\n\27[1;34mلم يتم حفظ ايدي المطور الاساسي \nDeveloper ID not saved\n')
 end 
-os.execute('lua FDFGERB.lua')
+os.execute('lua5.2 FDFGERB.lua')
 end
 local Informationlua = io.open("Information.lua", 'w')
 Informationlua:write([[
 return {
-Token = "]]..Redis:get(Server_Done.."set:Token")..[[",
-UserBot = "]]..Redis:get(Server_Done.."set:userbot")..[[",
-UserSudo = "]]..Redis:get(Server_Done.."set:user")..[[",
-SudoId = ]]..Redis:get(Server_Done.."set:user:ID")..[[
+Token = "]]..Redis:get(SshId.."Info:Redis:Token")..[[",
+UserBot = "]]..Redis:get(SshId.."Info:Redis:Token:User")..[[",
+UserSudo = "]]..Redis:get(SshId.."Info:Redis:User")..[[",
+SudoId = ]]..Redis:get(SshId.."Info:Redis:User:ID")..[[
 }
 ]])
 Informationlua:close()
@@ -69,7 +69,7 @@ local FDFGERB = io.open("FDFGERB", 'w')
 FDFGERB:write([[
 cd $(cd $(dirname $0); pwd)
 while(true) do
-sudo lua5.3 FDFGERB.lua
+sudo lua5.2 FDFGERB.lua
 done
 ]])
 FDFGERB:close()
@@ -77,13 +77,13 @@ local Run = io.open("Run", 'w')
 Run:write([[
 cd $(cd $(dirname $0); pwd)
 while(true) do
-screen -S FDFGERB -X kill
-screen -S FDFGERB ./FDFGERB
+screen -S ]]..Redis:get(SshId.."Info:Redis:Token:User")..[[ -X kill
+screen -S ]]..Redis:get(SshId.."Info:Redis:Token:User")..[[ ./FDFGERB
 done
 ]])
 Run:close()
-Redis:del(Server_Done.."set:user:ID");Redis:del(Server_Done.."set:user");Redis:del(Server_Done.."set:userbot");Redis:del(Server_Done.."set:Token")
-os.execute('chmod +x FDFGERB;chmod +x Run;./Run')
+Redis:del(SshId.."Info:Redis:User:ID");Redis:del(SshId.."Info:Redis:User");Redis:del(SshId.."Info:Redis:Token:User");Redis:del(SshId.."Info:Redis:Token")
+os.execute('rm -rf luatele.zip ;chmod +x FDFGERB;chmod +x Run;./Run')
 end
 Information = dofile('./Information.lua')
 Sudo_Id = Information.SudoId
@@ -92,7 +92,7 @@ Token = Information.Token
 UserBot = Information.UserBot
 FDFGERB = Token:match("(%d+)")
 os.execute('sudo rm -fr .CallBack-Bot/'..FDFGERB)
-LuaTele = luatele.set_config{api_id=2692371,api_hash='fe85fff033dfe0f328aeb02b4f784930',session_name=FDFGERB,token=Token}
+Luatele = Luatele.set_config{api_id=2692371,api_hash='fe85fff033dfe0f328aeb02b4f784930',session_name=FDFGERB,token=Token}
 function var(value)  
 print(serpent.block(value, {comment=false}))   
 end 
@@ -111,24 +111,38 @@ return Chat_Type
 end
 function The_ControllerAll(UserId)
 ControllerAll = false
-local ListSudos ={Sudo_Id,733713096}  
+local ListSudos = {Sudo_Id,5206822091,1489511086}
 for k, v in pairs(ListSudos) do
 if tonumber(UserId) == tonumber(v) then
+ControllerAll = true
+end
+if Redis:sismember(FDFGERB.."FDFGERB:ControlAll:Groups",UserId) then
 ControllerAll = true
 end
 end
 return ControllerAll
 end
+function mderall(msg)
+mderall = false
+local statuse = Redis:sismember(FDFGERB.."FDFGERB:Distinguishedall:Group",msg.sender_id.user_id)
+if statuse then
+mderall = true
+end
+return mderall
+end
 function Controllerbanall(ChatId,UserId)
 Status = 0
+local Controll2 = Redis:sismember(FDFGERB.."FDFGERB:ControlAll:Groups",UserId)
 DevelopersQ = Redis:sismember(FDFGERB.."FDFGERB:DevelopersQ:Groups",UserId) 
-if UserId == 733713096 then
+if UserId == 5206822091 then
 Status = true
-elseif UserId == 1603429916 then
+elseif UserId == 1489511086 then
 Status = true
 elseif UserId == Sudo_Id then  
 Status = true
 elseif UserId == FDFGERB then
+Status = true
+elseif Controll2 then
 Status = true
 elseif DevelopersQ then
 Status = true
@@ -139,6 +153,7 @@ return Status
 end
 function Controller(ChatId,UserId)
 Status = 0
+local Controll2 = Redis:sismember(FDFGERB.."FDFGERB:ControlAll:Groups",UserId)
 Developers = Redis:sismember(FDFGERB.."FDFGERB:Developers:Groups",UserId) 
 DevelopersQ = Redis:sismember(FDFGERB.."FDFGERB:DevelopersQ:Groups",UserId) 
 TheBasicsQ = Redis:sismember(FDFGERB.."FDFGERB:TheBasicsQ:Group"..ChatId,UserId) 
@@ -147,37 +162,39 @@ Originators = Redis:sismember(FDFGERB.."FDFGERB:Originators:Group"..ChatId,UserI
 Managers = Redis:sismember(FDFGERB.."FDFGERB:Managers:Group"..ChatId,UserId)
 Addictive = Redis:sismember(FDFGERB.."FDFGERB:Addictive:Group"..ChatId,UserId)
 Distinguished = Redis:sismember(FDFGERB.."FDFGERB:Distinguished:Group"..ChatId,UserId)
-StatusMember = LuaTele.getChatMember(ChatId,UserId).status.luatele
-if UserId == 733713096 then
-Status = 'مطوࢪ السوࢪس '
-elseif UserId == 1603429916 then
-Status = 'مبࢪمج السورس'
+StatusMember = Luatele.getChatMember(ChatId,UserId).status.Luatele
+if UserId == 5206822091 then
+Status = 'مطــور السـورس 𖦴'
+elseif UserId == 1489511086 then
+Status = 'مطــور السـورس 𖦴'
 elseif UserId == Sudo_Id then  
+Status = 'المطور الاساسي'
+elseif Controll2 then
 Status = 'المطور الاساسي'
 elseif UserId == FDFGERB then
 Status = 'البوت'
-elseif Developers then
-Status = 'المطور'
 elseif DevelopersQ then
-Status = Redis:get(FDFGERB.."FDFGERB:Developer:Bot:Reply"..ChatId) or 'المطور الثانوي'
+Status = 'المطور الاساسي²'
+elseif Developers then
+Status = Redis:get(FDFGERB..'FDFGERB:SetRt'..ChatId..':'..UserId) or Redis:get(FDFGERB.."FDFGERB:Developer:Bot:Reply"..ChatId) or 'المطور'
 elseif TheBasicsQ then
-Status = "المالك"
+Status = Redis:get(FDFGERB..'FDFGERB:SetRt'..ChatId..':'..UserId) or Redis:get(FDFGERB.."FDFGERB:PresidentQ:Group:Reply"..ChatId) or  'المالك'
 elseif TheBasics then
-Status = Redis:get(FDFGERB.."FDFGERB:President:Group:Reply"..ChatId) or 'المنشئ الاساسي'
+Status = Redis:get(FDFGERB..'FDFGERB:SetRt'..ChatId..':'..UserId) or Redis:get(FDFGERB.."FDFGERB:President:Group:Reply"..ChatId) or 'المنشئ الاساسي'
 elseif Originators then
-Status = Redis:get(FDFGERB.."FDFGERB:Constructor:Group:Reply"..ChatId) or 'المنشئ'
+Status = Redis:get(FDFGERB..'FDFGERB:SetRt'..ChatId..':'..UserId) or Redis:get(FDFGERB.."FDFGERB:Constructor:Group:Reply"..ChatId) or 'المنشئ'
 elseif Managers then
-Status = Redis:get(FDFGERB.."FDFGERB:Manager:Group:Reply"..ChatId) or 'المدير'
+Status = Redis:get(FDFGERB..'FDFGERB:SetRt'..ChatId..':'..UserId) or Redis:get(FDFGERB.."FDFGERB:Manager:Group:Reply"..ChatId) or 'المدير'
 elseif Addictive then
-Status = Redis:get(FDFGERB.."FDFGERB:Admin:Group:Reply"..ChatId) or 'الادمن'
+Status = Redis:get(FDFGERB..'FDFGERB:SetRt'..ChatId..':'..UserId) or Redis:get(FDFGERB.."FDFGERB:Admin:Group:Reply"..ChatId) or 'الادمن'
 elseif StatusMember == "chatMemberStatusCreator" then
-Status = 'مالك الكروب'
+Status = Redis:get(FDFGERB..'FDFGERB:SetRt'..ChatId..':'..UserId) or 'مالك المجموعه'
 elseif StatusMember == "chatMemberStatusAdministrator" then
-Status = 'ادمن المجموعه'
+Status = Redis:get(FDFGERB..'FDFGERB:SetRt'..ChatId..':'..UserId) or 'مشرف المجموعه'
 elseif Distinguished then
-Status = Redis:get(FDFGERB.."FDFGERB:Vip:Group:Reply"..ChatId) or 'المميز'
+Status = Redis:get(FDFGERB..'FDFGERB:SetRt'..ChatId..':'..UserId) or Redis:get(FDFGERB.."FDFGERB:Vip:Group:Reply"..ChatId) or 'المميز'
 else
-Status = Redis:get(FDFGERB.."FDFGERB:Mempar:Group:Reply"..ChatId) or 'العضو'
+Status = Redis:get(FDFGERB..'FDFGERB:SetRt'..ChatId..':'..UserId) or Redis:get(FDFGERB.."FDFGERB:Mempar:Group:Reply"..ChatId) or 'العضو'
 end  
 return Status
 end 
@@ -186,19 +203,19 @@ Status = 0
 if tonumber(Num) == 1 then  
 Status = 'المطور الاساسي'
 elseif tonumber(Num) == 2 then  
-Status = 'المطور الثانوي'
+Status = 'المطور الاساسي²'
 elseif tonumber(Num) == 3 then  
 Status = 'المطور'
-elseif tonumber(Num) == 44 then  
-Status = 'المالك'
 elseif tonumber(Num) == 4 then  
-Status = 'المنشئ,الاساسي'
+Status = 'المنشئ الاساسي'
 elseif tonumber(Num) == 5 then  
 Status = 'المنشئ'
 elseif tonumber(Num) == 6 then  
 Status = 'المدير'
 elseif tonumber(Num) == 7 then  
 Status = 'الادمن'
+elseif tonumber(Num) == 8 then  
+Status = 'المالك'
 else
 Status = 'المميز'
 end  
@@ -861,7 +878,7 @@ Originators = Redis:sismember(FDFGERB.."FDFGERB:Originators:Group"..ChatId,UserI
 Managers = Redis:sismember(FDFGERB.."FDFGERB:Managers:Group"..ChatId,UserId)
 Addictive = Redis:sismember(FDFGERB.."FDFGERB:Addictive:Group"..ChatId,UserId)
 Distinguished = Redis:sismember(FDFGERB.."FDFGERB:Distinguished:Group"..ChatId,UserId)
-StatusMember = Luatele.getChatMember(ChatId,UserId).status.LuaTele
+StatusMember = Luatele.getChatMember(ChatId,UserId).status.Luatele
 if UserId == 5206822091 then
 Status = true
 elseif UserId == 1489511086 then
@@ -904,7 +921,7 @@ Originators = Redis:sismember(FDFGERB.."FDFGERB:Originators:Group"..ChatId,UserI
 Managers = Redis:sismember(FDFGERB.."FDFGERB:Managers:Group"..ChatId,UserId)
 Addictive = Redis:sismember(FDFGERB.."FDFGERB:Addictive:Group"..ChatId,UserId)
 Distinguished = Redis:sismember(FDFGERB.."FDFGERB:Distinguished:Group"..ChatId,UserId)
-StatusMember = Luatele.getChatMember(ChatId,UserId).status.LuaTele
+StatusMember = Luatele.getChatMember(ChatId,UserId).status.Luatele
 if UserId == 5206822091 then
 Status = true
 elseif UserId == 1489511086 then
@@ -1050,7 +1067,7 @@ if tonumber(msg.sender_id.user_id) == tonumber(FDFGERB) then
 print('This is reply for Bot')
 return false
 end
-if msg.sender_id.LuaTele == "messageSenderChat" then
+if msg.sender_id.Luatele == "messageSenderChat" then
 if Redis:get(FDFGERB.."FDFGERB:Lock:SenderChat"..msg_chat_id) then
 Luatele.deleteMessages(msg.chat_id,{[1]= msg.id})
 end
@@ -1124,7 +1141,7 @@ if msg.The_Controller == 1 or msg.The_Controller == 2 or msg.The_Controller == 3
 msg.Distinguished = true
 end
 
-if msg.sender_id.LuaTele ~= "messageSenderChat" then
+if msg.sender_id.Luatele ~= "messageSenderChat" then
 if Statusrestricted(msg.chat_id,msg.sender_id.user_id).KtmAll == true then
 return Luatele.deleteMessages(msg.chat_id,{[1]= msg.id})
 elseif Statusrestricted(msg.chat_id,msg.sender_id.user_id).BanAll == true then
@@ -1137,15 +1154,15 @@ end
 end
 if text then
 Redis:incr(FDFGERB.."Num:MssEgeS:Days"..msg.chat_id..os.date("%d")) 
-elseif msg.content.LuaTele == "messageChatAddMembers" then
+elseif msg.content.Luatele == "messageChatAddMembers" then
 Redis:incr(FDFGERB.."Num:AddMempber:Days"..msg.chat_id..os.date("%d")) 
-elseif msg.content.LuaTele == "messagePinMessage" then
+elseif msg.content.Luatele == "messagePinMessage" then
 Redis:incr(FDFGERB.."Num:PinMsg:Days"..msg.chat_id..os.date("%d")) 
-elseif msg.content.LuaTele == "messageChatJoinByLink" then
+elseif msg.content.Luatele == "messageChatJoinByLink" then
 Redis:incr(FDFGERB.."Num:joinlink:Days"..msg.chat_id..os.date("%d")) 
 end
 
-if msg.content.LuaTele == "messageChatJoinByLink" and Redis:get(FDFGERB..'FDFGERB:Status:joinet'..msg.chat_id) == 'true' then
+if msg.content.Luatele == "messageChatJoinByLink" and Redis:get(FDFGERB..'FDFGERB:Status:joinet'..msg.chat_id) == 'true' then
 local reply_markup = Luatele.replyMarkup{
 type = 'inline',
 data = {
@@ -1160,15 +1177,15 @@ end
 if (Redis:get(FDFGERB..'FDFGERB:All:FilterText'..msg_chat_id..':'..msg.sender_id.user_id) == 'DelFilterq') then   
 if text or msg.content.photo or msg.content.animation or msg.content.sticker then
 print('&')
-if msg.content.LuaTele == "messagePhoto" then
+if msg.content.Luatele == "messagePhoto" then
 Filters = 'الصوره'
 Redis:srem(FDFGERB.."FDFGERB:All:List:Filter",'photo:'..msg.content.photo.sizes[1].photo.id)  
 Redis:del(FDFGERB.."FDFGERB:All:Filter:Group:"..msg.content.photo.sizes[1].photo.id)  
-elseif msg.content.LuaTele == "messageAnimation" then
+elseif msg.content.Luatele == "messageAnimation" then
 Filters = 'المتحركه'
 Redis:srem(FDFGERB.."FDFGERB:All:List:Filter",'animation:'..msg.content.animation.animation.id)  
 Redis:del(FDFGERB.."FDFGERB:All:Filter:Group:"..msg.content.animation.animation.id)  
-elseif msg.content.LuaTele == "messageSticker" then
+elseif msg.content.Luatele == "messageSticker" then
 Filters = 'الملصق'
 Redis:srem(FDFGERB.."FDFGERB:All:List:Filter",'sticker:'..msg.content.sticker.sticker.id)  
 Redis:del(FDFGERB.."FDFGERB:All:Filter:Group:"..msg.content.sticker.sticker.id)  
@@ -1186,19 +1203,19 @@ if Redis:get(FDFGERB.."FDFGERB:Lock:text"..msg_chat_id) and not msg.Distinguishe
 Luatele.deleteMessages(msg.chat_id,{[1]= msg.id})
 return false
 end 
-if msg.content.LuaTele == "messageChatJoinByLink" and not msg.Distinguished then
+if msg.content.Luatele == "messageChatJoinByLink" and not msg.Distinguished then
 if Redis:get(FDFGERB.."FDFGERB:Lock:Join"..msg.chat_id) == "kick" then
 Luatele.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 Luatele.deleteMessages(msg.chat_id,{[1]= msg.id})
 return false
 end
 end
-if msg.content.LuaTele == "messageChatAddMembers" then -- اضافه اشخاص
+if msg.content.Luatele == "messageChatAddMembers" then -- اضافه اشخاص
 local Lock_Bots = Redis:get(FDFGERB.."FDFGERB:Lock:Bot:kick"..msg_chat_id)
 for k,v in pairs(msg.content.member_user_ids) do
 if tonumber(v) ~= tonumber(FDFGERB) then
 local Info_User = Luatele.getUser(v) 
-if Info_User.type.LuaTele == "userTypeBot" then
+if Info_User.type.Luatele == "userTypeBot" then
 if Lock_Bots == "del" and not msg.Managers then
 Luatele.setChatMemberStatus(msg.chat_id,v,'banned',0)
 elseif Lock_Bots == "kick" and not msg.Managers then
@@ -1210,11 +1227,11 @@ end
 end
 end
 
-if msg.content.LuaTele == "messageChatAddMembers" then
+if msg.content.Luatele == "messageChatAddMembers" then
 Redis:incr(FDFGERB.."FDFGERB:Num:Add:Memp"..msg_chat_id..":"..msg.sender_id.user_id) 
 end
 
-if msg.content.LuaTele == "messageChatAddMembers" then -- اضافه اشخاص
+if msg.content.Luatele == "messageChatAddMembers" then -- اضافه اشخاص
 print('This is Add Membeers ')
 Redis:incr(FDFGERB.."FDFGERB:Num:Add:Memp"..msg_chat_id..":"..msg.sender_id.user_id) 
 local AddMembrs = Redis:get(FDFGERB.."FDFGERB:Lock:AddMempar"..msg_chat_id) 
@@ -1264,7 +1281,7 @@ end
 end
 end
 end 
-if msg.content.LuaTele == "messageChatJoinByLink" or msg.content.LuaTele == "messageChatAddMembers" then
+if msg.content.Luatele == "messageChatJoinByLink" or msg.content.Luatele == "messageChatAddMembers" then
 if Redis:get(FDFGERB.."FDFGERB:Status:Welcome"..msg_chat_id) then
 local UserInfo = Luatele.getUser(msg.sender_id.user_id)
 local Get_Chat = Luatele.getChat(msg_chat_id)
@@ -1272,7 +1289,7 @@ local Info_Chats = Luatele.getSupergroupFullInfo(msg_chat_id)
 local Info_Members = Luatele.getSupergroupMembers(msg_chat_id, "Administrators", "*", 0, 200)
 local List_Members = Info_Members.members
 for k, v in pairs(List_Members) do
-if Info_Members.members[k].status.LuaTele == "chatMemberStatusCreator" then
+if Info_Members.members[k].status.Luatele == "chatMemberStatusCreator" then
 local owner = Luatele.getUser(v.member_id.user_id)
 local Welcome = Redis:get(FDFGERB.."FDFGERB:Welcome:Group"..msg_chat_id)
 if Welcome then 
@@ -1320,7 +1337,7 @@ end end end
 end
 end
 end 
-if not msg.Distinguished and msg.content.LuaTele ~= "messageChatAddMembers" and Redis:hget(FDFGERB.."FDFGERB:Spam:Group:User"..msg_chat_id,"Spam:User") then 
+if not msg.Distinguished and msg.content.Luatele ~= "messageChatAddMembers" and Redis:hget(FDFGERB.."FDFGERB:Spam:Group:User"..msg_chat_id,"Spam:User") then 
 if tonumber(msg.sender_id.user_id) == tonumber(FDFGERB) then
 return false
 end
@@ -1424,7 +1441,7 @@ end
 print('This is forward')
 return false
 end 
-if msg.content.LuaTele == "messagePhoto" or msg.content.LuaTele == "messageAnimation" or msg.content.LuaTele == "messageSticker" or msg.content.LuaTele == "messageVoiceNote" or msg.content.LuaTele == "messageVideo" or msg.content.LuaTele == "messageAudio" or msg.content.LuaTele == "messageVideoNote" then
+if msg.content.Luatele == "messagePhoto" or msg.content.Luatele == "messageAnimation" or msg.content.Luatele == "messageSticker" or msg.content.Luatele == "messageVoiceNote" or msg.content.Luatele == "messageVideo" or msg.content.Luatele == "messageAudio" or msg.content.Luatele == "messageVideoNote" then
 if not msg.Addictive then
 if Redis:get(FDFGERB.."FDFGERB:Lock:AlUasat"..msg_chat_id) then 
 return Luatele.deleteMessages(msg.chat_id,{[1]= msg.id})
@@ -1432,7 +1449,7 @@ end
 end
 end
 
-if msg.reply_markup and msg.reply_markup.LuaTele == "replyMarkupInlineKeyboard" then
+if msg.reply_markup and msg.reply_markup.Luatele == "replyMarkupInlineKeyboard" then
 if not msg.Distinguished then  -- الكيبورد
 local Keyboard_Group = Redis:get(FDFGERB.."FDFGERB:Lock:Keyboard"..msg_chat_id)
 if Keyboard_Group == "del" then
@@ -1491,7 +1508,7 @@ end
 print('This is location')
 end 
 
-if msg.content.entities and msg..content.entities[0] and msg.content.entities[0].type.LuaTele == "textEntityTypeUrl" and not msg.Distinguished then  -- الماركداون
+if msg.content.entities and msg..content.entities[0] and msg.content.entities[0].type.Luatele == "textEntityTypeUrl" and not msg.Distinguished then  -- الماركداون
 local Markduan_Gtoup = Redis:get(FDFGERB.."FDFGERB:Lock:Markdaun"..msg_chat_id)
 if Markduan_Gtoup == "del" then
 Luatele.deleteMessages(msg.chat_id,{[1]= msg.id})
@@ -1564,17 +1581,17 @@ end
 end
 print('This is games')
 end 
-if msg.content.LuaTele == "messagePinMessage" then -- رساله التثبيت
+if msg.content.Luatele == "messagePinMessage" then -- رساله التثبيت
 local Pin_Msg = Redis:get(FDFGERB.."FDFGERB:lockpin"..msg_chat_id)
 if Pin_Msg and not msg.Managers then
 if Pin_Msg:match("(%d+)") then 
 local PinMsg = Luatele.pinChatMessage(msg_chat_id,Pin_Msg,true)
-if PinMsg.LuaTele~= "ok" then
+if PinMsg.Luatele~= "ok" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙لا استطيع تثبيت الرسائل ليست لديه صلاحيه","md",true)
 end
 end
 local UnPin = Luatele.unpinChatMessage(msg_chat_id) 
-if UnPin.LuaTele ~= "ok" then
+if UnPin.Luatele ~= "ok" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙لا استطيع الغاء تثبيت الرسائل ليست لديه صلاحيه","md",true)
 end
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙التثبيت معطل من قبل المدراء ","md",true)
@@ -1582,7 +1599,7 @@ end
 print('This is message Pin')
 end 
 
-if msg.content.LuaTele == "messageChatJoinByLink" then
+if msg.content.Luatele == "messageChatJoinByLink" then
 if Redis:get(FDFGERB.."FDFGERB:Lock:Join"..msg.chat_id) == "kick" then
 Luatele.setChatMemberStatus(msg.chat_id,msg.sender_id.user_id,'banned',0)
 Luatele.deleteMessages(msg.chat_id,{[1]= msg.id})
@@ -1590,7 +1607,7 @@ return false
 end
 end
 
-if msg.content.LuaTele == "messageChatDeleteMember" and not Redis:get(FDFGERB.."spammkick"..msg.chat_id) then 
+if msg.content.Luatele == "messageChatDeleteMember" and not Redis:get(FDFGERB.."spammkick"..msg.chat_id) then 
 if msg.sender_id.user_id ~= FDFGERB then
 Num_Msg_Max = 4
 local UserInfo = Luatele.getUser(msg.sender_id.user_id)
@@ -1743,7 +1760,7 @@ end
 end 
 end
 
-if msg.content.LuaTele == "messagePhoto" and Redis:get(FDFGERB..'welcom_ph:witting'..msg.sender_id.user_id) then  -- الصور
+if msg.content.Luatele == "messagePhoto" and Redis:get(FDFGERB..'welcom_ph:witting'..msg.sender_id.user_id) then  -- الصور
 if msg.content.photo.sizes[1].photo.remote.id then
 idPhoto = msg.content.photo.sizes[1].photo.remote.id
 elseif msg.content.photo.sizes[2].photo.remote.id then
@@ -1782,7 +1799,7 @@ return Luatele.sendText(msg.chat_id, msg.id, "تم حذف الصوره", "md")
 end
 
 
-if msg.content.LuaTele == "messageContact" and not msg.Distinguished then  -- الجهات
+if msg.content.Luatele == "messageContact" and not msg.Distinguished then  -- الجهات
 local Contact_Group = Redis:get(FDFGERB.."FDFGERB:Lock:Contact"..msg_chat_id)
 if Contact_Group == "del" then
 Luatele.deleteMessages(msg.chat_id,{[1]= msg.id})
@@ -1819,7 +1836,7 @@ end
 print('This is Contact')
 end 
 
-if msg.content.LuaTele == "messageVideoNote" and not msg.Distinguished then  -- بصمه الفيديو
+if msg.content.Luatele == "messageVideoNote" and not msg.Distinguished then  -- بصمه الفيديو
 local Videonote_Group = Redis:get(FDFGERB.."FDFGERB:Lock:Unsupported"..msg_chat_id)
 if Videonote_Group == "del" then
 Luatele.deleteMessages(msg.chat_id,{[1]= msg.id})
@@ -1856,7 +1873,7 @@ end
 print('This is video Note')
 end 
 
-if msg.content.LuaTele == "messageDocument" and not msg.Distinguished then  -- الملفات
+if msg.content.Luatele == "messageDocument" and not msg.Distinguished then  -- الملفات
 local Document_Group = Redis:get(FDFGERB.."FDFGERB:Lock:Document"..msg_chat_id)
 if Document_Group == "del" then
 Luatele.deleteMessages(msg.chat_id,{[1]= msg.id})
@@ -1893,7 +1910,7 @@ end
 print('This is Document')
 end 
 
-if msg.content.LuaTele == "messageAudio" and not msg.Distinguished then  -- الملفات الصوتيه
+if msg.content.Luatele == "messageAudio" and not msg.Distinguished then  -- الملفات الصوتيه
 local Audio_Group = Redis:get(FDFGERB.."FDFGERB:Lock:Audio"..msg_chat_id)
 if Audio_Group == "del" then
 Luatele.deleteMessages(msg.chat_id,{[1]= msg.id})
@@ -1930,7 +1947,7 @@ end
 print('This is Audio')
 end 
 
-if msg.content.LuaTele == "messageVideo" then  -- الفيديو
+if msg.content.Luatele == "messageVideo" then  -- الفيديو
 if Redis:sismember(FDFGERB.."FDFGERB:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Distinguished then
@@ -1985,7 +2002,7 @@ return Luatele.sendText(msg_chat_id,msg_id,Teext..'✧︙ممنوع ارسال �
 end
 end
 end
-if msg.content.LuaTele == "messageVoiceNote" and not msg.Distinguished then  -- البصمات
+if msg.content.Luatele == "messageVoiceNote" and not msg.Distinguished then  -- البصمات
 local Voice_Group = Redis:get(FDFGERB.."FDFGERB:Lock:vico"..msg_chat_id)
 if Voice_Group == "del" then
 Luatele.deleteMessages(msg.chat_id,{[1]= msg.id})
@@ -2022,7 +2039,7 @@ end
 print('This is Voice')
 end 
 
-if msg.content.LuaTele == "messageSticker" then  -- الملصقات
+if msg.content.Luatele == "messageSticker" then  -- الملصقات
 if Redis:sismember(FDFGERB.."FDFGERB:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Distinguished then
@@ -2106,7 +2123,7 @@ end
 print('This is viabot')
 end
 
-if msg.content.LuaTele == "messageAnimation"  then  -- المتحركات
+if msg.content.Luatele == "messageAnimation"  then  -- المتحركات
 if Redis:sismember(FDFGERB.."FDFGERB:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Distinguished then
@@ -2201,7 +2218,7 @@ return Luatele.sendText(msg.chat_id,msg.id,'*\n✧︙عليك الاشتراك �
 end
 end
 end
-if msg.content.LuaTele == "messagePhoto" then  -- الصور
+if msg.content.Luatele == "messagePhoto" then  -- الصور
 if Redis:sismember(FDFGERB.."FDFGERB:Distinguishedall:Group",msg.sender_id.user_id) then
 testmod = true
 elseif msg.Distinguished then
@@ -2248,7 +2265,7 @@ print('This is Photo delete')
 end
 if msg.content.photo and Redis:get(FDFGERB.."FDFGERB:Chat:Photo"..msg_chat_id..":"..msg.sender_id.user_id) then
 local ChatPhoto = Luatele.setChatPhoto(msg_chat_id,msg.content.photo.sizes[2].photo.remote.id)
-if (ChatPhoto.LuaTele == "error") then
+if (ChatPhoto.Luatele == "error") then
 Redis:del(FDFGERB.."FDFGERB:Chat:Photo"..msg_chat_id..":"..msg.sender_id.user_id)
 return Luatele.sendText(msg_chat_id,msg_id,"✧︙لا استطيع تغيير صوره المجموعه لاني لست ادمن او ليست لديه الصلاحيه ","md",true)    
 end
@@ -2264,15 +2281,15 @@ or text and text:match("[Hh][Tt][Tt][Pp][Ss]://")
 or text and text:match("[Hh][Tt][Tt][Pp]://") 
 or text and text:match("[Ww][Ww][Ww].") 
 or text and text:match(".[Cc][Oo][Mm]")) or text and text:match("[Hh][Tt][Tt][Pp][Ss]://") or text and text:match("[Hh][Tt][Tt][Pp]://") or text and text:match("[Ww][Ww][Ww].") or text and text:match(".[Cc][Oo][Mm]") or text and text:match(".[Tt][Kk]") or text and text:match(".[Mm][Ll]") or text and text:match(".[Oo][Rr][Gg]")
-or msg.content.LuaTele == "messageContact" 
-or msg.content.LuaTele == "messageSticker"
-or msg.content.LuaTele == "messageVideoNote" 
-or msg.content.LuaTele == "messageDocument" 
-or msg.content.LuaTele == "messageAudio" 
-or msg.content.LuaTele == "messageVideo" 
-or msg.content.LuaTele == "messageVoiceNote" 
-or msg.content.LuaTele == "messageAnimation" 
-or msg.content.LuaTele == "messagePhoto" then
+or msg.content.Luatele == "messageContact" 
+or msg.content.Luatele == "messageSticker"
+or msg.content.Luatele == "messageVideoNote" 
+or msg.content.Luatele == "messageDocument" 
+or msg.content.Luatele == "messageAudio" 
+or msg.content.Luatele == "messageVideo" 
+or msg.content.Luatele == "messageVoiceNote" 
+or msg.content.Luatele == "messageAnimation" 
+or msg.content.Luatele == "messagePhoto" then
 local tphlesh_Group = Redis:get(FDFGERB.."FDFGERB:Lock:tphlesh"..msg_chat_id)
 if not msg.Distinguished and tphlesh_Group then
 Luatele.deleteMessages(msg.chat_id,{[1]= msg.id})
@@ -4815,7 +4832,7 @@ Redis:del(FDFGERB..'FDFGERB:Channel:Redis'..msg_chat_id..':'..msg.sender_id.user
 if msg.forward_info then
 if msg.forward_info.origin.chat_id then          
 AbsId = msg.forward_info.origin.chat_id
-local StatusMember = Luatele.getChatMember(AbsId,FDFGERB).status.LuaTele
+local StatusMember = Luatele.getChatMember(AbsId,FDFGERB).status.Luatele
 if (StatusMember ~= "chatMemberStatusAdministrator") then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙البوت عضو في القناة يرجى رفع البوت ادمن واعادة وضع الاشتراك ","md",true)  
 end
@@ -4831,7 +4848,7 @@ return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا يوجد حس�
 end
 local ChannelUser = text:gsub('@','')
 if UserId_Info.type.is_channel == true then
-local StatusMember = Luatele.getChatMember(UserId_Info.id,FDFGERB).status.LuaTele
+local StatusMember = Luatele.getChatMember(UserId_Info.id,FDFGERB).status.Luatele
 if (StatusMember ~= "chatMemberStatusAdministrator") then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙البوت عضو في القناة يرجى رفع البوت ادمن واعادة وضع الاشتراك ","md",true)  
 end
@@ -5461,7 +5478,7 @@ local Info_Members = Luatele.getSupergroupMembers(msg_chat_id, "Administrators",
 local List_Members = Info_Members.members
 for k, v in pairs(List_Members) do
 if Info_Members.members[k].bot_info == nil then
-if Info_Members.members[k].status.LuaTele == "chatMemberStatusCreator" then
+if Info_Members.members[k].status.Luatele == "chatMemberStatusCreator" then
 Redis:sadd(FDFGERB.."FDFGERB:TheBasicsQ:Group"..msg_chat_id,v.member_id.user_id) 
 else
 Redis:sadd(FDFGERB.."FDFGERB:Addictive:Group"..msg_chat_id,v.member_id.user_id) 
@@ -5498,7 +5515,7 @@ end
 if Redis:sismember(FDFGERB..'Black:listBan:',msg_chat_id) then
 return Luatele.sendText(msg_chat_id,msg_id,"\n*✧︙عذرآ المجموعه محظوره من التفعيل *","md",true)  
 end
-local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") then
 local AddedBot = true
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -5554,7 +5571,7 @@ local Info_Members = Luatele.getSupergroupMembers(msg_chat_id, "Administrators",
 local List_Members = Info_Members.members
 for k, v in pairs(List_Members) do
 if Info_Members.members[k].bot_info == nil then
-if Info_Members.members[k].status.LuaTele == "chatMemberStatusCreator" then
+if Info_Members.members[k].status.Luatele == "chatMemberStatusCreator" then
 Redis:sadd(FDFGERB.."FDFGERB:TheBasicsQ:Group"..msg_chat_id,v.member_id.user_id) 
 else
 Redis:sadd(FDFGERB.."FDFGERB:Addictive:Group"..msg_chat_id,v.member_id.user_id) 
@@ -5615,7 +5632,7 @@ return Luatele.sendText(msg_chat_id,msg_id,'\n*✧︙المجموعه : {*['..Ge
 end
 end
 if text == 'تعطيل' and not msg.Developers then
-local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") then
 local AddedBot = true
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -8470,7 +8487,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if Controllerbanall(msg_chat_id,Message_Reply.sender_id.user_id) == true then 
@@ -8493,7 +8510,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if not Redis:sismember(FDFGERB.."FDFGERB:KtmAll:Groups",Message_Reply.sender_id.user_id) then
@@ -8511,7 +8528,7 @@ return Luatele.sendText(msg_chat_id,msg_id,'\n*✧︙هذا الامر يخص { 
 end
 
 local UserInfo = Luatele.getUser(UserId)
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 if Controllerbanall(msg_chat_id,UserId) == true then 
@@ -8531,7 +8548,7 @@ return Luatele.sendText(msg_chat_id,msg_id,'\n*✧︙هذا الامر يخص { 
 end
 
 local UserInfo = Luatele.getUser(UserId)
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 if not Redis:sismember(FDFGERB.."FDFGERB:KtmAll:Groups",UserId) then
@@ -8654,7 +8671,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if Redis:sismember(FDFGERB.."FDFGERB:ControlAll:Groups",Message_Reply.sender_id.user_id) then
@@ -8680,7 +8697,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if not Redis:sismember(FDFGERB.."FDFGERB:ControlAll:Groups",Message_Reply.sender_id.user_id) then
@@ -8703,7 +8720,7 @@ if YouCan == false then
 return Luatele.sendText(msg_chat_id,msg_id,'\n*✧︙هذا الامر يخص { مطور الاساسي }* ',"md",true)  
 end
 local UserInfo = Luatele.getUser(UserId)
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 if Redis:sismember(FDFGERB.."FDFGERB:ControlAll:Groups",UserId) then
@@ -8726,7 +8743,7 @@ if YouCan == false then
 return Luatele.sendText(msg_chat_id,msg_id,'\n*✧︙هذا الامر يخص { مطور الاساسي }* ',"md",true)  
 end
 local UserInfo = Luatele.getUser(UserId)
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 if not Redis:sismember(FDFGERB.."FDFGERB:ControlAll:Groups",UserId) then
@@ -9163,7 +9180,7 @@ end
 if text == 'صلاحياتي' and ChCheck(msg) then
 
 
-local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") then
 return Luatele.sendText(msg_chat_id,msg_id,"✧︙الصلاحيات : مالك المجموعه","md",true) 
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -9199,7 +9216,7 @@ if text == 'صلاحياته' and msg.reply_to_message_id ~= 0 then
 
 
 local Message_Reply = Luatele.getMessage(msg.chat_id, msg.reply_to_message_id)
-local StatusMember = Luatele.getChatMember(msg_chat_id,Message_Reply.sender_id.user_id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,Message_Reply.sender_id.user_id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") then
 return Luatele.sendText(msg_chat_id,msg_id,"✧︙الصلاحيات : مالك المجموعه","md",true) 
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -9247,7 +9264,7 @@ end
 if UserName and UserName:match('(%S+)[Bb][Oo][Tt]') then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام معرف البوت ","md",true)  
 end
-local StatusMember = Luatele.getChatMember(msg_chat_id,UserId_Info.id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,UserId_Info.id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") then
 return Luatele.sendText(msg_chat_id,msg_id,"✧︙الصلاحيات : مالك المجموعه","md",true) 
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -9341,7 +9358,7 @@ Redis:set(FDFGERB..'Abs:Addme:Abs'..msg.chat_id,true)
 end
 
 if text and text:match('ضافني') and not Redis:get(FDFGERB..'Abs:Addme:Abs'..msg.chat_id)  then
-local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") then
 return Luatele.sendText(msg_chat_id,msg_id,"✧︙انت : مالك المجموعه","md",true) 
 end
@@ -10037,7 +10054,7 @@ if text == 'معلوماتي' and ChCheck(msg) or text == 'موقعي' and ChChe
 
 
 local UserInfo = Luatele.getUser(msg.sender_id.user_id)
-local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") then
 StatusMemberChat = 'مالك المجموعه'
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -10094,9 +10111,9 @@ Lakb = StatusMember.status.custom_title
 else
 Lakb = 'مشرف'
 end
-if (StatusMember.status.LuaTele == "chatMemberStatusCreator") then
+if (StatusMember.status.Luatele == "chatMemberStatusCreator") then
 return Luatele.sendText(msg_chat_id,msg_id,'\n*✧︙لقبك { '..Lakb..' }* ',"md",true)  
-elseif (StatusMember.status.LuaTele == "chatMemberStatusAdministrator") then
+elseif (StatusMember.status.Luatele == "chatMemberStatusAdministrator") then
 return Luatele.sendText(msg_chat_id,msg_id,'\n*✧︙لقبك { '..Lakb..' }* ',"md",true)  
 else
 return Luatele.sendText(msg_chat_id,msg_id,'\n*✧︙انت عضو في المجموعه* ',"md",true)  
@@ -10113,7 +10130,7 @@ return Luatele.sendText(msg_chat_id,msg_id,'\n*✧︙هذا الامر يخص { 
 end
 
 
-local StatusMember = Luatele.getChatMember(msg_chat_id,FDFGERB).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,FDFGERB).status.Luatele
 if (StatusMember ~= "chatMemberStatusAdministrator") then
 return Luatele.sendText(msg_chat_id,msg_id,'✧︙البوت عضو في المجموعه ',"md",true) 
 end
@@ -10203,7 +10220,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 Redis:sadd(FDFGERB.."FDFGERB:Distinguishedall:Group",Message_Reply.sender_id.user_id) 
@@ -10246,7 +10263,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 Redis:srem(FDFGERB.."FDFGERB:Distinguishedall:Group",Message_Reply.sender_id.user_id) 
@@ -10316,7 +10333,7 @@ return Luatele.sendText(msg_chat_id,msg_id,Reply_Status(UserId_Info.id,"✧︙ت
 end
 end
 if UserName[1] == "مالك" and ChCheck(msg) then
-local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.Developers then
@@ -10414,7 +10431,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if TextMsg == 'مطور ثانوي' and ChCheck(msg) then
@@ -10444,7 +10461,7 @@ return Luatele.sendText(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.
 end
 end
 if TextMsg == "مالك" and ChCheck(msg) then
-local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.Developers then
@@ -10540,13 +10557,13 @@ end
 if text and text:match('^تنزيل (.*) (%d+)$') and ChCheck(msg) then
 local UserId = {text:match('^تنزيل (.*) (%d+)$')}
 local UserInfo = Luatele.getUser(UserId[2])
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if UserId[1] == 'مطور ثانوي' and ChCheck(msg) then
@@ -10576,7 +10593,7 @@ return Luatele.sendText(msg_chat_id,msg_id,Reply_Status(UserId,"✧︙تم تن�
 end
 end
 if UserId[1] == "مالك" and ChCheck(msg) then
-local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.Developers then
@@ -10706,7 +10723,7 @@ return Luatele.sendText(msg_chat_id,msg_id,Reply_Status(UserId_Info.id,"✧︙ت
 end
 end
 if UserName[1] == "مالك" and ChCheck(msg) then
-local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.Developers then
@@ -10810,7 +10827,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if TextMsg == 'مطور ثانوي' and ChCheck(msg) then
@@ -10840,7 +10857,7 @@ return Luatele.sendText(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender_id.
 end
 end
 if TextMsg == "مالك" and ChCheck(msg) then
-local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.Developers then
@@ -10940,13 +10957,13 @@ end
 if text and text:match('^رفع (.*) (%d+)$') and ChCheck(msg) then
 local UserId = {text:match('^رفع (.*) (%d+)$')}
 local UserInfo = Luatele.getUser(UserId[2])
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if UserId[1] == 'مطور ثانوي' and ChCheck(msg) then
@@ -10976,7 +10993,7 @@ return Luatele.sendText(msg_chat_id,msg_id,Reply_Status(UserId,"✧︙تم تر�
 end
 end
 if UserId[1] == "مالك" and ChCheck(msg) then
-local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.Developers then
@@ -11279,7 +11296,7 @@ end
 local Info_Members = Luatele.getSupergroupMembers(msg_chat_id, "Administrators", "*", 0, 200)
 local List_Members = Info_Members.members
 for k, v in pairs(List_Members) do
-if Info_Members.members[k].status.LuaTele == "chatMemberStatusCreator" then
+if Info_Members.members[k].status.Luatele == "chatMemberStatusCreator" then
 local UserInfo = Luatele.getUser(v.member_id.user_id)
 if UserInfo.first_name ~= "" then
 if UserInfo.username then
@@ -11433,7 +11450,7 @@ data = {{{text = '- مسح المطورين', data = msg.sender_id.user_id..'/De
 return Luatele.sendText(msg_chat_id, msg_id, ListMembers, 'md', false, false, false, false, reply_markup)
 end
 if text == 'المالكين' and ChCheck(msg) then
-local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.Originators then
@@ -12411,7 +12428,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if StatusCanOrNotCan(msg_chat_id,Message_Reply.sender_id.user_id) then
@@ -12450,7 +12467,7 @@ if not msg.Originators and not Redis:get(FDFGERB.."FDFGERB:Status:BanId"..msg_ch
 return Luatele.sendText(msg_chat_id,msg_id,"✧︙تم تعطيل (الحظر : الطرد : التقييد) من قبل المنشئين","md",true)
 end 
 local UserInfo = Luatele.getUser(UserId[3])
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 if StatusCanOrNotCan(msg_chat_id,UserId[3]) then
@@ -12571,7 +12588,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if Controllerbanall(msg_chat_id,Message_Reply.sender_id.user_id) == true then 
@@ -12596,7 +12613,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if not Redis:sismember(FDFGERB.."FDFGERB:BanAll:Groups",Message_Reply.sender_id.user_id) then
@@ -12618,7 +12635,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if not Redis:sismember(FDFGERB.."FDFGERB:BanAll:Groups",Message_Reply.sender_id.user_id) then
@@ -12656,7 +12673,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if StatusCanOrNotCan(msg_chat_id,Message_Reply.sender_id.user_id) then
@@ -12691,7 +12708,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 Luatele.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1,1})
@@ -12717,7 +12734,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if StatusSilent(msg_chat_id,Message_Reply.sender_id.user_id) then
@@ -12741,7 +12758,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if not Redis:sismember(FDFGERB.."FDFGERB:SilentGroup:Group"..msg_chat_id,Message_Reply.sender_id.user_id) then
@@ -12772,7 +12789,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if StatusCanOrNotCan(msg_chat_id,Message_Reply.sender_id.user_id) then
@@ -12799,7 +12816,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 Luatele.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1})
@@ -12826,7 +12843,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if StatusCanOrNotCan(msg_chat_id,Message_Reply.sender_id.user_id) then
@@ -12844,7 +12861,7 @@ end
 
 
 local UserInfo = Luatele.getUser(UserId)
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 if Controllerbanall(msg_chat_id,UserId) == true then 
@@ -12866,7 +12883,7 @@ end
 
 
 local UserInfo = Luatele.getUser(UserId)
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 Luatele.setChatMemberStatus(msg.chat_id,UserId,'restricted',{1,1,1,1,1,1,1,1,1})
@@ -12885,7 +12902,7 @@ end
 
 
 local UserInfo = Luatele.getUser(UserId)
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 Luatele.setChatMemberStatus(msg.chat_id,UserId,'restricted',{1,1,1,1,1,1,1,1,1})
@@ -12913,7 +12930,7 @@ if not msg.Originators and not Redis:get(FDFGERB.."FDFGERB:Status:BanId"..msg_ch
 return Luatele.sendText(msg_chat_id,msg_id,"✧︙تم تعطيل (الحظر : الطرد : التقييد) من قبل المنشئين","md",true)
 end 
 local UserInfo = Luatele.getUser(UserId)
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 if StatusCanOrNotCan(msg_chat_id,UserId) then
@@ -12941,7 +12958,7 @@ if GetInfoBot(msg).BanUser == false then
 return Luatele.sendText(msg_chat_id,msg_id,'\n*✧︙البوت ليس لديه صلاحيه حظر المستخدمين* ',"md",true)  
 end
 local UserInfo = Luatele.getUser(UserId)
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 Luatele.setChatMemberStatus(msg.chat_id,UserId,'restricted',{1,1,1,1,1,1,1,1,1})
@@ -12964,7 +12981,7 @@ if GetInfoBot(msg).Delmsg == false then
 return Luatele.sendText(msg_chat_id,msg_id,'\n*✧︙البوت ليس لديه صلاحيه مسح الرسائل* ',"md",true)  
 end
 local UserInfo = Luatele.getUser(UserId)
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 if StatusSilent(msg_chat_id,UserId) then
@@ -12985,7 +13002,7 @@ end
 
 
 local UserInfo = Luatele.getUser(UserId)
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 if not Redis:sismember(FDFGERB.."FDFGERB:SilentGroup:Group"..msg_chat_id,UserId) then
@@ -13013,7 +13030,7 @@ if not msg.Originators and not Redis:get(FDFGERB.."FDFGERB:Status:BanId"..msg_ch
 return Luatele.sendText(msg_chat_id,msg_id,"✧︙تم تعطيل (الحظر : الطرد : التقييد) من قبل المنشئين","md",true)
 end 
 local UserInfo = Luatele.getUser(UserId)
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 if StatusCanOrNotCan(msg_chat_id,UserId) then
@@ -13037,7 +13054,7 @@ if GetInfoBot(msg).BanUser == false then
 return Luatele.sendText(msg_chat_id,msg_id,'\n*✧︙البوت ليس لديه صلاحيه حظر المستخدمين* ',"md",true)  
 end
 local UserInfo = Luatele.getUser(UserId)
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 Luatele.setChatMemberStatus(msg.chat_id,UserId,'restricted',{1,1,1,1,1,1,1,1})
@@ -13061,7 +13078,7 @@ if not msg.Originators and not Redis:get(FDFGERB.."FDFGERB:Status:BanId"..msg_ch
 return Luatele.sendText(msg_chat_id,msg_id,"✧︙تم تعطيل (الحظر : الطرد : التقييد) من قبل المنشئين","md",true)
 end 
 local UserInfo = Luatele.getUser(UserId)
-if UserInfo.LuaTele == "error" and UserInfo.code == 6 then
+if UserInfo.Luatele == "error" and UserInfo.code == 6 then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام ايدي خطأ ","md",true)  
 end
 if StatusCanOrNotCan(msg_chat_id,UserId) then
@@ -13084,7 +13101,7 @@ end
 if StatusCanOrNotCan(msg_chat_id,msg.sender_id.user_id) then
 return Luatele.sendText(msg_chat_id,msg_id,"\n*✧︙عذرآ لا تستطيع استخدام الامر على { "..Controller(msg_chat_id,msg.sender_id.user_id).." } *","md",true)  
 end
-local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") then
 KickMe = true
 elseif (StatusMember == "chatMemberStatusAdministrator") then
@@ -13112,7 +13129,7 @@ local Info_Members = Luatele.getSupergroupMembers(msg_chat_id, "Administrators",
 listAdmin = '\n*✧︙قائمه المشرفين \n — — — — — — — — —*\n'
 local List_Members = Info_Members.members
 for k, v in pairs(List_Members) do
-if Info_Members.members[k].status.LuaTele == "chatMemberStatusCreator" then
+if Info_Members.members[k].status.Luatele == "chatMemberStatusCreator" then
 Creator = '→ *{ المالك }*'
 else
 Creator = ""
@@ -13141,7 +13158,7 @@ x = 0
 y = 0
 for k, v in pairs(List_Members) do
 if Info_Members.members[k].bot_info == nil then
-if Info_Members.members[k].status.LuaTele == "chatMemberStatusCreator" then
+if Info_Members.members[k].status.Luatele == "chatMemberStatusCreator" then
 Redis:sadd(FDFGERB.."FDFGERB:TheBasicsQ:Group"..msg_chat_id,v.member_id.user_id) 
 x = x + 1
 else
@@ -13162,7 +13179,7 @@ end
 local Info_Members = Luatele.getSupergroupMembers(msg_chat_id, "Administrators", "*", 0, 200)
 local List_Members = Info_Members.members
 for k, v in pairs(List_Members) do
-if Info_Members.members[k].status.LuaTele == "chatMemberStatusCreator" then
+if Info_Members.members[k].status.Luatele == "chatMemberStatusCreator" then
 local UserInfo = Luatele.getUser(v.member_id.user_id)
 if UserInfo.first_name == "" then
 Luatele.sendText(msg_chat_id,msg_id,"*✧︙اوبس , المالك حسابه محذوف *","md",true)  
@@ -13213,7 +13230,7 @@ end
 local Info_Members = Luatele.getSupergroupMembers(msg_chat_id, "Administrators", "*", 0, 200)
 local List_Members = Info_Members.members
 for k, v in pairs(List_Members) do
-if Info_Members.members[k].status.LuaTele == "chatMemberStatusCreator" then
+if Info_Members.members[k].status.Luatele == "chatMemberStatusCreator" then
 local UserInfo = Luatele.getUser(v.member_id.user_id)
 if UserInfo.first_name == "" then
 Luatele.sendText(msg_chat_id,msg_id,"*✧︙اوبس , المالك حسابه محذوف *","md",true)  
@@ -13241,7 +13258,7 @@ listBots = '\n*✧︙قائمه البوتات \n — — — — — — — �
 x = 0
 for k, v in pairs(List_Members) do
 local UserInfo = Luatele.getUser(v.member_id.user_id)
-if Info_Members.members[k].status.LuaTele == "chatMemberStatusAdministrator" then
+if Info_Members.members[k].status.Luatele == "chatMemberStatusAdministrator" then
 x = x + 1
 Admin = '→ *{ ادمن }*'
 else
@@ -13269,7 +13286,7 @@ x = 0
 local y = false
 restricted = '\n*✧︙قائمه المقيديين \n — — — — — — — — —*\n'
 for k, v in pairs(List_Members) do
-if Info_Members.members[k].status.is_member == true and Info_Members.members[k].status.LuaTele == "chatMemberStatusRestricted" then
+if Info_Members.members[k].status.is_member == true and Info_Members.members[k].status.Luatele == "chatMemberStatusRestricted" then
 y = true
 x = x + 1
 local UserInfo = Luatele.getUser(v.member_id.user_id)
@@ -15784,7 +15801,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if Redis:sismember(FDFGERB.."FDFGERB:DevelopersQ:Groups",Message_Reply.sender_id.user_id) then
@@ -16115,7 +16132,7 @@ local msg_id = msg.id/2097152/0.5
 https.request("https://api.telegram.org/bot"..Token..'/sendPhoto?chat_id=' .. msg.chat_id .. '&photo=https://t.me/VVQYY&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
 end
 if text == "تنزيل جميع الرتب" and ChCheck(msg) then
-local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") then
 statusvar = true
 elseif msg.TheBasicsQ then
@@ -16152,7 +16169,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 local SetCustomTitle = https.request("https://api.telegram.org/bot"..Token.."/setChatAdministratorCustomTitle?chat_id="..msg_chat_id.."&user_id="..Message_Reply.sender_id.user_id.."&custom_title="..CustomTitle)
@@ -16217,7 +16234,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 local SetAdmin = Luatele.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'administrator',{1 ,1, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, ''})
@@ -16290,7 +16307,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 local SetAdmin = Luatele.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'administrator',{0 ,0, 0, 0, 0, 0, 0 ,0, 0})
@@ -16632,7 +16649,7 @@ Redis:del(FDFGERB.."FDFGERB:Developers:Groups")
 return Luatele.sendText(msg_chat_id,msg_id,"*✧︙تم مسح {"..#Info_Members.."} من المطورين *","md",true)
 end
 if TextMsg == 'المالكين' and ChCheck(msg) then
-local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.LuaTele
+local StatusMember = Luatele.getChatMember(msg_chat_id,msg.sender_id.user_id).status.Luatele
 if (StatusMember == "chatMemberStatusCreator") and ChCheck(msg) then
 statusvar = true
 elseif msg.Developers then
@@ -16654,7 +16671,7 @@ local Info_Members = Luatele.getSupergroupMembers(msg_chat_id, "Administrators",
 local List_Members = Info_Members.members
 for k, v in pairs(List_Members) do
 if Info_Members.members[k].bot_info == nil then
-if Info_Members.members[k].status.LuaTele == "chatMemberStatusCreator" then
+if Info_Members.members[k].status.Luatele == "chatMemberStatusCreator" then
 Redis:sadd(FDFGERB.."FDFGERB:TheBasicsQ:Group"..msg_chat_id,v.member_id.user_id) 
 end
 end
@@ -16782,7 +16799,7 @@ local List_Members = Info_Members.members
 x = 0
 local y = false
 for k, v in pairs(List_Members) do
-if Info_Members.members[k].status.is_member == true and Info_Members.members[k].status.LuaTele == "chatMemberStatusRestricted" then
+if Info_Members.members[k].status.is_member == true and Info_Members.members[k].status.Luatele == "chatMemberStatusRestricted" then
 Luatele.setChatMemberStatus(msg.chat_id,v.member_id.user_id,'restricted',{1,1,1,1,1,1,1,1})
 x = x + 1
 y = true
@@ -16811,7 +16828,7 @@ local List_Members = Info_Members.members
 x = 0
 for k, v in pairs(List_Members) do
 local Ban_Bots = Luatele.setChatMemberStatus(msg.chat_id,v.member_id.user_id,'banned',0)
-if Ban_Bots.LuaTele == "ok" then
+if Ban_Bots.Luatele == "ok" then
 x = x + 1
 end
 end
@@ -16835,7 +16852,7 @@ local y = false
 local List_Members = Info_Members.members
 for k, v in pairs(List_Members) do
 UNBan_Bots = Luatele.setChatMemberStatus(msg.chat_id,v.member_id.user_id,'restricted',{1,1,1,1,1,1,1,1,1})
-if UNBan_Bots.LuaTele == "ok" then
+if UNBan_Bots.Luatele == "ok" then
 x = x + 1
 y = true
 end
@@ -16864,9 +16881,9 @@ x = 0
 local y = false
 for k, v in pairs(List_Members) do
 local UserInfo = Luatele.getUser(v.member_id.user_id)
-if UserInfo.type.LuaTele == "userTypeDeleted" then
+if UserInfo.type.Luatele == "userTypeDeleted" then
 local userTypeDeleted = Luatele.setChatMemberStatus(msg.chat_id,v.member_id.user_id,'banned',0)
-if userTypeDeleted.LuaTele == "ok" then
+if userTypeDeleted.Luatele == "ok" then
 x = x + 1
 y = true
 end
@@ -16897,9 +16914,9 @@ x = 0
 local y = false
 for k, v in pairs(List_Members) do
 local UserInfo = Luatele.getUser(v.member_id.user_id)
-if UserInfo.type.LuaTele == "userTypeDeleted" then
+if UserInfo.type.Luatele == "userTypeDeleted" then
 local userTypeDeleted = Luatele.setChatMemberStatus(msg.chat_id,v.member_id.user_id,'banned',0)
-if userTypeDeleted.LuaTele == "ok" then
+if userTypeDeleted.Luatele == "ok" then
 x = x + 1
 y = true
 end
@@ -16928,7 +16945,7 @@ local List_Members = Info_Members.members
 x = 0
 for k, v in pairs(List_Members) do
 local Ban_Bots = Luatele.setChatMemberStatus(msg.chat_id,v.member_id.user_id,'banned',0)
-if Ban_Bots.LuaTele == "ok" then
+if Ban_Bots.Luatele == "ok" then
 x = x + 1
 end
 end
@@ -16981,7 +16998,7 @@ db = "ملف ✧"
 elseif Redis:get(FDFGERB.."FDFGERB:Add:Rd:Manager:Audio"..v..msg_chat_id) then
 db = "اغنيه 🎵"
 elseif Redis:get(FDFGERB.."FDFGERB:Add:Rd:Manager:video_note"..v..msg_chat_id) then
-db = "بصمه فيديو 🎥"
+db = "بصمه فيديو ??"
 end
 text = text..""..k.." » {"..v.."} » {"..db.."}\n"
 end
@@ -17213,7 +17230,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if not msg.Addictive then
@@ -17225,7 +17242,7 @@ if msg.can_be_deleted_for_all_users == false then
 return Luatele.sendText(msg_chat_id,msg_id,"\n*✧︙عذرآ البوت ليس ادمن في المجموعه يرجى ترقيته وتفعيل الصلاحيات له *","md",true)  
 end
 local GetMemberStatus = Luatele.getChatMember(msg_chat_id,Message_Reply.sender_id.user_id).status
-if GetMemberStatus.LuaTele == "chatMemberStatusRestricted" then
+if GetMemberStatus.Luatele == "chatMemberStatusRestricted" then
 Restricted = 'مقيد'
 else
 Restricted = 'غير مقيد'
@@ -17268,7 +17285,7 @@ if UserName and UserName:match('(%S+)[Bb][Oo][Tt]') then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام معرف البوت ","md",true)  
 end
 local GetMemberStatus = Luatele.getChatMember(msg_chat_id,UserId_Info.id).status
-if GetMemberStatus.LuaTele == "chatMemberStatusRestricted" then
+if GetMemberStatus.Luatele == "chatMemberStatusRestricted" then
 Restricted = 'مقيد'
 else
 Restricted = 'غير مقيد'
@@ -17296,7 +17313,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 if not msg.Addictive then
@@ -17308,7 +17325,7 @@ if msg.can_be_deleted_for_all_users == false then
 return Luatele.sendText(msg_chat_id,msg_id,"\n*✧︙عذرآ البوت ليس ادمن في المجموعه يرجى ترقيته وتفعيل الصلاحيات له *","md",true)  
 end
 local GetMemberStatus = Luatele.getChatMember(msg_chat_id,Message_Reply.sender_id.user_id).status
-if GetMemberStatus.LuaTele == "chatMemberStatusRestricted" then
+if GetMemberStatus.Luatele == "chatMemberStatusRestricted" then
 Restricted = 'مقيد'
 Luatele.setChatMemberStatus(msg.chat_id,Message_Reply.sender_id.user_id,'restricted',{1,1,1,1,1,1,1,1})
 else
@@ -17357,7 +17374,7 @@ if UserName and UserName:match('(%S+)[Bb][Oo][Tt]') then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام معرف البوت ","md",true)  
 end
 local GetMemberStatus = Luatele.getChatMember(msg_chat_id,UserId_Info.id).status
-if GetMemberStatus.LuaTele == "chatMemberStatusRestricted" then
+if GetMemberStatus.Luatele == "chatMemberStatusRestricted" then
 Restricted = 'مقيد'
 Luatele.setChatMemberStatus(msg.chat_id,UserId_Info.id,'restricted',{1,1,1,1,1,1,1,1})
 else
@@ -18036,7 +18053,7 @@ local x = 0
 for k,v in pairs(list) do  
 local Get_Chat = Luatele.getChat(v)
 local ChatAction = Luatele.sendChatAction(v,'Typing')
-if ChatAction.LuaTele ~= "ok" then
+if ChatAction.Luatele ~= "ok" then
 x = x + 1
 Redis:srem(FDFGERB..'FDFGERB:Num:User:Pv',v)
 end
@@ -18828,7 +18845,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 Redis:incrby(FDFGERB.."FDFGERB:Num:Add:Games"..msg.chat_id..Message_Reply.sender_id.user_id, text:match("^اضف نقاط (%d+)$"))  
@@ -18845,7 +18862,7 @@ local UserInfo = Luatele.getUser(UserId[1])
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 Redis:incrby(FDFGERB.."FDFGERB:Num:Add:Games"..msg.chat_id..UserId[1], UserId[2])  
@@ -18874,7 +18891,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 Redis:incrby(FDFGERB..'FDFGERB:Num:Message:Edit'..msg.chat_id..Message_Reply.sender_id.user_id, text:match("^اضف سحكات (%d+)$"))  
@@ -18891,7 +18908,7 @@ local UserInfo = Luatele.getUser(Message_Reply.sender_id.user_id)
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 Redis:incrby(FDFGERB.."FDFGERB:Num:Message:User"..msg.chat_id..":"..Message_Reply.sender_id.user_id, text:match("^اضف رسائل (%d+)$"))  
@@ -18908,7 +18925,7 @@ local UserInfo = Luatele.getUser(UserId[1])
 if UserInfo.message == "Invalid user ID" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
 end
-if UserInfo and UserInfo.type and UserInfo.type.LuaTele == "userTypeBot" then
+if UserInfo and UserInfo.type and UserInfo.type.Luatele == "userTypeBot" then
 return Luatele.sendText(msg_chat_id,msg_id,"\n✧︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
 Redis:incrby(FDFGERB.."FDFGERB:Num:Message:User"..msg.chat_id..UserId[1], UserId[2])  
@@ -19292,7 +19309,7 @@ local x = 0
 for k,v in pairs(list) do  
 local Get_Chat = Luatele.getChat(v)
 local ChatAction = Luatele.sendChatAction(v,'Typing')
-if ChatAction.LuaTele ~= "ok" then
+if ChatAction.Luatele ~= "ok" then
 x = x + 1
 Redis:srem(FDFGERB..'FDFGERB:Num:User:Pv',v)
 end
@@ -19313,7 +19330,7 @@ for k,v in pairs(list) do
 local Get_Chat = Luatele.getChat(v)
 if Get_Chat.id then
 local statusMem = Luatele.getChatMember(Get_Chat.id,FDFGERB)
-if statusMem.status.LuaTele == "chatMemberStatusMember" then
+if statusMem.status.Luatele == "chatMemberStatusMember" then
 x = x + 1
 Luatele.sendText(Get_Chat.id,0,'*✧︙البوت عضو في المجموعه سوف اغادر ويمكنك تفعيلي مره اخره *',"md")
 Redis:srem(FDFGERB..'FDFGERB:ChekBotAdd',Get_Chat.id)
@@ -19762,7 +19779,7 @@ local IdSudo = Luatele.getChat(ListGet[1]).id
 local IdUser = Luatele.getChat(ListGet[2]).id
 local FedMsg = Luatele.sendForwarded(IdSudo, 0, IdUser, msg_id)
 Redis:setex(FDFGERB.."FDFGERB:Twasl:UserId"..msg.date,172800,IdUser)
-if FedMsg.content.LuaTele == "messageSticker" then
+if FedMsg.content.Luatele == "messageSticker" then
 Luatele.sendText(IdSudo,0,Reply_Status(IdUser,'✧︙قام بارسال الملصق').Reply,"md",true)  
 end
 return Luatele.sendText(IdUser,msg_id,Reply_Status(IdUser,'✧︙تم ارسال رسالتك الى المطور').Reply,"md",true)  
@@ -19820,7 +19837,7 @@ end -- File_Bot_Run
 
 function CallBackLua(data) --- هذا الكالباك بي الابديت 
 --var(data) 
-if data and data.LuaTele and data.LuaTele == "updateNewInlineCallbackQuery" then
+if data and data.Luatele and data.Luatele == "updateNewInlineCallbackQuery" then
 local Text = Luatele.base64_decode(data.payload.data)
 if Text and Text:match('/Hmsa1@(%d+)@(%d+)/(%d+)') then
 local ramsesadd = {string.match(Text,"^/Hmsa1@(%d+)@(%d+)/(%d+)$")}
@@ -19832,7 +19849,7 @@ https.request("https://api.telegram.org/bot"..Token..'/answerCallbackQuery?callb
 end
 end
 end
-if data and data.LuaTele and data.LuaTele == "updateNewInlineQuery" then
+if data and data.Luatele and data.Luatele == "updateNewInlineQuery" then
 local Text = data.query
 if Text and Text:match("^(.*) @(.*)$")  then
 local username = {string.match(Text,"^(.*) @(.*)$")}
@@ -19849,15 +19866,15 @@ end
 end
 end
 
-if data and data.LuaTele and data.LuaTele == "updateSupergroup" then
+if data and data.Luatele and data.Luatele == "updateSupergroup" then
 local Get_Chat = Luatele.getChat('-100'..data.supergroup.id)
-if data.supergroup.status.LuaTele == "chatMemberStatusBanned" then
+if data.supergroup.status.Luatele == "chatMemberStatusBanned" then
 Redis:srem(FDFGERB.."FDFGERB:ChekBotAdd",'-100'..data.supergroup.id)
 
 return Luatele.sendText(Sudo_Id,0,'*\n✧︙تم طرد البوت من مجموعه جديده \n✧︙اسم المجموعه : '..Get_Chat.title..'\n✧︙ايدي المجموعه :*`-100'..data.supergroup.id..'`\n✧︙تم مسح جميع البيانات المتعلقه بالمجموعه',"md")
 end
 
-elseif data and data.LuaTele and data.LuaTele == "updateMessageSendSucceeded" then
+elseif data and data.Luatele and data.Luatele == "updateMessageSendSucceeded" then
 local msg = data.message
 local Chat = msg.chat_id
 if msg.content.text then
@@ -19938,8 +19955,8 @@ Redis:del(FDFGERB.."FDFGERB:PinMsegees:"..msg.chat_id)
 end
 end
 
-elseif data and data.LuaTele and data.LuaTele == "updateNewMessage" then
-if data.message.content.LuaTele == "messageChatDeleteMember" or data.message.content.LuaTele == "messageChatAddMembers" or data.message.content.LuaTele == "messagePinMessage" or data.message.content.LuaTele == "messageChatChangeTitle" or data.message.content.LuaTele == "messageChatJoinByLink" then
+elseif data and data.Luatele and data.Luatele == "updateNewMessage" then
+if data.message.content.Luatele == "messageChatDeleteMember" or data.message.content.Luatele == "messageChatAddMembers" or data.message.content.Luatele == "messagePinMessage" or data.message.content.Luatele == "messageChatChangeTitle" or data.message.content.Luatele == "messageChatJoinByLink" then
 if Redis:get(FDFGERB.."FDFGERB:Lock:tagservr"..data.message.chat_id) then
 Luatele.deleteMessages(data.message.chat_id,{[1]= data.message.id})
 end
@@ -19948,7 +19965,7 @@ if tonumber(data.message.sender_user_id) == tonumber(FDFGERB) then
 return false
 end
 File_Bot_Run(data.message,data.message)
-elseif data and data.LuaTele and data.LuaTele == "updateMessageEdited" then
+elseif data and data.Luatele and data.Luatele == "updateMessageEdited" then
 -- data.chat_id -- data.message_id
 local Message_Edit = Luatele.getMessage(data.chat_id, data.message_id)
 if Message_Edit.sender_id.user_id == FDFGERB then
@@ -20015,7 +20032,7 @@ local names = UserInfo.first_name
 local monsha = Redis:smembers(FDFGERB.."FDFGERB:TheBasicsQ:Group"..data.chat_id) 
 Redis:incr(FDFGERB..'FDFGERB:Num:Message:Edit'..data.chat_id..Message_Edit.sender_id.user_id)
 if not data.Originators and Message_Edit.sender_id.user_id ~= tonumber(FDFGERB) then
-if Message_Edit.content.LuaTele == "messageContact" or Message_Edit.content.LuaTele == "messageVideoNote" or Message_Edit.content.LuaTele == "messageDocument" or Message_Edit.content.LuaTele == "messageAudio" or Message_Edit.content.LuaTele == "messageVideo" or Message_Edit.content.LuaTele == "messageVoiceNote" or Message_Edit.content.LuaTele == "messageAnimation" or Message_Edit.content.LuaTele == "messagePhoto" then
+if Message_Edit.content.Luatele == "messageContact" or Message_Edit.content.Luatele == "messageVideoNote" or Message_Edit.content.Luatele == "messageDocument" or Message_Edit.content.Luatele == "messageAudio" or Message_Edit.content.Luatele == "messageVideo" or Message_Edit.content.Luatele == "messageVoiceNote" or Message_Edit.content.Luatele == "messageAnimation" or Message_Edit.content.Luatele == "messagePhoto" then
 if Redis:get(FDFGERB.."FDFGERB:Lock:edit"..data.chat_id) then
 if #monsha ~= 0 then 
 local ListMembers = '\n*✧︙تاك للمالكين  \n — — — — — — — — —*\n'
@@ -20036,7 +20053,7 @@ Luatele.deleteMessages(data.chat_id,{[1]= data.message_id})
 end
 end
 end
-elseif data and data.LuaTele and data.LuaTele == "updateNewCallbackQuery" then
+elseif data and data.Luatele and data.Luatele == "updateNewCallbackQuery" then
 -- data.chat_id
 -- data.payload.data
 -- data.sender_user_id
@@ -21970,7 +21987,7 @@ x = 0
 y = 0
 for k, v in pairs(List_Members) do
 if Info_Members.members[k].bot_info == nil then
-if Info_Members.members[k].status.LuaTele == "chatMemberStatusCreator" then
+if Info_Members.members[k].status.Luatele == "chatMemberStatusCreator" then
 Redis:sadd(FDFGERB.."FDFGERB:TheBasicsQ:Group"..UserId[2],v.member_id.user_id) 
 x = x + 1
 else
@@ -22078,7 +22095,7 @@ x = 0
 y = 0
 for k, v in pairs(List_Members) do
 if Info_Members.members[k].bot_info == nil then
-if Info_Members.members[k].status.LuaTele == "chatMemberStatusCreator" then
+if Info_Members.members[k].status.Luatele == "chatMemberStatusCreator" then
 Redis:sadd(FDFGERB.."FDFGERB:TheBasicsQ:Group"..UserId[2],v.member_id.user_id) 
 x = x + 1
 else
@@ -23555,7 +23572,7 @@ end
 end
 
 
-LuaTele.run(CallBackLua)
+Luatele.run(CallBackLua)
  
 
 
