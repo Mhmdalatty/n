@@ -12338,14 +12338,6 @@ send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"✠┊تم فتح ا
 return false
 end 
 if text == "قفل الانكليزيه" then 
-if not msg.Admin then
-return send(msg_chat_id,msg_id,'\n*✠┊هذا الامر يخص { '..Controller_Num(7)..' }* ',"md" = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(FDFGERB..'Chat:Channel:Join:Name'..msg.chat_id), url = 't.me/'..Redis:get(FDFGERB..'Chat:Channel:Join'..msg.chat_id)}, },}}
-return send(msg.chat_id,msg.id,'*\n✠┊ عليك الاشتراك في قناة البوت لأستخدام الاوامر*',"md",false, false, false, false, reply_markup)
-end
-if ChannelJoin(msg) == false then
-local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(FDFGERB..'Channel:Join:Name'), url = 't.me/'..Redis:get(FDFGERB..'Channel:Join')}, },}}
-return send(msg.chat_id,msg.id,'*\n✠┊ عليك الاشتراك في قناة البوت لأستخدام الاوامر*',"md",false, false, false, false, reply_markup)
-end
 Redis:set(FDFGERB.."Lock:english"..msg_chat_id,true) 
 send(msg_chat_id,msg_id,Reply_Status(msg.sender_id.user_id,"✠┊تم قفـل الانكليزيه").Lock,"md",true)  
 return false
