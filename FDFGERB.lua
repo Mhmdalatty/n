@@ -7135,7 +7135,7 @@ if GetMemberStatus.can_promote_members then
 promote = '❬ ✔️ ❭' else promote = '❬ ❌ ❭'
 end
 local PermissionsUserr = '*\n✠┊ صلاحيات المستخدم :\n┉┉┉┉┉┉┉┉┉┉'..'\n✠┊ تغيير المعلومات : '..change_info..'\n✠┊ تثبيت الرسائل : '..pin_messages..'\n✠┊ اضافه مستخدمين : '..invite_users..'\n✠┊ مسح الرسائل : '..delete_messages..'\n✠┊ حظر المستخدمين : '..restrict_members..'\n✠┊ اضافه المشرفين : '..promote..'\n\n*'
-return send"(msg_chat_id,msg_id,"✠┊الصلاحيات : مشرف الكروب"..(PermissionsUserr or '') ,"md",true) 
+return send(msg_chat_id,msg_id,"✠┊الصلاحيات : مشرف الكروب"..(PermissionsUserr or '') ,"md",true) 
 end
 end
 
