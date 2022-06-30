@@ -7092,8 +7092,7 @@ end
 if GetMemberStatus.can_promote_members then
 promote = '❬ ✔️ ❭' else promote = '❬ ❌ ❭'
 end
-local PermissionsUserr = '*\n✠┊ صلاحيات المستخدم :\n
-┉┉┉┉┉┉┉┉┉┉'..'\n✠┊ تغيير المعلومات : '..change_info..'\n✠┊ تثبيت الرسائل : '..pin_messages..'\n✠┊ اضافه مستخدمين : '..invite_users..'\n✠┊ مسح الرسائل : '..delete_messages..'\n✠┊ حظر المستخدمين : '..restrict_members..'\n✠┊ اضافه المشرفين : '..promote..'\n\n*'
+local PermissionsUserr = '*\n✠┊ صلاحيات المستخدم :\n┉┉┉┉┉┉┉┉┉┉'..'\n✠┊ تغيير المعلومات : '..change_info..'\n✠┊ تثبيت الرسائل : '..pin_messages..'\n✠┊ اضافه مستخدمين : '..invite_users..'\n✠┊ مسح الرسائل : '..delete_messages..'\n✠┊ حظر المستخدمين : '..restrict_members..'\n✠┊ اضافه المشرفين : '..promote..'\n\n*'
 return send(msg_chat_id,msg_id,"✠┊الصلاحيات : مشرف الكروب"..(PermissionsUserr or '') ,"md",true) 
 end
 end
@@ -7135,9 +7134,8 @@ end
 if GetMemberStatus.can_promote_members then
 promote = '❬ ✔️ ❭' else promote = '❬ ❌ ❭'
 end
-local PermissionsUserr = '*\n✠┊ صلاحيات المستخدم :\n
-┉┉┉┉┉┉┉┉┉┉'..'\n✠┊ تغيير المعلومات : '..change_info..'\n✠┊ تثبيت الرسائل : '..pin_messages..'\n✠┊ اضافه مستخدمين : '..invite_users..'\n✠┊ مسح الرسائل : '..delete_messages..'\n✠┊ حظر المستخدمين : '..restrict_members..'\n✠┊ اضافه المشرفين : '..promote..'\n\n*'
-return send(msg_chat_id,msg_id,"✠┊الصلاحيات : مشرف الكروب"..(PermissionsUserr or '') ,"md",true) 
+local PermissionsUserr = '*\n✠┊ صلاحيات المستخدم :\n┉┉┉┉┉┉┉┉┉┉'..'\n✠┊ تغيير المعلومات : '..change_info..'\n✠┊ تثبيت الرسائل : '..pin_messages..'\n✠┊ اضافه مستخدمين : '..invite_users..'\n✠┊ مسح الرسائل : '..delete_messages..'\n✠┊ حظر المستخدمين : '..restrict_members..'\n✠┊ اضافه المشرفين : '..promote..'\n\n*'
+return send"(msg_chat_id,msg_id,"✠┊الصلاحيات : مشرف الكروب"..(PermissionsUserr or '') ,"md",true) 
 end
 end
 
@@ -7190,8 +7188,7 @@ end
 if GetMemberStatus.can_promote_members then
 promote = '❬ ✔️ ❭' else promote = '❬ ❌ ❭'
 end
-local PermissionsUserr = '*\n✠┊ صلاحيات المستخدم :\n
-┉┉┉┉┉┉┉┉┉┉'..'\n✠┊ تغيير المعلومات : '..change_info..'\n✠┊ تثبيت الرسائل : '..pin_messages..'\n✠┊ اضافه مستخدمين : '..invite_users..'\n✠┊ مسح الرسائل : '..delete_messages..'\n✠┊ حظر المستخدمين : '..restrict_members..'\n✠┊ اضافه المشرفين : '..promote..'\n\n*'
+local PermissionsUserr = '*\n✠┊ صلاحيات المستخدم :\n┉┉┉┉┉┉┉┉┉┉'..'\n✠┊ تغيير المعلومات : '..change_info..'\n✠┊ تثبيت الرسائل : '..pin_messages..'\n✠┊ اضافه مستخدمين : '..invite_users..'\n✠┊ مسح الرسائل : '..delete_messages..'\n✠┊ حظر المستخدمين : '..restrict_members..'\n✠┊ اضافه المشرفين : '..promote..'\n\n*'
 return send(msg_chat_id,msg_id,"✠┊الصلاحيات : مشرف الكروب"..(PermissionsUserr or '') ,"md",true) 
 end
 end
@@ -8080,8 +8077,7 @@ end
 if GetMemberStatus.can_promote_members then
 promote = '❬ ✔️ ❭' else promote = '❬ ❌ ❭'
 end
-PermissionsUser = '*\n✠┊ صلاحيات المستخدم :\n
-┉┉┉┉┉┉┉┉┉┉'..'\n✠┊ تغيير المعلومات : '..change_info..'\n✠┊ تثبيت الرسائل : '..pin_messages..'\n✠┊ اضافه مستخدمين : '..invite_users..'\n✠┊ مسح الرسائل : '..delete_messages..'\n✠┊ حظر المستخدمين : '..restrict_members..'\n✠┊ اضافه المشرفين : '..promote..'\n\n*'
+PermissionsUser = '*\n✠┊ صلاحيات المستخدم :\n┉┉┉┉┉┉┉┉┉┉'..'\n✠┊ تغيير المعلومات : '..change_info..'\n✠┊ تثبيت الرسائل : '..pin_messages..'\n✠┊ اضافه مستخدمين : '..invite_users..'\n✠┊ مسح الرسائل : '..delete_messages..'\n✠┊ حظر المستخدمين : '..restrict_members..'\n✠┊ اضافه المشرفين : '..promote..'\n\n*'
 end
 return send(msg_chat_id,msg_id,
 '\n*✠┊ايديك : '..UserId..
@@ -8148,8 +8144,7 @@ end
 if GetMemberStatus.can_promote_members then
 promote = '❬ ✔️ ❭' else promote = '❬ ❌ ❭'
 end
-PermissionsUser = '*\n✠┊ صلاحيات البوت : مشرف في الكروب :\n
-┉┉┉┉┉┉┉┉┉┉'..'\n✠┊ تغيير المعلومات : '..change_info..'\n✠┊ تثبيت الرسائل : '..pin_messages..'\n✠┊ اضافه مستخدمين : '..invite_users..'\n✠┊ مسح الرسائل : '..delete_messages..'\n✠┊ حظر المستخدمين : '..restrict_members..'\n✠┊ اضافه المشرفين : '..promote..'\n\n*'
+PermissionsUser = '*\n✠┊ صلاحيات البوت : مشرف في الكروب :\n┉┉┉┉┉┉┉┉┉┉'..'\n✠┊ تغيير المعلومات : '..change_info..'\n✠┊ تثبيت الرسائل : '..pin_messages..'\n✠┊ اضافه مستخدمين : '..invite_users..'\n✠┊ مسح الرسائل : '..delete_messages..'\n✠┊ حظر المستخدمين : '..restrict_members..'\n✠┊ اضافه المشرفين : '..promote..'\n\n*'
 return send(msg_chat_id,msg_id,PermissionsUser,"md",true) 
 end
 
@@ -15514,10 +15509,8 @@ end
 if Get_Chat.permissions.can_send_polls then
 polls = '❬ ✔️ ❭' else polls = '❬ ❌ ❭'
 end
-local permissions = '*\n✠┊ صلاحيات الكروب :\n
-┉┉┉┉┉┉┉┉┉┉'..'\n✠┊ ارسال الويب : '..web..'\n✠┊ تغيير معلومات الكروب : '..info..'\n✠┊ اضافه مستخدمين : '..invite..'\n✠┊ تثبيت الرسائل : '..pin..'\n✠┊ ارسال الميديا : '..media..'\n✠┊ ارسال الرسائل : '..messges..'\n✠┊ اضافه البوتات : '..other..'\n✠┊ ارسال استفتاء : '..polls..'*\n\n'
-local TextChat = '*\n✠┊ معلومات الكروب :\n
-┉┉┉┉┉┉┉┉┉┉'..' \n✠┊ اسم الكروب : ❬* ['..Get_Chat.title..']('..Info_Chats.invite_link.invite_link..')* ❭\n✠┊ عدد الادمنيه : ❬ '..Info_Chats.administrator_count..' ❭\n✠┊ عدد المحظورين : ❬ '..Info_Chats.banned_count..' ❭\n✠┊ عدد الاعضاء : ❬ '..Info_Chats.member_count..' ❭\n✠┊ عدد المقيديين : ❬ '..Info_Chats.restricted_count..' ❭\n✠┊ الايدي : ❬ *`'..msg.chat_id..'`* ❭*\n'
+local permissions = '*\n✠┊ صلاحيات الكروب :\n┉┉┉┉┉┉┉┉┉┉'..'\n✠┊ ارسال الويب : '..web..'\n✠┊ تغيير معلومات الكروب : '..info..'\n✠┊ اضافه مستخدمين : '..invite..'\n✠┊ تثبيت الرسائل : '..pin..'\n✠┊ ارسال الميديا : '..media..'\n✠┊ ارسال الرسائل : '..messges..'\n✠┊ اضافه البوتات : '..other..'\n✠┊ ارسال استفتاء : '..polls..'*\n\n'
+local TextChat = '*\n✠┊ معلومات الكروب :\n┉┉┉┉┉┉┉┉┉┉'..' \n✠┊ اسم الكروب : ❬* ['..Get_Chat.title..']('..Info_Chats.invite_link.invite_link..')* ❭\n✠┊ عدد الادمنيه : ❬ '..Info_Chats.administrator_count..' ❭\n✠┊ عدد المحظورين : ❬ '..Info_Chats.banned_count..' ❭\n✠┊ عدد الاعضاء : ❬ '..Info_Chats.member_count..' ❭\n✠┊ عدد المقيديين : ❬ '..Info_Chats.restricted_count..' ❭\n✠┊ الايدي : ❬ *`'..msg.chat_id..'`* ❭*\n'
 if Info_Chats.photo then
 bot.sendPhoto(msg.chat_id, msg.id, Info_Chats.photo.sizes[1].photo.remote.id,TextChat..permissions, "md")
 else
