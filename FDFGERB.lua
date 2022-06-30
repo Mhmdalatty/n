@@ -18162,8 +18162,7 @@ SilentGroup = 'مكتوم'
 else
 SilentGroup = 'غير مكتوم'
 end
-send(msg_chat_id,msg_id,"\n*✠┊معلومات الكشف \n
-┉┉┉┉┉┉┉┉┉┉"..'\n✠┊ الحظر العام : '..BanAll..'\n✠┊ الحظر : '..BanGroup..'\n✠┊ الكتم : '..SilentGroup..'\n✠┊ التقييد : '..Restricted..'*',"md",true)  
+send(msg_chat_id,msg_id,"\n*✠┊معلومات الكشف \n┉┉┉┉┉┉┉┉┉┉"..'\n✠┊ الحظر العام : '..BanAll..'\n✠┊ الحظر : '..BanGroup..'\n✠┊ الكتم : '..SilentGroup..'\n✠┊ التقييد : '..Restricted..'*',"md",true)  
 end
 if text and text:match('^كشف القيود @(%S+)$') then
 local UserName = text:match('^كشف القيود @(%S+)$')
@@ -18212,8 +18211,7 @@ SilentGroup = 'مكتوم'
 else
 SilentGroup = 'غير مكتوم'
 end
-send(msg_chat_id,msg_id,"\n*✠┊معلومات الكشف \n
-┉┉┉┉┉┉┉┉┉┉"..'\n✠┊ الحظر العام : '..BanAll..'\n✠┊ الحظر : '..BanGroup..'\n✠┊ الكتم : '..SilentGroup..'\n✠┊ التقييد : '..Restricted..'*',"md",true)  
+send(msg_chat_id,msg_id,"\n*✠┊معلومات الكشف \n┉┉┉┉┉┉┉┉┉┉"..'\n✠┊ الحظر العام : '..BanAll..'\n✠┊ الحظر : '..BanGroup..'\n✠┊ الكتم : '..SilentGroup..'\n✠┊ التقييد : '..Restricted..'*',"md",true)  
 end
 if text == 'رفع القيود' and msg.reply_to_message_id ~= 0 then
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
@@ -18387,7 +18385,7 @@ txx = txx..k.." - "..v.." »» "..cmdd.."\n"
 end
 bot.sendText(msg_chat_id,msg_id,txx)
 end
--------زواج
+
 if text == "زواج" or text == "رفع زوجتي" or text == "رفع زوجي" and msg.reply_to_message_id ~= 0 then
 local Message_Reply = bot.getMessage(msg.chat_id, msg.reply_to_message_id)
 local UserInfo = bot.getUser(Message_Reply.sender_id.user_id)
@@ -22879,7 +22877,7 @@ name = string.gsub(name,"لهانه","وحده حلوه ومغروره تلبس 
 name = string.gsub(name,"انا","ابن امك وابن ابيك وليس باختك ولا باخيك فمن يكون ؟")
 name = string.gsub(name,"امي","اخت خالك وليست خالتك من تكون ؟ ")
 name = string.gsub(name,"الابره","ما هو الشيئ الذي كلما خطا خطوه فقد شيئا من ذيله ؟ ")
-name = string.gsub(name,"الساعه","ما هو الشيئ الذي يقول الصدق ولكنه اذا جاع كذب ؟")
+name = string.gsub(name,"الساعه","ما هو الشيئ الذي يقول الصدق ولكنه اذا ┉┉┉┉┉┉┉┉┉┉".. كذب ؟")
 name = string.gsub(name,"22","كم مره ينطبق عقربا الساعه على بعضهما في اليوم الواحد ")
 name = string.gsub(name,"غلط","ما هي الكلمه الوحيده التي تلفض غلط دائما ؟ ")
 name = string.gsub(name,"كم الساعه","ما هو السؤال الذي تختلف اجابته دائما ؟")
