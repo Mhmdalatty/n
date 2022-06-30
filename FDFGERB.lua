@@ -24515,9 +24515,7 @@ if text == "حسو" then
       },
     }
     }
-  return bot.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,"\n ـ
-┉┉┉┉┉┉┉┉┉┉ـ\n"..ANUBIS[math.random(#ANUBIS)].."\n ـ
-┉┉┉┉┉┉┉┉┉┉ـ"  , "md", true, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup )
+  return bot.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,"\n ـ┉┉┉┉┉┉┉┉┉┉ـ\n"..ANUBIS[math.random(#ANUBIS)].."\n ـ┉┉┉┉┉┉┉┉┉┉ـ"  , "md", true, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup )
   end
   end
 
