@@ -4333,8 +4333,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(FDFGERB..'Channel:Join:Name'), url = 't.me/'..Redis:get(FDFGERB..'Channel:Join')}, },}}
 return send(msg.chat_id,msg.id,'*\n✠┊ عليك الاشتراك في قناة البوت لأستخدام الاوامر*',"md",false, false, false, false, reply_markup)
 end
-send(msg_chat_id,msg_id,'*✠┊عدد احصائيات البوت الكامله \n
-┉┉┉┉┉┉┉┉┉┉\n✠┊ عدد المجموعات : '..(Redis:scard(FDFGERB..'ChekBotAdd') or 0)..'\n✠┊ عدد المشتركين : '..(Redis:scard(FDFGERB..'Num:User:Pv') or 0)..'*',"md",true)  
+send(msg_chat_id,msg_id,'*✠┊عدد احصائيات البوت الكامله \n┉┉┉┉┉┉┉┉┉┉\n✠┊ عدد المجموعات : '..(Redis:scard(FDFGERB..'ChekBotAdd') or 0)..'\n✠┊ عدد المشتركين : '..(Redis:scard(FDFGERB..'Num:User:Pv') or 0)..'*',"md",true)  
 end
 if text == 'تفعيل' and msg.Dev then
 if msg.can_be_deleted_for_all_users == false then
@@ -12128,8 +12127,7 @@ Admin = ""
 end
 listBots = listBots.."*"..k.." - @"..UserInfo.username.."* "..Admin.."\n"
 end
-send(msg_chat_id,msg_id,listBots.."*\n
-┉┉┉┉┉┉┉┉┉┉\n✠┊ عدد البوتات التي هي ادمن ( "..x.." )*","md",true)  
+send(msg_chat_id,msg_id,listBots.."*\n┉┉┉┉┉┉┉┉┉┉\n✠┊ عدد البوتات التي هي ادمن ( "..x.." )*","md",true)  
 end
 
 
@@ -15170,8 +15168,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return send(msg.chat_id,msg.id,'*\n✠┊ عليك الاشتراك في قناة البوت لأستخدام الاوامر*',"md",false, false, false, false, reply_markup)
 end
 local list = Redis:smembers(FDFGERB.."Command:List:Group"..msg_chat_id.."")
-Command = "✠┊قائمه الاوامر المضافه  \n
-┉┉┉┉┉┉┉┉┉┉\n"
+Command = "✠┊قائمه الاوامر المضافه  \n┉┉┉┉┉┉┉┉┉┉\n"
 for k,v in pairs(list) do
 Commands = Redis:get(FDFGERB.."Get:Reides:Commands:Group"..msg_chat_id..":"..v)
 if Commands then 
@@ -15379,8 +15376,7 @@ end
 if Redis:get(FDFGERB.."Status:AddMe"..msg.chat_id) then
 StatusAddme = '❬ ✔️ ❭' else StatusAddme = '❬ ❌ ❭'
 end
-local protectionGroup = '\n*✠┊اعدادات حمايه الكروب\n 
-┉┉┉┉┉┉┉┉┉┉\n'
+local protectionGroup = '\n*✠┊اعدادات حمايه الكروب\n ┉┉┉┉┉┉┉┉┉┉\n'
 ..'\n✠┊ جلب الرابط ➤ '..Statuslink
 ..'\n✠┊ جلب الترحيب ➤ '..StatusWelcome
 ..'\n✠┊ الايدي ➤ '..StatusId
@@ -16990,8 +16986,7 @@ if text == ("الردود") then
   return send(msg.chat_id,msg.id,'*\n✠┊عليك الاشتراك في قناة البوت لاستخذام الاوامر*',"md",false, false, false, false, reply_markup)
   end
   local list = Redis:smembers(FDFGERB.."List:Manager"..msg_chat_id.."")
-  rd_list = "✠┊قائمه الردود \n
-┉┉┉┉┉┉┉┉┉┉\n"
+  rd_list = "✠┊قائمه الردود \n┉┉┉┉┉┉┉┉┉┉\n"
   for k,v in pairs(list) do
   if Redis:get(FDFGERB.."Add:Rd:Manager:Gif"..v..msg_chat_id) then
   db = "متحركه "
@@ -17016,8 +17011,7 @@ if text == ("الردود") then
   end
   local list_mz = Redis:smembers(FDFGERB.."List:Rd:mz"..msg_chat_id.."")
   if #list_mz ~= 0 then 
-  mz_text = "
-┉┉┉┉┉┉┉┉┉┉\nالردود علي كلمه من جمله :\n"
+  mz_text = "┉┉┉┉┉┉┉┉┉┉\nالردود علي كلمه من جمله :\n"
   for k,v in pairs(list_mz) do
   if Redis:get(FDFGERB.."Add:Rd:mz:Gif"..v..msg_chat_id) then
   db = "متحركه "
@@ -17201,8 +17195,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return send(msg.chat_id,msg.id,'*\n✠┊ عليك الاشتراك في قناة البوت لأستخدام الاوامر*',"md",false, false, false, false, reply_markup)
 end
 local list = Redis:smembers(FDFGERB.."List:Rd:Sudo")
-text = "\n📝︙قائمة الردود العامه \n
-┉┉┉┉┉┉┉┉┉┉\n"
+text = "\n📝︙قائمة الردود العامه \n┉┉┉┉┉┉┉┉┉┉\n"
 for k,v in pairs(list) do
 if Redis:get(FDFGERB.."Add:Rd:Sudo:Gif"..v) then
 db = "متحركه 🎭"
@@ -17461,8 +17454,7 @@ if text == "حذف قسم" then
   return send(msg.chat_id,msg.id,'*\n✠┊عليك الاشتراك في قناة البوت لاستخذام الاوامر*',"md",false, false, false, false, reply_markup)
   end
   local list = Redis:smembers(FDFGERB.."List:Sections:inline")
-  text = "✠┊قائمه الاقسام \n
-┉┉┉┉┉┉┉┉┉┉\n"
+  text = "✠┊قائمه الاقسام \n┉┉┉┉┉┉┉┉┉┉\n"
   for k,v in pairs(list) do
   text = text..""..k.." » "..v.."\n"
   end
@@ -17751,8 +17743,7 @@ if text == ("الرتب المضافه") then
   end
 local rtb_list = Redis:smembers(FDFGERB.."rowtab:")
 if #rtb_list == 0 then return send(msg_chat_id,msg_id,'✠┊لايوجد رتب مضافه ف البوت',"md",true)  end
-rtb = "الرتب المضافه في البوت \n
-┉┉┉┉┉┉┉┉┉┉\n"
+rtb = "الرتب المضافه في البوت \n┉┉┉┉┉┉┉┉┉┉\n"
 for k,v in pairs(rtb_list) do
 rtba_type = Redis:get(FDFGERB..v.."type:")
 if rtba_type == "sdev" then rtba_t = "مطور ثانوي"
@@ -18450,8 +18441,7 @@ local zwgat_list = Redis:smembers(FDFGERB..msg_chat_id.."zwgat:")
 if #zwgat_list == 0 then 
 return send(msg_chat_id,msg_id,'✠┊لايوجد زوجات',"md",true) 
 end 
-local zwga_list = "✠┊عدد الزوجات : "..#zwgat_list.."\n✠┊ الزوجات :\n
-┉┉┉┉┉┉┉┉┉┉\n"
+local zwga_list = "✠┊عدد الزوجات : "..#zwgat_list.."\n✠┊ الزوجات :\n┉┉┉┉┉┉┉┉┉┉\n"
 for k, v in pairs(zwgat_list) do
 local UserInfo = bot.getUser(v)
 local zwga_name = UserInfo.first_name
@@ -18495,8 +18485,7 @@ local mutlqat_list = Redis:smembers(FDFGERB..msg_chat_id.."mutlqat:")
 if #mutlqat_list == 0 then 
 return send(msg_chat_id,msg_id,'✠┊لايوجد مطلقات',"md",true) 
 end 
-local mutlqa_list = "✠┊عدد المطلقات : "..#mutlqat_list.."\n✠┊ المطلقات :\n
-┉┉┉┉┉┉┉┉┉┉\n"
+local mutlqa_list = "✠┊عدد المطلقات : "..#mutlqat_list.."\n✠┊ المطلقات :\n┉┉┉┉┉┉┉┉┉┉\n"
 for k, v in pairs(mutlqat_list) do
 local UserInfo = bot.getUser(v)
 local mutlqa_name = UserInfo.first_name
@@ -18549,8 +18538,7 @@ local heart_list = Redis:smembers(FDFGERB..msg_chat_id..msg.sender_id.user_id.."
 if #heart_list == 0 then
 return send(msg_chat_id,msg_id,"قلبك فاضي محدش فيه","md")
 elseif #heart_list > 0 then
-your_heart = "الناس الي فقلبك \n
-┉┉┉┉┉┉┉┉┉┉\n"
+your_heart = "الناس الي فقلبك \n┉┉┉┉┉┉┉┉┉┉\n"
 for k,v in pairs(heart_list) do
 local user_info = bot.getUser(v)
 local name = user_info.first_name
@@ -19083,8 +19071,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return send(msg.chat_id,msg.id,'*\n✠┊ عليك الاشتراك في قناة البوت لأستخدام الاوامر*',"md",false, false, false, false, reply_markup)
 end
 local list = Redis:smembers(FDFGERB.."List:Manager:inline"..msg_chat_id.."")
-text = "✠┊قائمه الردود الانلاين \n
-┉┉┉┉┉┉┉┉┉┉\n"
+text = "✠┊قائمه الردود الانلاين \n┉┉┉┉┉┉┉┉┉┉\n"
 for k,v in pairs(list) do
 if Redis:get(FDFGERB.."Add:Rd:Manager:Gif:inline"..v..msg_chat_id) then
 db = "متحركه"
@@ -19381,8 +19368,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return send(msg.chat_id,msg.id,'*\n✠┊ عليك الاشتراك في قناة البوت لأستخدام الاوامر*',"md",false, false, false, false, reply_markup)
 end
 local list = Redis:smembers(FDFGERB.."List:Manager:inline3am")
-text = "✠┊قائمه الردود الانلاين \n
-┉┉┉┉┉┉┉┉┉┉\n"
+text = "✠┊قائمه الردود الانلاين \n┉┉┉┉┉┉┉┉┉┉\n"
 for k,v in pairs(list) do
 if Redis:get(FDFGERB.."Add:Rd:Manager:Gif:inline3am"..v) then
 db = "متحركه"
@@ -19652,8 +19638,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return send(msg.chat_id,msg.id,'*\n✠┊ عليك الاشتراك في قناة البوت لأستخدام الاوامر*',"md",false, false, false, false, reply_markup)
 end
 local mz_sudo = Redis:smembers(FDFGERB.."List:Rd:Sudo:mz")
-mmez_list = "\n✠┊ قائمة الردود المميزه \n
-┉┉┉┉┉┉┉┉┉┉\n"
+mmez_list = "\n✠┊ قائمة الردود المميزه \n┉┉┉┉┉┉┉┉┉┉\n"
 for k,v in pairs(mz_sudo) do
 if Redis:get(FDFGERB.."Add:Rd:Sudo:mz:Gif"..v) then
 db = "متحركه"
@@ -23944,8 +23929,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {
     },
   }
   }
-return bot.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id, getbio( 1696907808 ).."\n
-┉┉┉┉┉┉┉┉┉┉\n"  , "html", true, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup )
+return bot.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id, getbio( 1696907808 ).."\n┉┉┉┉┉┉┉┉┉┉\n"  , "html", true, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup )
 end
 end
 if text == 'المبرمج' or text == 'مبرمج السورس' or text == 'محدث السورس' then
@@ -23958,8 +23942,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {
     },
   }
   }
-return bot.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id, getbio(1696907808).."\n
-┉┉┉┉┉┉┉┉┉┉\n"  , "html", true, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup )
+return bot.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id, getbio(1696907808).."\n┉┉┉┉┉┉┉┉┉┉\n"  , "html", true, nil, nil, nil, nil, nil, nil, nil, nil, reply_markup )
 end
 end
 
@@ -24193,8 +24176,7 @@ data = {
 },
 }
 }
-return send(msg_chat_id,msg_id,' ✠┊ اهلا عزيزي آلمـطـور\n ✠┊ آنت آلمـطـور آلآسـآسـي للبوت\n
-┉┉┉┉┉┉┉┉┉┉\n ✠┊ تسـتطـيع‌‏ آلتحگم باوامر البوت\n ✠┊ من خلاال الكيبورت خاص بك\n ✠┊ قناة سورس البوت [اضغط هنا](https://t.me/LEDARQ)', 'md', false, false, false, false, reply_markup)
+return send(msg_chat_id,msg_id,' ✠┊ اهلا عزيزي آلمـطـور\n ✠┊ آنت آلمـطـور آلآسـآسـي للبوت\n┉┉┉┉┉┉┉┉┉┉\n ✠┊ تسـتطـيع‌‏ آلتحگم باوامر البوت\n ✠┊ من خلاال الكيبورت خاص بك\n ✠┊ قناة سورس البوت [اضغط هنا](https://t.me/LEDARQ)', 'md', false, false, false, false, reply_markup)
 end
 end
 if Redis:get(FDFGERB.."set:rmz"..msg.sender_id.user_id) then
@@ -24381,8 +24363,7 @@ if ChannelJoin(msg) == false then
 local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(FDFGERB..'Channel:Join:Name'), url = 't.me/'..Redis:get(FDFGERB..'Channel:Join')}, },}}
 return send(msg.chat_id,msg.id,'*\n✠┊ عليك الاشتراك في قناة البوت لأستخدام الاوامر*',"md",false, false, false, false, reply_markup)
 end
-send(msg_chat_id,msg_id,'*✠┊عدد احصائيات البوت الكامله \n
-┉┉┉┉┉┉┉┉┉┉\n✠┊ عدد المجموعات : '..(Redis:scard(FDFGERB..'ChekBotAdd') or 0)..'\n✠┊ عدد المشتركين : '..(Redis:scard(FDFGERB..'Num:User:Pv') or 0)..'*',"md",true)  
+send(msg_chat_id,msg_id,'*✠┊عدد احصائيات البوت الكامله \n┉┉┉┉┉┉┉┉┉┉\n✠┊ عدد المجموعات : '..(Redis:scard(FDFGERB..'ChekBotAdd') or 0)..'\n✠┊ عدد المشتركين : '..(Redis:scard(FDFGERB..'Num:User:Pv') or 0)..'*',"md",true)  
 end
 if text == 'تغيير كليشه المطور ✠' then
 if not msg.Asasy then 
@@ -24588,8 +24569,7 @@ local reply_markup = bot.replyMarkup{type = 'inline',data = {{{text = Redis:get(
 return send(msg.chat_id,msg.id,'*\n✠┊ عليك الاشتراك في قناة البوت لأستخدام الاوامر*',"md",false, false, false, false, reply_markup)
 end
 local list = Redis:smembers(FDFGERB.."List:Rd:Sudo")
-text = "\n📝︙قائمة الردود العامه \n
-┉┉┉┉┉┉┉┉┉┉\n"
+text = "\n📝︙قائمة الردود العامه \n┉┉┉┉┉┉┉┉┉┉\n"
 for k,v in pairs(list) do
 if Redis:get(FDFGERB.."Add:Rd:Sudo:Gif"..v) then
 db = "متحركه 🎭"
@@ -25661,8 +25641,7 @@ if Text and Text:match('(.*)/next/(.*)') then
   local kit_list = Redis:smembers(FDFGERB.."kit:")
   local Residual = #kit_list - num
   if tonumber(IdUser) == tonumber(UserId) and Residual > 30 then
-      local Listkit = '\n✠┊قائمه الاسأله  \n✠┊عدد الاسأله : '..#kit_list..'\n 
-┉┉┉┉┉┉┉┉┉┉\n'
+      local Listkit = '\n✠┊قائمه الاسأله  \n✠┊عدد الاسأله : '..#kit_list..'\n ┉┉┉┉┉┉┉┉┉┉\n'
   for i = num, anubis, 1 do
       Listkit = Listkit.." - "..kit_list[i].."\n"
   end
@@ -25677,8 +25656,7 @@ if Text and Text:match('(.*)/next/(.*)') then
   end
   if tonumber(IdUser) == tonumber(UserId) and Residual < 30 then
       local kit_end = num + Residual
-      local Listkit = '\n✠┊قائمه الاسأله  \n✠┊عدد الاسأله : '..#kit_list..'\n 
-┉┉┉┉┉┉┉┉┉┉\n'
+      local Listkit = '\n✠┊قائمه الاسأله  \n✠┊عدد الاسأله : '..#kit_list..'\n ┉┉┉┉┉┉┉┉┉┉\n'
   for i = num, kit_end, 1 do
       Listkit = Listkit.." - "..kit_list[i].."\n"
   end
